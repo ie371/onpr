@@ -1,12 +1,6 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-Vue.use(Vuex)
-import calc from './calc.js';
-
-export default new Vuex.Store({
-	modules: { calc:calc },
-	state:{
-			rekv:{
+export default {
+    state: {
+            rekv:{
 				nazvPR:'',
 				cod:'',
 				nazvPrO:'',
@@ -26,10 +20,14 @@ export default new Vuex.Store({
 			sk:{
 				skor:'1.5',
 			},
-		},
+    },
 
-	getters:{
+    getters:{
 			getRekv: state => state.rekv,
 			getSk: state => state.sk,
-		},
-})
+
+
+    }
+  
+
+ }

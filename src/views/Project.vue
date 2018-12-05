@@ -2,9 +2,8 @@
 
 
 
-<form id="formpost" method="post" target="_blank" enctype="multipart/form-data" 
-onkeypress="if(event.keyCode == 13) return false;" 
->
+<form method="post" target="_blank" enctype="multipart/form-data" 
+onkeypress="if(event.keyCode == 13) return false;" >
 
 
 
@@ -49,12 +48,14 @@ onkeypress="if(event.keyCode == 13) return false;"
 <script>
     import rekvizit from '../components/rekvizit.vue';
     import paramC from '../components/paramC.vue';
+    // import kpField from '../components/kpField.vue';
 
     export default {
 
     components: {
                 rekvizit: rekvizit,
                 paramC: paramC,
+                // kpField:kpField,
                 },
     data() {
         return{
