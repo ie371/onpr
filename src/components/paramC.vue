@@ -1231,6 +1231,8 @@ export default {
                 else if(this.isx.di3 && this.isx.di3!=='' && this.isx.di3!=='0'){ tipk=  'g'}
                 this.$store.dispatch('tipkp', tipk ) 
             },
+        
+        
         change_du (d,h) {
 
             let tipk = ''
