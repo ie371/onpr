@@ -1010,6 +1010,7 @@
         },
         computed: {
             isUserAuthenticated(){
+                
             return this.$store.getters.isUserAuthenticated
             },
 

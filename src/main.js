@@ -23,7 +23,7 @@ new Vue({
     axios
       .post('http://localhost/v.0.8/pdf/project/test.php')
       .then(response => (
-        // console.log('это ответ', response.data)
+        // проверка юзера 
         vm.$store.dispatch('STATE_CHANGED', response.data)
         ));
   }
