@@ -32,51 +32,51 @@ export default {
             // return true
         },
         menuItems(){
-            // return this.isUserAuthenticated
-            // ? 
-            // [
-            //     {
-                    
-            //         title:'Проект',
-            //         route:'/project'
-            //     },
-            //     {
-                    
-            //         title:'Профиль',
-            //         route:'/profile'
-            //     }
-            // ] :
-            // [
-            //     {
-            //         title:'Вход ',
-            //         route:'/signin'
-            //     },
-            //     {
-                    
-            //         title:'Регистрация',
-            //         route:'/signup'
-            //     }
-            // ]
-            
-            return [
+            return this.isUserAuthenticated
+            ? 
+            [
                 {
+                    
                     title:'Проект',
                     route:'/project'
                 },
                 {
+                    
                     title:'Профиль',
                     route:'/profile'
-                },
-
+                }
+            ] :
+            [
                 {
                     title:'Вход ',
                     route:'/signin'
                 },
                 {
+                    
                     title:'Регистрация',
                     route:'/signup'
                 }
             ]
+            
+            // return [
+            //     {
+            //         title:'Проект',
+            //         route:'/project'
+            //     },
+            //     {
+            //         title:'Профиль',
+            //         route:'/profile'
+            //     },
+
+            //     {
+            //         title:'Вход ',
+            //         route:'/signin'
+            //     },
+            //     {
+            //         title:'Регистрация',
+            //         route:'/signup'
+            //     }
+            // ]
         }
     },
     methods:{
