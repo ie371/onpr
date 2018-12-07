@@ -18,14 +18,14 @@ new Vue({
   store,
   render: h => h(App),
 
-  mounted() {
-    let vm = this
-    axios
-      .post('http://localhost/v.0.8/pdf/project/test.php')
-      .then(response => (
-        // проверка юзера 
-        vm.$store.dispatch('STATE_CHANGED', response.data)
-        ));
-  }
+  // mounted() {
+  //   let vm = this
+  //   axios
+  //     .post('http://localhost/onpr/pdf/project/test.php')
+  //     .then(response => (
+  //       // проверка юзера 
+  //       vm.$store.dispatch('STATE_CHANGED', response.data)
+  //       ));
+  // }
 
 }).$mount('#app')

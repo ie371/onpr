@@ -48,7 +48,7 @@ export default {
                 // console.log('ffffff')
                 // this.$router.push("/project")
             // })
-            
+            // commit('UNSET_USER')
         },
         STATE_CHANGED({commit}, payload){
             if(payload){

@@ -1159,14 +1159,14 @@
                 }
             },
             grzO() {
-                if (this.isx.dut1 < 33 && this.isx.filo == 2) {
+                if (this.isx.dut1 < 33 && this.isx.di1 !== '0' && this.isx.di1 !== 0 && this.isx.filo == 2) {
                     return true;
                 } else {
                     return false;
                 }
             },
             grzG() {
-                if (this.isx.dut4 < 33 && this.isx.filg == 2) {
+                if (this.isx.dut4 < 33 && this.isx.di4 !== '0' && this.isx.di4 !== 0 && this.isx.filg == 2) {
                     return true;
                 } else {
                     return false;
@@ -1357,7 +1357,7 @@
                             bf7 = 0;
                         }
                         //  if(this.isx.dut1 <33 && this.isx.filo=='2'){ bf7=1 }else{ bf7=0  }
-                        if (this.isx.dut4 < 33 && this.isx.filg == '2') {
+                        if (this.isx.dut4 < 33 && this.isx.di4 !== '0' && this.isx.filg == '2') {
                             bf7 = 1
                         } else {
                             bf7 = 0
@@ -1377,7 +1377,7 @@
                         } else {
                             bf7 = 0
                         }
-                        if (this.isx.dut4 < 33 && this.isx.filg == '2') {
+                        if (this.isx.dut4 < 33 && this.isx.di4 !== 0 && this.isx.filg == '2') {
                             bf7 = 1
                         } else {
                             bf7 = 0
@@ -1402,33 +1402,6 @@
         },
         
         methods: {
-            // axio () {
-            //     // this.mess = [];
-            //     // let asd = [];
-            //     // console.log('это отооооооооооо вет')
-            //     // axios.defaults.headers.common['Authorization'] = resp.token
-
-            //     let jf = JSON.stringify(this.isx);
-            //     let tokenStr = 'xxyyzz'
-            //     let config = {
-            //             headers: {
-            //             'Content-Type': 'application/json',
-            //             'Authorization': `Bearer ${tokenStr}`
-            //             }
-            //     };
-
-            //     // document.forms["formpost"].submit();
-
-            //     axios.post('./pdf/project/test.php', {jf}, config)
-            //             .then((response)=> {
-            //                 console.log('это ответ',response)
-            //                 console.log(response.data)
-            //             })
-            //             .catch(function (error) {
-            //                 console.log(error);
-            //             });
-            //             document.forms["formpost"].submit();
-            // },
             onOk() {
                 let ee = '';
                 if (this.top || this.bottom) {

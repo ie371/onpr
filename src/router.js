@@ -15,32 +15,32 @@ export default new Router({
       path: '/project',
       name: 'project',
       component: Project,
-      beforeEnter: AuthGuard
+      // beforeEnter: AuthGuard
     },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: Profile,
-      beforeEnter: AuthGuard
-    },
-    {
-      path: '/signin',
-      name: 'signin',
-      component: Signin
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: Signup
-    },
+    // {
+    //   path: '/profile',
+    //   name: 'profile',
+    //   component: Profile,
+    //   beforeEnter: AuthGuard
+    // },
+    // {
+    //   path: '/signin',
+    //   name: 'signin',
+    //   component: Signin
+    // },
+    // {
+    //   path: '/signup',
+    //   name: 'signup',
+    //   component: Signup
+    // },
 
   ],
   // mode:'history'
 })
 
-function AuthGuard(from, to, next){
-  if(Store.getters.isUserAuthenticated)
-  next()
-  else
-  next('/signin')
-}
+// function AuthGuard(from, to, next){
+//   if(Store.getters.isUserAuthenticated)
+//   next()
+//   else
+//   next('/project')
+// }
