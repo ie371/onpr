@@ -85,7 +85,123 @@
     </b-row>
   </div>
 
+<!-- <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100 p-t-50 p-b-90">
+        <form class="login100-form validate-form flex-sb flex-w" style="<?php echo $v_show_form; ?>" action="/reg.php" method="post">
 
+          <input type="hidden" name="create" value="create">
+          <span class="login100-form-title p-b-51">
+            Регистрация
+          </span>
+
+          
+          <div class="wrap-input100 validate-input m-b-16">
+            <input class="input100" type="text" name="fio" placeholder="ФИО (не менее 5 знаков)" value="<?php echo @$_POST['fio']; ?>" maxlength="150" required>
+            <span class="focus-input100"></span>
+          </div>
+          
+          
+          <div class="wrap-input100 validate-input m-b-16">
+            <input class="input100" type="email" name="email" placeholder="email (действующий e-mail в качестве логина)" value="<?php echo @$_POST['email']; ?>" maxlength="100" required>
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-16">
+            <input class="input100" type="password" name="password" placeholder="пароль (не менее 5 и не более 15 знаков)" value="<?php echo @$_POST['password']; ?>" maxlength="15" required>
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-16">
+            <input class="input100" type="text" id="phone" name="phone" placeholder="10 цифр в формате (903)123-4567" value="<?php echo @$_POST['phone']; ?>" maxlength="15" required>
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="input-group ">          
+          <div class="flex-sb-m w-full p-t-3 p-b-24">
+          <div class="contact100-form-checkbox">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="clame" name="clame" required style="margin-left: -23px;" >
+              <label class="custom-control-label" for="clame" style="font-size: 0.9em">Настоящим вы даете согласие на обработку персональных данных</label>
+            </div>
+          </div>
+          </div>
+          </div>
+          
+          <div class="input-group ">          
+          <div class="flex-sb-m w-full p-t-3 p-b-24">
+          <div class="contact100-form-checkbox">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="spam" name="spam" checked style="margin-left: -23px;" >
+              <label class="custom-control-label" for="spam" style="font-size: 0.9em">Подписаться на новости</label>
+            </div>
+          </div>
+          </div>
+          </div>
+
+          <div class="container-login100-form-btn m-t-17">
+            <button class="login100-form-btn">
+              Регистрация
+            </button>
+          </div>
+
+        </form>
+
+        <div class="m-t-17" style="text-align: center;">
+          <a href="/index.php" class="txt1">Перейти на страницу авторизации</a>
+        </div>
+
+
+        <div class="m-t-17" style="text-align: center;">
+          <a href="#" class="txt2" data-toggle="modal" data-target="#ModalLong">Соглашение на обработку персональных данных сайтом</a>
+        </div>
+
+      <div class="modal fade" id="ModalLong" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalLongTitle">Соглашение на обработку персональных данных сайтом</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+          <p>Пользователь (субъект персональных данных) дает свое согласие на обработку персональных данных ООО «Интелприбор», которому принадлежит сайт <b>intelpribor.ru</b> и которое расположено по адресу: Московская область, г. Жуковский, ул. Энергетическая, д. 15.
+
+          <p>Регистрируясь на Сайте и/или заполняя Форму обратной связи (далее – «Форма»), пользователь:
+
+          <li>подтверждает, что указанные им персональные данные принадлежат лично ему;</li>
+          <li>признает и подтверждает, что он внимательно и в полном объеме ознакомился с настоящим Соглашением и содержащимися в нем условиями обработки его персональных данных, указываемых им в полях Формы на сайте;</li>
+          <li>признает и подтверждает, что все положения настоящего Соглашения и условия обработки его персональных данных ему понятны;</li>
+          <li>выражает согласие с условиями обработки персональных данных без каких-либо оговорок и ограничений.</li>
+
+          <p>Пользователь дает свое согласие на обработку его персональных данных, а именно совершение действий, предусмотренных п. 3 ст. 3 Федерального закона от 27.07.2006 N 152-ФЗ "О персональных данных", и подтверждает, что, давая такое согласие, он действует свободно, своей волей и в своем интересе.
+
+          <p>Настоящее согласие Пользователя применяется в отношении обработки следующих персональных данных:
+
+          <li>фамилия, имя, отчество;</li>
+          <li>номера телефонов;</li>
+          <li>адресах электронной почты (E-mail).</li>
+
+          <p>Согласие на обработку персональных данных предоставляется с момента регистрации на сайте и/или заполнения Формы и действительно бессрочно либо до его письменного отзыва.
+
+          <p>Я СОГЛАСЕН на обработку и хранение моих персональных данных, указанных мною в Форме в соответствии с условиями настоящего согласия на обработку персональных данных. Одновременно даю свое согласие и не возражаю, чтобы Сайт или иные лица по его поручению отправляли сообщения, в том числе рекламного характера или иную информацию иного содержания на номер телефона или адрес электронной почты или с использованием иных средств связи, указанных мной в Форме или при регистрации на Сайте.</p>
+
+          <a href="https://intelpribor.ru/upload/docs/privacy-policy.pdf" >Политика компании в отношении обработки персональных данных</a>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Закрыть</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div> -->
 
 </template>
 <script>
@@ -132,7 +248,7 @@ export default {
     watch:{
         isUserAuthenticated(val){
             if(val === true)
-                this.$router.push("/project")
+                this.$router.push("/")
         }
     },
     methods:{

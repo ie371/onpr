@@ -5,8 +5,7 @@
 </header>          
 <div class="content-wrapper">
         <div class="box">
-            <!-- <router-view/> -->
-            <Project></Project>
+            <router-view/>
         </div>  
   </div>
  </div>
@@ -18,13 +17,11 @@
 
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
-import Project from './views/Project.vue'
 
 export default {
   components:{
     AppHeader,
     AppFooter,
-    Project
   }
   
 }

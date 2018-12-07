@@ -587,7 +587,7 @@
                         Создать КП
                     </b-btn>
 
-                    <b-btn v-b-modal.modallg variant="warning" class="btn btn-sm btn-block mb-3">Текст КП</b-btn>
+                    <!-- <b-btn v-b-modal.modallg variant="warning" class="btn btn-sm btn-block mb-3">Текст КП</b-btn> -->
 
                     <b-btn type='submit' class="btn btn-sm btn-block mb-3" formaction='./pdf/project/project2.php'
                     v-if="isUserAuthenticated"

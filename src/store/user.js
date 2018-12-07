@@ -9,7 +9,7 @@ export default {
     mutations: {
         SET_USER(state, payload){
             state.user.isAuthenticated = true
-            state.user.uid = payload
+            // state.user.uid = payload
         },
         UNSET_USER(state){
             state.user = {
@@ -22,7 +22,7 @@ export default {
         SIGNUP({commit}, payload){
             commit('SET_PROCESSING', true)
             commit('CLEAR_ERROR')
-            // firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+
             .then(() => {
                 commit('SET_PROCESSING', false)
             })
@@ -33,7 +33,7 @@ export default {
         },
         SIGNIN({commit}, payload){
             commit('SET_PROCESSING', true)
-            // firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+
             .then(() => {
                 commit('SET_PROCESSING', false)
             })
@@ -42,17 +42,17 @@ export default {
                 commit('SET_ERROR', error.message)
               });
         },
-        SIGNOUT(){
+        SIGNOUT({commit}){
             // firebase.auth().signOut()
             // .then(() => {
                 // console.log('ffffff')
                 // this.$router.push("/project")
             // })
-            // commit('UNSET_USER')
+            commit('UNSET_USER')
         },
         STATE_CHANGED({commit}, payload){
             if(payload){
-                commit('SET_USER', payload.uid)
+                commit('SET_USER')
             }else{
                 commit('UNSET_USER')
             }

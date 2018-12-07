@@ -3,8 +3,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import axios from 'axios';
-// import check from './components/check'
+// import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -21,7 +20,7 @@ new Vue({
   // mounted() {
   //   let vm = this
   //   axios
-  //     .post('http://localhost/onpr/pdf/project/test.php')
+  //     .post('../auth/check.php')
   //     .then(response => (
   //       // проверка юзера 
   //       vm.$store.dispatch('STATE_CHANGED', response.data)

@@ -9,9 +9,9 @@
         <!-- <b-nav-item  v-for="(item,i) in menuItems"  :key="i" :to="item.route">
             {{item.title}}
         </b-nav-item > -->
-        <!-- <b-nav-item  @click.prevent="signout" v-if="isUserAuthenticated">
+        <b-nav-item  @click.prevent="signout" v-if="isUserAuthenticated">
            Выход
-        </b-nav-item> -->
+        </b-nav-item>
     </b-navbar-nav>
   </b-collapse>
 </b-navbar>
@@ -31,35 +31,40 @@ export default {
             return this.$store.getters.isUserAuthenticated
             // return true
         },
-        // menuItems(){
-        //     return this.isUserAuthenticated
-        //     ? 
-        //     [
-        //         {
-        //             title:'Проект',
-        //             route:'/project'
-        //         },
-        //         {
-        //             title:'Профиль',
-        //             route:'/profile'
-        //         }
-        //     ] :
-        //     [
-        //         {
-        //             title:'Вход ',
-        //             route:'/signin'
-        //         },
-        //         {
-        //             title:'Регистрация',
-        //             route:'/signup'
-        //         }
-        //     ]
-        // }
+        menuItems(){
+            return this.isUserAuthenticated
+            ? 
+            [
+                {
+                    title:'Проект',
+                    route:'/'
+                },
+                {
+                    title:'Профиль',
+                    route:'/profile'
+                }
+            ] :
+            [
+                {
+                    title:'Проект',
+                    route:'/'
+                },
+                {
+                    title:'Вход ',
+                    route:'/signin'
+                },
+                {
+                    title:'Регистрация',
+                    route:'/signup'
+                }
+            ]
+        }
     },
     methods:{
         signout(){
-            this.$store.dispatch('SIGNOUT')
-            // this.$router.push("/signin")
+              window.location ="app.php?exit=1"
+            // this.$store.dispatch('SIGNOUT')
+            // this.$router.push("/")
         }
     }
 }

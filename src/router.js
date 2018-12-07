@@ -12,35 +12,35 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/project',
+      path: '/',
       name: 'project',
       component: Project,
       // beforeEnter: AuthGuard
     },
-    // {
-    //   path: '/profile',
-    //   name: 'profile',
-    //   component: Profile,
-    //   beforeEnter: AuthGuard
-    // },
-    // {
-    //   path: '/signin',
-    //   name: 'signin',
-    //   component: Signin
-    // },
-    // {
-    //   path: '/signup',
-    //   name: 'signup',
-    //   component: Signup
-    // },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: Signin
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup
+    },
 
   ],
   // mode:'history'
 })
 
-// function AuthGuard(from, to, next){
-//   if(Store.getters.isUserAuthenticated)
-//   next()
-//   else
-//   next('/project')
-// }
+function AuthGuard(from, to, next){
+  if(Store.getters.isUserAuthenticated)
+  next()
+  else
+  next('/')
+}
