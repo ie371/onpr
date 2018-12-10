@@ -88,17 +88,6 @@
                 </div>
             </div>
 
-            <!-- <div  class="form-group">
-         <div class='col'> 
-            <h6><span class="badge">Ситуационный план</span></h6>
-            <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
-            <b-form-file v-model="file" :state="Boolean(file)" placeholder="Выберите файл..."></b-form-file>
-        </div>
-        </div> -->
-
-
-
-
         </div>
 
 
@@ -1318,6 +1307,9 @@
                 let z1 = ''
                 let zz = ''
                 let bf7 = 1;
+                let bf8 = 0;
+                let v1=0;
+                let v2=0;
                 if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !==
                         '0' && this.isx.qmax !== '0')) {
                     tipu = 'og'
@@ -1335,53 +1327,32 @@
                         z1 = '1';
                         z = z1 + z2
                         zz = 'ЦО'
-                        if (this.check6.y1 || this.mlO) {
-                            bf7 = 1;
-                        } else {
-                            bf7 = 0;
-                        }
-                        if (this.isx.dut1 < 33 && this.isx.filo == '2') {
-                            bf7 = 1
-                        } else {
-                            bf7 = 0
-                        }
-                        // if(this.isx.dut4 <33 && this.isx.filg=='2'){ bf7=1 }else{ bf7=0  }
+                        if (this.check6.y1 || this.mlO) {  v1 = 1; } else {  v1 = 0; }
+                        if (this.isx.dut1 < 33 && this.isx.filo == '2') {  v2 = 1 } else { v2 = 0 }
+                        bf8 = v1 + v2;
+                        if(bf8>0){bf7=1}else{bf7=0}
                         break;
                     case 'g':
                         z1 = '2'
                         z = z1 + z4
                         zz = 'ГВС'
-                        if (this.check6.y3 || this.check6.y4 || this.mlG) {
-                            bf7 = 1;
-                        } else {
-                            bf7 = 0;
-                        }
-                        //  if(this.isx.dut1 <33 && this.isx.filo=='2'){ bf7=1 }else{ bf7=0  }
-                        if (this.isx.dut4 < 33 && this.isx.di4 !== '0' && this.isx.filg == '2') {
-                            bf7 = 1
-                        } else {
-                            bf7 = 0
-                        }
+                        if (this.check6.y3 || this.check6.y4 || this.mlG) { v1 = 1; } else { v1 = 0; }
+                        if ((this.isx.dut3 < 33 && this.isx.di3 !== 0 && this.isx.filg == '2') || (this.isx.dut4 < 33 && this.isx.di4 !== 0 && this.isx.filg == '2')) {
+                            v2 = 1 } else { v2 = 0 }
+                        bf8 = v1 + v2;
+                        if(bf8>0){bf7=1}else{bf7=0}
                         break;
                     case 'og':
                         z1 = '3'
                         z = z1 + z2 + z3 + z4
                         zz = 'ЦО + ГВС'
-                        if (this.check6.y1 || this.check6.y3 || this.check6.y4 || this.mlO || this.mlG) {
-                            bf7 = 1;
-                        } else {
-                            bf7 = 0;
-                        }
-                        if (this.isx.dut1 < 33 && this.isx.filo == '2') {
-                            bf7 = 1
-                        } else {
-                            bf7 = 0
-                        }
-                        if (this.isx.dut4 < 33 && this.isx.di4 !== 0 && this.isx.filg == '2') {
-                            bf7 = 1
-                        } else {
-                            bf7 = 0
-                        }
+
+                        if (this.check6.y1 || this.check6.y3 || this.check6.y4 || this.mlO || this.mlG) { v1 = 1; } else { v1 = 0; }
+
+                        if ((this.isx.dut1 < 33 && this.isx.filo == '2') || (this.isx.dut3 < 33 && this.isx.di3 !== 0 && this.isx.filg == '2') || (this.isx.dut4 < 33 && this.isx.di4 !== 0 && this.isx.filg == '2'))  {  v2 = 1 } else {  v2 = 0 }
+
+                        bf8 = v1 + v2;
+                        if(bf8>0){bf7=1}else{bf7=0}
                         break;
                     default:
                         zz = ''

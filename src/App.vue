@@ -3,11 +3,11 @@
 <header class="main-header">
        <app-header></app-header>
 </header>          
-<div class="content-wrapper">
+<!-- <div class="content-wrapper"> -->
         <div class="box">
             <router-view/>
         </div>  
-  </div>
+  <!-- </div> -->
  </div>
 
 </template>
