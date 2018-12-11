@@ -17,21 +17,18 @@ new Vue({
   store,
   render: h => h(App),
 
-  // mounted() {
-  //   let vm = this
-  //   axios
-  //     .post('./check.php')
-  //     .then(response => {
-  //       // проверка юзера 
-  //       console.log(response.data)
-  //       vm.$store.dispatch('STATE_CHANGED', response.data)
-  //       // if (!response.data){
-  //       //   console.log(response.data)
-  //       // }
-        
-
-
-  //     });
-  // }
+  mounted() {
+    let vm = this
+    axios
+      .post('./check.php')
+      .then(response => {
+        console.log('response.data', response.data)
+        vm.$store.dispatch('STATE_CHANGED', response.data)
+      })
+      .catch(error=> {
+        console.log(error);
+        vm.$store.dispatch('SIGNIN', error)
+      });
+  }
 
 }).$mount('#app')

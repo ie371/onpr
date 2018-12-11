@@ -2,7 +2,7 @@
 export default {
     state: {
         user:{
-            isAuthenticated: true,
+            isAuthenticated: false,
             uid: null
         }
     },
