@@ -22,13 +22,12 @@ new Vue({
     axios
       .post('./check.php')
       .then(response => {
-        console.log('response.data', response.data)
         vm.$store.dispatch('STATE_CHANGED', response.data)
       })
-      .catch(error=> {
-        console.log(error);
-        vm.$store.dispatch('SIGNIN', error)
-      });
+      // .catch(error=> {
+      //   console.log(error);
+      //   vm.$store.dispatch('SIGNIN', error)
+      // });
   }
 
 }).$mount('#app')

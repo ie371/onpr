@@ -62,9 +62,9 @@ export default {
     },
     methods:{
         signout(){
-              window.location ="index.php?exit=1"
+              window.location ='index.php?exit=1'
             // this.$store.dispatch('SIGNOUT')
-            // this.$router.push("/")
+            // this.$router.push("/?exit=1")
         }
     }
 }

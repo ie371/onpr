@@ -5,7 +5,7 @@
 
     <b-row class="justify-content-md-center" align-v="center">
 
-        <b-col align-self="center" lg="5" >
+        <b-col align-self="center" lg="5">
 
               <h1>ВХОД</h1>
 
@@ -97,24 +97,20 @@ export default {
                     data: personForm,
                     url: './check.php',
                 };
-                // console.log('personForm', personForm)
+               
                 axios(options)
                      .then((response)=> {
-                        // console.log('response', response)
-                        console.log('response.data', response.data)
                         this.$store.dispatch('STATE_CHANGED', response.data)
-                        this.text = response.data
+                        // this.text = response.data
                     })
                     .catch(err => console.log(err));
             },
 
             toFormData: function(obj) {
-
                 let formData = new FormData();
                 for(let key in obj) {
                     formData.append(key, obj[key]);
                 }
-                //  console.log('formData', formData.getAll('key'));
                 return formData;
             },
 
