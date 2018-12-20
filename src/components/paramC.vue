@@ -108,6 +108,16 @@
                             v-on:input="proj('t1','qco')" step='0.0000001' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="8">
                     </div>
+
+                     <div class='col-md-6'>
+                        <label class='col-form-label'>Схема теплопотребления</label>
+                        <select class='form-control form-control-sm' v-model="isx.sx_otkr" v-on:change="proj('t1','sx_otkr')"
+                            :disabled="otkrco">
+                            <option value='0'>закрытая</option>
+                            <option value='1'>открытая</option>
+                        </select>
+                    </div>
+
                 </div>
 
                 <div class="form-row">
@@ -374,11 +384,14 @@
 
                 <div class="form-row">
                     <div class='col-md-6'>
-                        <label class='col-form-label'>Схема теплопотребления</label>
-                        <select class='form-control form-control-sm' v-model="isx.sx_otkr" v-on:change="proj('t1','sx_otkr')"
-                            :disabled="otkr">
-                            <option value='0'>закрытая</option>
-                            <option value='1'>открытая</option>
+                        <label class='col-form-label'>Схема теплопотребления ГВС</label>
+                        <select class='form-control form-control-sm'
+                        v-model="isx.sx_gvs_dep"
+                         @change="gvs_to($event.target.value)"
+                         :disabled="otkrgvs"
+                            >
+                            <option value=0>открытая</option>
+                            <option value=1>закрытая</option>
                         </select>
                     </div>
                     <div class='col'>
@@ -999,7 +1012,6 @@
         },
         computed: {
             isUserAuthenticated(){
-                
             return this.$store.getters.isUserAuthenticated
             },
 
@@ -1115,7 +1127,18 @@
                     return this.isx.dut2;
                 }
             },
-            otkr() {
+            otkrco() {
+                if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !=='0' && this.isx.qmax !== '0')) {
+                   if(this.isx.sx_gvs_dep==='1') {
+                       this.$store.dispatch('actdisotkr', 0)
+                       return true
+                       }
+                    return false
+                } else {
+                    return true
+                }
+            },
+            otkrgvs() {
                 if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !==
                         '0' && this.isx.qmax !== '0')) {
                     return false
@@ -1419,7 +1442,10 @@
                     this.fg = false
                 }
             },
-
+            gvs_to(to) {
+                // console.log(to)
+                    this.$store.dispatch('actGVSto', to)
+            },
             showModal() {
                 this.$refs.myModalRef.show()
             },
@@ -1466,7 +1492,7 @@
                         break;
                 }
 
-                if (this.otkr) {
+                if (this.otkrco) {
                     this.$store.dispatch('actdisotkr', 0)
                 }
                 this.$store.dispatch('tupik', 0);

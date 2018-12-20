@@ -11,6 +11,7 @@ export default {
 			sx_ot:0,
 			sx_otkr:0,
 			sx_gvs:0,
+			sx_gvs_dep:0,
 			qco:null,
 			qmax:null,
 			qgvssr:null,
@@ -46,7 +47,8 @@ export default {
 			selReg:'0',
 			mess:[],
 			indexnas:'',
-			onlineKP:true
+			onlineKP:true,
+
 		},
 		sbKP:{
 			tipSB:0,
@@ -95,7 +97,7 @@ export default {
 		actrescalc(context, ek){ context.commit('murescalc', ek) },
 		actPodp(context, s){ context.commit('muPodp', s) },
 		actOKP(context, s){ context.commit('muOKP', s) },
-		
+		actGVSto(context, s){ context.commit('muGVSto', s) },
 	},
 
 	mutations:{
@@ -105,12 +107,26 @@ export default {
 			}
 			state.isxcalc.pr_ot = payload;
 		},
+
 		mu_pr_gvs(state, payload){
 			if(payload===0){
 				state.isxcalc.qmax = null;
 				state.isxcalc.qgvssr = null;
 			}
 			state.isxcalc.pr_gvs = payload;
+		},
+		muGVSto(state, payload){
+			// console.log(payload)
+			if(payload==='0'){
+				// console.log(payload)
+				state.isxcalc.t3 = 60;
+				state.isxcalc.t4 = 50;
+			} else {
+				// console.log('payload',payload)
+				state.isxcalc.t3 = 70;
+				state.isxcalc.t4 = 40;
+			}
+			
 		},
 		mu_ot_null(state, payload){
 			state.rescalc.OT = {};
