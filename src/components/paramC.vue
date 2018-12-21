@@ -339,14 +339,14 @@
             <div class='form-group'>
 
                 <div class="form-row">
-                    <div class='col'>
+                    <div class='col-md-3'>
                         <label class='col-form-label'>Qmax</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qmax' step='0.0000001'
                             v-model="isx.qmax" v-on:input="proj('t3','qmax')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="8" v-b-popover.hover.bottomright.html="Qmax">
                     </div>
 
-                    <div class='col'>
+                    <div class='col-md-3'>
                         <label class='col-form-label'>Qсред</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qср' step='0.0000001'
                             v-model="isx.qgvssr" v-on:input="proj('t4','qgvssr')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -355,10 +355,18 @@
                     </div>
 
                     <div class='col'>
-                        <label class='col-form-label'>Кчн</label>
-                        <input type='number' class='form-control form-control-sm' placeholder='Кчн' step='0.1' v-model="isx.kch"
-                            v-on:input="cre" v-b-popover.hover.bottomright.html="KCHN">
+                        <label class='col-form-label'>Схема теплопотребления</label>
+                        <select class='form-control form-control-sm'
+                        v-model="isx.sx_gvs_dep"
+                         @change="gvs_to($event.target.value)"
+                         :disabled="otkrgvs"
+                            >
+                            <option value=0>открытая</option>
+                            <option value=1>закрытая 1 ступ</option>
+                            <option value=2>закрытая 2-х ступ</option>
+                        </select>
                     </div>
+
                 </div>
 
                 <div class="form-row">
@@ -383,47 +391,78 @@
 
 
                 <div class="form-row">
-                    <div class='col-md-6'>
-                        <label class='col-form-label'>Схема теплопотребления ГВС</label>
-                        <select class='form-control form-control-sm'
-                        v-model="isx.sx_gvs_dep"
-                         @change="gvs_to($event.target.value)"
-                         :disabled="otkrgvs"
-                            >
-                            <option value=0>открытая</option>
-                            <option value=1>закрытая</option>
-                        </select>
-                    </div>
+
+
                     <div class='col'>
-                        <label class='col-form-label'>Тхв лето, °C</label>
+                        <label class='col-form-label'>Кчн</label>
+                        <input type='number' class='form-control form-control-sm' placeholder='Кчн' step='0.1' v-model="isx.kch"
+                            v-on:input="cre" v-b-popover.hover.bottomright.html="KCHN"
+                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            maxlength="4">
+                    </div>
+
+                    <div class='col'>
+                        <label class='col-form-label'>Тхвл</label>
                         <input type='text' class='form-control form-control-sm' v-model="isx.txvL" value='15'
-                            v-on:input="proj('t3','txvL')" v-b-popover.hover.bottomright="'Температура хол. воды (лето - 15 С)'">
+                            v-on:input="proj('t3','txvL')" v-b-popover.hover.bottomright="'Температура хол. воды (лето - 15 °С)'">
+                    </div>
+
+                    <div class='col'>
+                        <label class='col-form-label'>Тхвз</label>
+                        <input type='text' class='form-control form-control-sm' v-model="isx.txvZ" value='5' v-on:input="proj('t3','txvZ')"
+                            v-b-popover.hover.bottomright="'Температура хол. воды (зима - 5 °С)'">
+                    </div>
+
+                    <div class='col'>
+                        <label class='col-form-label'>Кнп</label>
+                        <input type='number' class='form-control form-control-sm' step='0.01'
+                        v-model="isx.knp"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            maxlength="4"    
+                        v-b-popover.hover.bottomright="'коэффициент, учитывающий уменьшение расхода тепла в трубопроводах ГВС в летний период'">
+                    </div>
+
+                    <div class='col'>
+                        <label class='col-form-label'>Ктп</label>
+                        <input type='number' class='form-control form-control-sm' step='0.01' 
+                         v-model="isx.ktp"
+                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            maxlength="4"    
+                        v-b-popover.hover.bottomright="'коэффициент, учитывающий потери тепла в трубопроводах '">
 
                     </div>
                     <div class='col'>
-                        <label class='col-form-label'>Тхв зима, °C</label>
-                        <input type='text' class='form-control form-control-sm' v-model="isx.txvZ" value='5' v-on:input="proj('t3','txvZ')"
-                            v-b-popover.hover.bottomright="'Температура хол. воды (зима - 5 С)'">
+                        <label class='col-form-label'>&beta;</label>
+                        <input type='number' class='form-control form-control-sm' step='0.01' 
+                         v-model="isx.beta"
+                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            maxlength="4"    
+                        v-b-popover.hover.bottomright="'коэффициент запаса на разрегулировку стояков ГВС'">
 
                     </div>
-
+                    
                 </div>
-
 
             </div>
 
             <div class='form-group'>
 
                 <div class="form-row mb-2">
-                    <div class='col'>
+
+                    <div class='col'>     
                         <label class='col-form-label'></label>
                     </div>
+
                     <div class='col text-maroon text-s'>
                         Подача Т3
                     </div>
                     <div class='col text-blue text-s'>
                         Обратка Т4
                     </div>
+
+
+
+
                 </div>
 
                 <div class="form-row mb-2">
@@ -1011,8 +1050,9 @@
             }
         },
         computed: {
+
             isUserAuthenticated(){
-            return this.$store.getters.isUserAuthenticated
+                return this.$store.getters.isUserAuthenticated
             },
 
             isx() {
@@ -1222,7 +1262,7 @@
                 return 'диап. Ду ИМ для модифиц. линий: 32 - 80'
             },
             diptr() {
-                let du = [15, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300];
+                let du = [15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300];
                 let duu1 = [];
                 let dd1 = [];
                 let duu9 = [];
@@ -1333,6 +1373,7 @@
                 let bf8 = 0;
                 let v1=0;
                 let v2=0;
+                let v3=0;
                 if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !==
                         '0' && this.isx.qmax !== '0')) {
                     tipu = 'og'
@@ -1352,6 +1393,7 @@
                         zz = 'ЦО'
                         if (this.check6.y1 || this.mlO) {  v1 = 1; } else {  v1 = 0; }
                         if (this.isx.dut1 < 33 && this.isx.filo == '2') {  v2 = 1 } else { v2 = 0 }
+
                         bf8 = v1 + v2;
                         if(bf8>0){bf7=1}else{bf7=0}
                         break;
@@ -1360,9 +1402,10 @@
                         z = z1 + z4
                         zz = 'ГВС'
                         if (this.check6.y3 || this.check6.y4 || this.mlG) { v1 = 1; } else { v1 = 0; }
-                        if ((this.isx.dut3 < 33 && this.isx.di3 !== 0 && this.isx.filg == '2') || (this.isx.dut4 < 33 && this.isx.di4 !== 0 && this.isx.filg == '2')) {
+                        if ((this.isx.dut3 < 33 && this.isx.di3 > 0 && this.isx.filg == '2') || (this.isx.dut4 < 33 && this.isx.di4 > 0 && this.isx.filg == '2')) {
                             v2 = 1 } else { v2 = 0 }
-                        bf8 = v1 + v2;
+                        if (this.isx.di4 > 0 && (this.isx.tipIMg3 !== this.isx.tipIMg4)) {  v3 = 1; } else {  v3 = 0; }    
+                        bf8 = v1 + v2 + v3;
                         if(bf8>0){bf7=1}else{bf7=0}
                         break;
                     case 'og':
@@ -1372,9 +1415,10 @@
 
                         if (this.check6.y1 || this.check6.y3 || this.check6.y4 || this.mlO || this.mlG) { v1 = 1; } else { v1 = 0; }
 
-                        if ((this.isx.dut1 < 33 && this.isx.filo == '2') || (this.isx.dut3 < 33 && this.isx.di3 !== 0 && this.isx.filg == '2') || (this.isx.dut4 < 33 && this.isx.di4 !== 0 && this.isx.filg == '2'))  {  v2 = 1 } else {  v2 = 0 }
+                        if ((this.isx.dut1 < 33 && this.isx.filo == '2') || (this.isx.dut3 < 33 && this.isx.di3 > 0 && this.isx.filg == '2') || (this.isx.dut4 < 33 && this.isx.di4 > 0 && this.isx.filg == '2'))  {  v2 = 1 } else {  v2 = 0 }
 
-                        bf8 = v1 + v2;
+                        if (this.isx.di4 > 0 && (this.isx.tipIMg3 !== this.isx.tipIMg4)) {  v3 = 1; } else {  v3 = 0; }    
+                        bf8 = v1 + v2 + v3;
                         if(bf8>0){bf7=1}else{bf7=0}
                         break;
                     default:
@@ -1421,7 +1465,7 @@
                 return 'Qср = Qмакс / Kчн'
             },
             KCHN() {
-                return 'Kчн = Qмакс / Qср <br> Зависит от типа здания'
+                return 'коэффициент часовой неравномерности <br> Kчн = Qмакс / Qср'
             },
             rasshir() {
                 return 'Данный параметр необходим для подбора датчиков температуры.<br> При Ду ИМ менее 50, датчики устанавливаются в расширение Ду65.'
@@ -1443,7 +1487,7 @@
                 }
             },
             gvs_to(to) {
-                // console.log(to)
+
                     this.$store.dispatch('actGVSto', to)
             },
             showModal() {
@@ -1619,7 +1663,7 @@
 
                 switch (d) {
                     case 't1':
-                        if (+this.isx.di1 !== 0) {
+                        if (+this.isx.di1 > 0) {
                             let ch = this.dipTR(this.isx.di1, this.isx.dut1)
                             if (ch) {
                                 this.$store.dispatch({
@@ -1652,7 +1696,7 @@
                         }
                         break;
                     case 't3':
-                        if (+this.isx.di3 !== 0) {
+                        if (+this.isx.di3 > 0) {
                             let ch = this.dipTR(this.isx.di3, this.isx.dut3)
                             if (ch) {
                                 this.$store.dispatch({
@@ -1687,7 +1731,7 @@
 
                         break;
                     case 't4':
-                        if (+this.isx.di4 !== 0) {
+                        if (+this.isx.di4 > 0) {
                             let ch = this.dipTR(this.isx.di4, this.isx.dut4)
                             if (ch) {
                                 this.$store.dispatch({
@@ -1722,7 +1766,7 @@
 
                         break;
                     case 't9':
-                        if (+this.isx.di9 !== 0) {
+                        if (+this.isx.di9 > 0) {
                             let ch = this.dipTR(this.isx.di9, this.isx.dut9)
                             if (ch) {
                                 this.$store.dispatch({
@@ -1767,7 +1811,7 @@
             },
 
             dipTR(du_im, du_tr) {
-                let du = [15, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300];
+                let du = [15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300];
                 let k1 = du.indexOf(+du_im);
                 let k11 = du.indexOf(+du_tr);
                 if (!du_tr || k1 > k11 || k11 - k1 > 3) {

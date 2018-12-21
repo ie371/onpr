@@ -71,38 +71,17 @@ function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen ) {
     var trm = 1;    
     var man = 1; 
 
-
-    // console.log('t===='+t)
-    // console.log('du_im===='+du_im)
-    // console.log('du_tr==='+du_tr)
-    // console.log('Gm===='+Gm)
-    // console.log('Gg===='+Gg)
-    // console.log('tg==='+tg)
-    // console.log('pg =='+pg)
-    // console.log('otpen =='+otpen)
-
-
     var PL = ro(t,p);
 
     if(otpen == 0) { var Gv = Gm*1000 / PL;
-
                     } else { 
-
                         var PLo = ro(t,p);
                         var Gvo = Gm*1000 / PLo;
                         var PLg = ro(tg,pg);
                         var Gvg = Gg*1000 / PLg;
                         var Gv = Gvo + Gvg;
-                        // console.log('PLo =='+PLo)
-                        // console.log('Gvo =='+Gvo)
-                        // console.log('PLg =='+PLg)
-                        // console.log('Gvg =='+Gvg)
-                        // console.log('Gv =='+Gv)
-
             }
 
-    // if(R){var Gv = R }        
-    // console.log('Gv =='+Gv)
     var a1 = Math.pow(du_im*0.001, 2)/4;    
     var V = (Gv*1/((3.14*a1))/3600).toFixed(2);
     var n = 0.00000178/(1+0.0337*t+0.000221*Math.pow(t, 2));    
@@ -289,11 +268,7 @@ function pr(isx, sk, peres, R) {
                     var objot = {} 
                 }
 
-
-
-
-
-                
+  
         if( isx.qmax && isx.qmax!='' && isx.qmax!=0 ){
 
                 var ngr = isx.qmax;
@@ -326,7 +301,7 @@ function pr(isx, sk, peres, R) {
                     var duTr4 = DUim4;
                 } 
                 
-                if(DUim4 !==0){
+                if(DUim4 >0){
                 var gdr4 = gidr( t4, DUim4, duTr4, Gm4, p4,  tipL, null, null, null  );
                 } else {
                     var gdr4={du_im:0}

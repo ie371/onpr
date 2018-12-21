@@ -16,6 +16,9 @@ export default {
 			qmax:null,
 			qgvssr:null,
 			kch:2.2,
+			knp:0.8,
+			ktp:0.25,
+			beta:1.3,
 			t1:95,
 			t2:70,
 			t3:60,
@@ -275,6 +278,7 @@ export default {
 		mutupik(state,payload){ 
 			state.isxcalc.sx_gvs = payload;
 			if(payload===1){
+				console.log('tupik')
 			state.rescalc.gdr4 = { Gv:'',  V:'', du_im:0 };
 			state.isxcalc.dut4 = null;} 
 		
