@@ -22,7 +22,7 @@
             <div class="form-group">
                 <div class='col'>
                     <h6><span class="badge">Платы расширения</span></h6>
-                    <multiselect v-model="value" :options="options" :multiple="true" track-by="lib" :custom-label="customLabel"
+                    <multiselect v-model="plats" :options="options" :multiple="true" track-by="lib" :custom-label="customLabel"
                         placeholder="Платы расширения" :option-height="34">
                     </multiselect>
                 </div>
@@ -236,9 +236,9 @@
                         <label class='col-form-label'>Скорость, м/с</label>
                     </div>
                     <div class='col'>
-                        <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr1.V" :class="{'red-error' : !speed1 }"
+                        <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr1.V" :class="{'red-error' : !speed.v0 }"
                             id='V1' readonly>
-                        <b-popover :disabled="speed1" :show="!speed1" triggers="hover" target="V1"> {{maxSpeed}}</b-popover>
+                        <b-popover :disabled="speed.v0" :show="!speed.v0" triggers="hover" target="V1"> {{maxSpeed}}</b-popover>
 
 
 
@@ -310,10 +310,10 @@
                         </div>
                         <div class='col'>
                             <label class='col-form-label'>Скорость</label>
-                            <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr9.V" :class="{'red-error' : !speed9 }"
+                            <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr9.V" :class="{'red-error' : !speed.v1 }"
                                 id='V9' readonly>
                         </div>
-                        <b-popover :disabled="speed9" triggers="hover focus" target="V9"> {{maxSpeed}}</b-popover>
+                        <b-popover :disabled="speed.v1" triggers="hover focus" target="V9"> {{maxSpeed}}</b-popover>
                         <div class='col'>
                             <label class='col-form-label'>Ду Т94</label>
                             <select class='form-control form-control-sm' v-model="isx.dut9" v-on:change="change_du('t9','peres')">
@@ -535,15 +535,15 @@
                         <label class='col-form-label'>Скорость, м/с</label>
                     </div>
                     <div class='col'>
-                        <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr3.V" :class="{'red-error' : !speed3 }"
+                        <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr3.V" :class="{'red-error' : !speed.v2 }"
                             id='V3' readonly>
                     </div>
-                    <b-popover :disabled="speed3" :show="!speed3" triggers="hover" target="V3"> {{maxSpeed}}</b-popover>
+                    <b-popover :disabled="speed.v2" :show="!speed.v2" triggers="hover" target="V3"> {{maxSpeed}}</b-popover>
                     <div class='col'>
-                        <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr4.V" :class="{'red-error' : !speed4 }"
+                        <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr4.V" :class="{'red-error' : !speed.v3 }"
                             id='V4' readonly>
                     </div>
-                    <b-popover :disabled="speed4" :show="!speed4" triggers="hover" target="V4"> {{maxSpeed}}</b-popover>
+                    <b-popover :disabled="speed.v3" :show="!speed.v3" triggers="hover" target="V4"> {{maxSpeed}}</b-popover>
                 </div>
 
                 <div class="form-row mb-2">
@@ -618,6 +618,29 @@
                     </div>
                 </b-row>
             </div>
+            <div class='form-group'>
+                <b-row>
+                    <div class='col-md-12' style="font-size:0.7em;">
+
+                    Основное оборудование - {{plats.length+1}}<br>
+                    Узел учета ЦО:
+                    <ul id="example-1">
+                        <li v-for="(item, index) in pozOt.arSpOt" :key="index">
+                            поз. - {{ item }}, наим: {{index}} 
+                           
+                        </li>
+                        </ul>
+                        Узел учета ГВС:
+                    <ul id="example-1">
+                        <li v-for="(item, index) in pozOt.arSpGvs" :key="index">
+                            поз. - {{ item }} - {{index}} 
+                           
+                        </li>
+                        </ul>
+                        
+                    </div>
+                </b-row>
+            </div>
 
             <div class='d-flex justify-content-center'>
 
@@ -674,6 +697,8 @@
                     </b-modal>
 
                     <input type="hidden" name="A" v-model="php">
+                    <input type="hidden" name="B" v-model="phpS">
+                    
                 </div>
             </div>
         </div>
@@ -693,7 +718,7 @@
         data() {
             return {
 
-                value: [{
+                plats: [{
                         plt: 'GSM-модем',
                         lib: 'gsm'
                     },
@@ -702,7 +727,44 @@
                         lib: 'usba'
                     }
                 ],
-
+                pozOtisx: [
+                    { id:0, name:"Изм.модуль", col:2 },
+                    { id:1, name:"Изм.модуль подпитки", col:0 },
+                    { id:2, name:"Компл. термометров", col:1 },
+                    { id:3, name:"Датчик давления", col:2 },
+                    { id:4, name:"Кран шаровой", col:1 },
+                    { id:5, name:"Кран шаровой ИПТ", col:0 },
+                    { id:6, name:"Кран шаровой подпитки", col:0 },
+                    { id:7, name:"Фильтр/Грязевик", col:0 },
+                    { id:8, name:"Фильтр подпитки", col:0 },
+                    { id:9, name:"Кран 3-х ходовой", col:6 },
+                    { id:10, name:"Манометр", col:6 },
+                    { id:11, name:"Термометр", col:2 },
+                    { id:12, name:"Кран шаровой муфт. Ду15", col:2 },
+                    { id:13, name:"Кран шаровой муфт. Ду25", col:0 },
+                    { id:14, name:"Вставка габаритная основная", col:1 },
+                    { id:15, name:"Вставка габаритная подпитка", col:0 },
+                ],
+                pozGVSisx: [
+                    { id:0, name:"Изм.модуль T3", col:1 },
+                    { id:1, name:"Изм.модуль T4", col:0 },
+                    { id:2, name:"Компл. термометров/Термометр сопротивления", col:1 },
+                    { id:3, name:"Датчик давления", col:2 },
+                    { id:4, name:"Кран шаровой T3 (ИП)", col:1 },
+                    { id:5, name:"Кран шаровой T3 (ИПТ)", col:0 },
+                    { id:6, name:"Кран шаровой T4 (ИП)", col:1 },
+                    { id:7, name:"Кран шаровой T4 (ИПТ)", col:0 },
+                    { id:8, name:"Обратный клапан", col:0 },
+                    { id:9, name:"Фильтр/Грязевик T3", col:0 },
+                    { id:10, name:"Фильтр/Грязевик T4", col:0 },
+                    { id:11, name:"Кран 3-х ходовой", col:6 },
+                    { id:12, name:"Манометр", col:6 },
+                    { id:13, name:"Термометр", col:2 },
+                    { id:14, name:"Кран шаровой муфт. Ду15", col:2 },
+                    { id:15, name:"Кран шаровой муфт. Ду25", col:0 },
+                    { id:16, name:"Вставка габаритная Т3", col:1 },
+                    { id:17, name:"Вставка габаритная Т4", col:0 },
+                ],
                 options: [{
                         plt: 'GSM-модем',
                         lib: 'gsm'
@@ -1051,6 +1113,116 @@
         },
         computed: {
 
+            pozOt(){
+                let i = this.plats.length + 2;
+                let arSpOt = {};
+                let arSpGvs = {};
+                    if(this.isx.pr_ot !==0){
+                        if(this.isx.sx_ot > 0){
+                            this.pozOtisx[1].col = 1
+                            this.pozOtisx[6].col = 1
+                            this.pozOtisx[15].col = 1
+                            if(this.isx.filp > 0){this.pozOtisx[8].col = 1}else{this.pozOtisx[8].col = 0}
+                        } else {
+                        this.pozOtisx[1].col = 0
+                            this.pozOtisx[6].col = 0
+                            this.pozOtisx[15].col = 0
+                        }
+                        if(this.isx.filo > 0){this.pozOtisx[7].col = 1}else{this.pozOtisx[7].col = 0}
+
+                        if(this.isx.filo > 1){ this.pozOtisx[13].col = 1
+                        }else {this.pozOtisx[13].col = 0}
+
+                        if(this.isx.tipLo === 'ml'){this.pozOtisx[5].col = 1}else{this.pozOtisx[5].col = 0}
+
+                        
+                        this.pozOtisx.forEach(function (el) {
+                            if (el.col > 0) {
+                                    arSpOt[el.name] = i
+                                    i++;
+                                } 
+                            });
+                    }
+
+                    if(this.isx.pr_gvs !==0){
+                    //с циркуляцией
+                        if(this.isx.sx_gvs < 1){
+                                //  модули
+                                if( +this.isx.di3!==+this.isx.di4 ){
+                                     this.pozGVSisx[1].col=1
+                                     this.pozGVSisx[17].col=1
+                                     }
+                                 else{
+                                     this.pozGVSisx[1].col=0
+                                     this.pozGVSisx[17].col=0
+                                     }
+                                // краны
+                                if(this.isx.tipLg === 'ml'){
+                                    this.pozGVSisx[8].col = 0
+                                    // console.log('ml')
+                                    if(+this.isx.dut3!==+this.isx.dut4){
+                                        // console.log('ml<><><><><')
+                                         this.pozGVSisx[5].col = 1
+                                         this.pozGVSisx[6].col = 1
+                                         this.pozGVSisx[7].col = 1
+                                    } else {
+                                        // console.log('ml===========')
+                                        this.pozGVSisx[5].col = 0
+                                        this.pozGVSisx[7].col = 0
+                                    }
+                                }else{
+                                    this.pozGVSisx[8].col = 1
+                                    //  console.log('kl')
+                                    if(+this.isx.dut3!==+this.isx.dut4){
+                                         this.pozGVSisx[6].col = 1
+                                        //  this.pozOtisx[7].col = 1
+                                    } else {
+                                        this.pozGVSisx[6].col = 0
+                                        // this.pozOtisx[7].col = 0
+                                    }
+
+                                    }
+
+                                // фильтры
+
+                                    if(this.isx.filg > 0){
+                                    this.pozGVSisx[9].col = 1
+                                    if(+this.isx.dut3!==+this.isx.dut4){this.pozGVSisx[10].col = 1}
+                                    else{this.pozGVSisx[10].col = 0}
+                                    
+                                    }else{
+                                        this.pozGVSisx[9].col = 0
+                                        this.pozGVSisx[10].col = 0
+                                        }
+                                if(this.isx.filg > 1){ this.pozGVSisx[15].col = 1 } else {this.pozGVSisx[15].col = 0} 
+
+                                 
+                        } else {
+                            // console.log('tupik')
+                            this.pozGVSisx[1].col=0
+                            if(this.isx.tipLg === 'ml'){this.pozGVSisx[5].col=1}else{this.pozGVSisx[5].col=0}
+                            this.pozGVSisx[6].col=0
+                            this.pozGVSisx[7].col = 0
+                            this.pozGVSisx[8].col = 0
+                            if(this.isx.filg > 0){this.pozGVSisx[9].col = 1}else{this.pozGVSisx[9].col = 0}
+                             if(this.isx.filg > 1){ this.pozGVSisx[15].col = 1 } else {this.pozGVSisx[15].col = 0} 
+                            this.pozGVSisx[10].col = 0
+                            this.pozGVSisx[13].col = 0
+                            this.pozGVSisx[17].col=0
+
+                        }
+                       
+                        this.pozGVSisx.forEach(function (el) {
+                            if (el.col > 0) {
+                                    arSpGvs[el.name] = i
+                                    i++;
+                                } 
+                            });
+                    }
+
+               return {arSpOt,arSpGvs}
+            },
+
             isUserAuthenticated(){
                 return this.$store.getters.isUserAuthenticated
             },
@@ -1066,10 +1238,15 @@
             },
             php() {
                 let plll = {
-                    plt: this.value
+                    plt: this.plats
                 }
                 let ppp = JSON.stringify(Object.assign({}, this.isx, this.rescalc, this.sb, plll));
                 return ppp
+            },
+            phpS() {
+                
+                let sss = JSON.stringify(Object.assign({}, this.pozOt.arSpOt,this.pozOt.arSpGvs ))
+                return sss
             },
 
             optionso() {
@@ -1199,9 +1376,9 @@
                 }
             },
             mlG() {
-                if (this.isx.tipLg == 'ml' && (this.isx.di3 !== 0 || this.isx.di4 !== 0)) {
-                    if (((this.isx.di3 > 80 || this.isx.di3 < 32) && this.isx.di3 !== 0) || ((this.isx.di4 > 80 || this
-                            .isx.di4 < 32) && this.isx.di4 !== 0)) {
+                if (this.isx.tipLg == 'ml' && (this.isx.di3 > 0 || this.isx.di4 > 0)) {
+                    if (((this.isx.di3 > 80 || this.isx.di3 < 32) && this.isx.di3 > 0) || ((this.isx.di4 > 80 || this
+                            .isx.di4 < 32) && this.isx.di4 > 0)) {
                         return true;
                     } else {
                         return false;
@@ -1224,33 +1401,22 @@
                     return false;
                 }
             },
-            speed1() {
-                if (+this.rescalc.gdr1.V > 1.5) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
-            speed9() {
-                if (+this.rescalc.gdr9.V > 1.5) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
-            speed3() {
-                if (+this.rescalc.gdr3.V > 1.5) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
-            speed4() {
-                if (+this.rescalc.gdr4.V > 1.5) {
-                    return false;
-                } else {
-                    return true;
-                }
+            speed() {
+                let are = {};
+                let sp =[
+                    this.rescalc.gdr1.V,
+                    this.rescalc.gdr9.V,
+                    this.rescalc.gdr3.V,
+                    this.rescalc.gdr4.V
+                ]
+                sp.forEach(function (el, i) {
+                    if (el > 1.5) {
+                            are['v'+i] = false
+                        } else {
+                            are['v'+i] = true
+                        }
+                    });
+                return are    
             },
             maxSpeed() {
                 return "Скорость потока в ИМ больше 1,5 м/с"
@@ -1435,8 +1601,6 @@
                     bf7
                 }
             },
-
-
         },
         
         methods: {

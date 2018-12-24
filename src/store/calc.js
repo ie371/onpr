@@ -278,7 +278,7 @@ export default {
 		mutupik(state,payload){ 
 			state.isxcalc.sx_gvs = payload;
 			if(payload===1){
-				console.log('tupik')
+				// console.log('tupik')
 			state.rescalc.gdr4 = { Gv:'',  V:'', du_im:0 };
 			state.isxcalc.dut4 = null;} 
 		
