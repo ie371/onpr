@@ -91,10 +91,7 @@ export default {
 		filO(context, fo){ context.commit('mufilO', fo) },
 		filG(context, fg){ context.commit('mufilG', fg) },
 		truba(context, tr){ context.commit('mutruba', tr) },
-
-
 		actpeR(context, W ){context.commit('mupeR', W)},
-
 		act_ot_null(context, dtr ){context.commit('mu_ot_null', dtr)},
 		act_gvs_null(context, dtr ){context.commit('mu_gvs_null', dtr)},
 		actrescalc(context, ek){ context.commit('murescalc', ek) },

@@ -358,7 +358,7 @@
                         <label class='col-form-label'>Схема теплопотребления</label>
                         <select class='form-control form-control-sm'
                         v-model="isx.sx_gvs_dep"
-                         @change="gvs_to($event.target.value)"
+                         @change="proj('','itp'+$event.target.value)"
                          :disabled="otkrgvs"
                             >
                             <option value=0>открытая</option>
@@ -373,7 +373,7 @@
                     <div class='col'>
                         <label class='col-form-label'>Тип изм. линии</label>
                         <select class='form-control form-control-sm' v-model="isx.tipLg" :class="{'red-error' : mlG }"
-                            @change="mmg" id='mlg'>
+                            @change="mmg" id='mlg' :disabled="stup">
                             <option value='kl'>Классическая</option>
                             <option value='ml'>Модифицированная</option>
                         </select>
@@ -381,7 +381,7 @@
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
-                        <select class='form-control form-control-sm' id="fig" v-model="isx.filg" :disabled="fg" :class="{'red-error' : grzG }">
+                        <select class='form-control form-control-sm' id="fig" v-model="isx.filg" :disabled="fg||stup" :class="{'red-error' : grzG }">
                             <option value='0'>без фильтра</option>
                             <option value='1'>сетчатый фильтр</option>
                             <option value='2'>грязевик</option>
@@ -416,7 +416,7 @@
                     <div class='col'>
                         <label class='col-form-label'>Кнп</label>
                         <input type='number' class='form-control form-control-sm' step='0.01'
-                        v-model="isx.knp"
+                        v-model="isx.knp" v-on:input="proj('t3','txvL')"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="4"    
                         v-b-popover.hover.bottomright="'коэффициент, учитывающий уменьшение расхода тепла в трубопроводах ГВС в летний период'">
@@ -425,7 +425,7 @@
                     <div class='col'>
                         <label class='col-form-label'>Ктп</label>
                         <input type='number' class='form-control form-control-sm' step='0.01' 
-                         v-model="isx.ktp"
+                         v-model="isx.ktp" v-on:input="proj('t3','txvL')"
                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="4"    
                         v-b-popover.hover.bottomright="'коэффициент, учитывающий потери тепла в трубопроводах '">
@@ -434,11 +434,10 @@
                     <div class='col'>
                         <label class='col-form-label'>&beta;</label>
                         <input type='number' class='form-control form-control-sm' step='0.01' 
-                         v-model="isx.beta"
+                         v-model="isx.beta" v-on:input="proj('t3','txvL')"
                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="4"    
-                        v-b-popover.hover.bottomright="'коэффициент запаса на разрегулировку стояков ГВС'">
-
+                        v-b-popover.hover.bottomright="'коэффициент запаса на разрегулировку стояков ГВС'" >
                     </div>
                     
                 </div>
@@ -484,11 +483,12 @@
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='50' v-model="isx.p3"
-                            v-on:input="proj('t3','p3')">
+                            v-on:input="proj('t3','p3')"
+                           :disabled="stup" >
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='40' v-model="isx.p4"
-                            v-on:input="proj('t4','p4')">
+                            v-on:input="proj('t4','p4')" :disabled="stup">
                     </div>
                 </div>
 
@@ -499,7 +499,7 @@
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' v-model="rescalc.gdr3.Gv" v-on:input="rash('t3')"
                             step='0.001' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                            maxlength="5">
+                            maxlength="5" :disabled="stup">
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' v-model="rescalc.gdr4.Gv" disabled>
@@ -514,15 +514,15 @@
                     </div>
 
                     <div class='col'>
-                        <select class='form-control form-control-sm' v-model="isx.di3" v-on:change="change_du('t3','peres')">
-                            <option v-for="(option, index) in optionso" v-bind:value="option.value" :key="index">
+                        <select class='form-control form-control-sm' v-model="isx.di3" v-on:change="change_du('t3','peres')" :disabled="stup">
+                            <option v-for="(option, index) in optionso" v-bind:value="option.value" :key="index" >
                                 {{ option.text }}
                             </option>
                         </select>
                     </div>
                     <div class='col'>
                         <select class='form-control form-control-sm' v-model="isx.di4" v-on:change="change_du('t4','peres')"
-                            :disabled="i4">
+                            :disabled="i4||stup" >
                             <option v-for="(option, index) in optionso" v-bind:value="option.value" :key="index">
                                 {{ option.text }}
                             </option>
@@ -553,7 +553,7 @@
                     </div>
                     <div class='col'>
                         <select class='form-control form-control-sm' v-model="isx.tipIMg3" :class="{'red-error' : check6.y3 }"
-                            id='im3'>
+                            id='im3' :disabled="stup">
                             <option value='6'>И6</option>
                             <option value='5'>К5</option>
                         </select>
@@ -561,7 +561,7 @@
                     </div>
                     <div class='col'>
                         <select class='form-control form-control-sm' v-model="isx.tipIMg4" :class="{'red-error' : check6.y4 }"
-                            id='im4'>
+                            id='im4' :disabled="stup">
                             <option value='6'>И6</option>
                             <option value='5'>К5</option>
                         </select>
@@ -574,7 +574,7 @@
                     </div>
 
                     <div class='col'>
-                        <select class='form-control form-control-sm' v-model="isx.dut3" v-on:change="change_du('t3','peres')">
+                        <select class='form-control form-control-sm' v-model="isx.dut3" v-on:change="change_du('t3','peres')" :disabled="stup">
                             <option v-for="(option,index) in diptr.duu3" v-bind:value="option.value" :key="index">
                                 {{ option.value }}
                             </option>
@@ -582,7 +582,7 @@
                     </div>
 
                     <div class='col'>
-                        <select class='form-control form-control-sm' v-model="isx.dut4" v-on:change="change_du('t4','peres')">
+                        <select class='form-control form-control-sm' v-model="isx.dut4" v-on:change="change_du('t4','peres')" :disabled="stup">
                             <option v-for="(option,index) in diptr.duu4" v-bind:value="option.value" :key="index">
                                 {{ option.value }}
                             </option>
@@ -622,7 +622,7 @@
                 <b-row>
                     <div class='col-md-12' style="font-size:0.7em;">
 
-                    Основное оборудование - {{plats.length+1}}<br>
+                    <!-- Основное оборудование - {{plats.length+1}}<br>
                     Узел учета ЦО:
                     <ul id="example-1">
                         <li v-for="(item, index) in pozOt.arSpOt" :key="index">
@@ -636,7 +636,20 @@
                             поз. - {{ item }} - {{index}} 
                            
                         </li>
-                        </ul>
+                    </ul> -->
+                    <!-- <ul id="example-1">
+                        <li v-for="(item, index) in rescalc.OT" :key="index">
+                            {{ item }} - {{index}} 
+                           
+                        </li>
+                    </ul>
+                    
+                    <ul id="example-2">
+                        <li v-for="(item, index) in rescalc.Ggvs" :key="index">
+                             {{index}}: {{ item }}
+                           
+                        </li>
+                    </ul> -->
                         
                     </div>
                 </b-row>
@@ -1109,6 +1122,7 @@
                 top: '',
                 bottom: 'Настоящее предложение не является офертой (в соответствии со ст.435 ГК РФ) и не влечет за собой обязательств ООО «Интелприбор» по заключению Договора на условиях настоящего предложения. Размер предоставляемой скидки и условия оплаты уточняются в зависимости от номенклатуры закупаемого оборудования и объемов закупки.     Стоимость указана на условиях: склад Поставщика – Московская обл., г. Жуковский, ул. Энергетическая, д. 15. При необходимости, условия и стоимость доставки согласовываются дополнительно. Срок поставки – в течение 1÷2 недель с даты зачисления денежных средств в оплату за оборудование на расчетный счет Поставщика, получения Поставщиком оригинала, подписанного Покупателем договора поставки (в случае поставки оборудования по договору), в зависимости от того, что произойдет позднее (при условии наличия согласованной Покупателем конфигурации узлов учета на складе Поставщика). Досрочная поставка оборудования допускается по согласованию с Покупателем. Срок действия данного Коммерческого предложения составляет 30 календарных дней',
                 show: false,
+                stup:false
             }
         },
         computed: {
@@ -1346,7 +1360,7 @@
             },
             otkrco() {
                 if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !=='0' && this.isx.qmax !== '0')) {
-                   if(this.isx.sx_gvs_dep==='1') {
+                   if(this.isx.sx_gvs_dep > 0) {
                        this.$store.dispatch('actdisotkr', 0)
                        return true
                        }
@@ -1651,7 +1665,6 @@
                 }
             },
             gvs_to(to) {
-
                     this.$store.dispatch('actGVSto', to)
             },
             showModal() {
@@ -1662,10 +1675,10 @@
             },
 
             proj(d, m) {
-
+                // @change="gvs_to($event.target.value)"
+                // console.log(m)
                 let tipu = ''
-                if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !==
-                        '0' && this.isx.qmax !== '0')) {
+                if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !=='0' && this.isx.qmax !== '0')) {
                     tipu = 'og'
                 } else if (this.isx.qco && this.isx.qco !== '' && this.isx.qco !== '0') {
                     tipu = 'o'
@@ -1688,6 +1701,7 @@
                     case 'qco':
                         this.$store.dispatch('actnum', this.isx.qco)
                         this.$store.dispatch('change_pr_ot', 1)
+
                         //не более 10
                         break;
                     case 'qmax':
@@ -1698,16 +1712,26 @@
                         this.$store.dispatch('actqm', this.isx.qgvssr)
                         this.$store.dispatch('change_pr_gvs', 1)
                         break;
+                    case 'itp0':
+                        this.stup=false
+                        break;    
+                    case 'itp1':
+                    // console.log('teploobmen', m)
+                        this.stup=true
+                        this.$store.dispatch('actGVSto', 1)
+                        break;
+                    case 'itp2':
+                    // console.log('teploobmen', m)
+                        this.stup=true
+                        this.$store.dispatch('actGVSto', 2)
+                        break;
                 }
 
-                if (this.otkrco) {
-                    this.$store.dispatch('actdisotkr', 0)
-                }
+                if (this.otkrco) {  this.$store.dispatch('actdisotkr', 0) }
+
                 this.$store.dispatch('tupik', 0);
 
-
                 let result = clc_pr(this.isx, 1.5, m, 0);
-                // console.log('result',result)
                 this.$store.dispatch({
                     type: 'actrescalc',
                     result: result
