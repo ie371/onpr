@@ -666,7 +666,7 @@
 
                     <!-- <b-btn v-b-modal.modallg variant="warning" class="btn btn-sm btn-block mb-3">Текст КП</b-btn> -->
 
-                    <b-btn type='submit' class="btn btn-sm btn-block mb-3" formaction='./pdf/project/project2.php'
+                    <b-btn type='submit' class="btn btn-sm btn-block mb-3" formaction='./pdf/project/prSt.php'
                     v-if="isUserAuthenticated"
                         :disabled="imgsx.bf7 ===1 ? true : false"
                         >
@@ -676,7 +676,7 @@
 
 
                     <!-- <b-btn 
-                        type='button'
+                        type='submit' variant="primary" formaction='./pdf/project/test.php'
                         class="btn btn-sm btn-block mb-3"
                         @click="axio"                       
                         >
@@ -741,42 +741,42 @@
                     }
                 ],
                 pozOtisx: [
-                    { id:0, name:"Изм.модуль", col:2 },
-                    { id:1, name:"Изм.модуль подпитки", col:0 },
-                    { id:2, name:"Компл. термометров", col:1 },
-                    { id:3, name:"Датчик давления", col:2 },
-                    { id:4, name:"Кран шаровой", col:1 },
-                    { id:5, name:"Кран шаровой ИПТ", col:0 },
-                    { id:6, name:"Кран шаровой подпитки", col:0 },
-                    { id:7, name:"Фильтр/Грязевик", col:0 },
-                    { id:8, name:"Фильтр подпитки", col:0 },
-                    { id:9, name:"Кран 3-х ходовой", col:6 },
-                    { id:10, name:"Манометр", col:6 },
-                    { id:11, name:"Термометр", col:2 },
-                    { id:12, name:"Кран шаровой муфт. Ду15", col:2 },
-                    { id:13, name:"Кран шаровой муфт. Ду25", col:0 },
-                    { id:14, name:"Вставка габаритная основная", col:1 },
-                    { id:15, name:"Вставка габаритная подпитка", col:0 },
+                    { id:0, name:"im1", col:2 },
+                    { id:1, name:"im9", col:0 },
+                    { id:2, name:"sensT", col:1 },
+                    { id:3, name:"sensD", col:2 },
+                    { id:4, name:"kr1", col:1 },
+                    { id:5, name:"kr11", col:0 },
+                    { id:6, name:"kr9", col:0 },
+                    { id:7, name:"filtr1", col:0 },
+                    { id:8, name:"filtr9", col:0 },
+                    { id:9, name:"kr3x", col:6 },
+                    { id:10, name:"man", col:6 },
+                    { id:11, name:"term", col:2 },
+                    { id:12, name:"spu15", col:2 },
+                    { id:13, name:"spu25", col:0 },
+                    { id:14, name:"vst1", col:1 },
+                    { id:15, name:"vst9", col:0 },
                 ],
                 pozGVSisx: [
-                    { id:0, name:"Изм.модуль T3", col:1 },
-                    { id:1, name:"Изм.модуль T4", col:0 },
-                    { id:2, name:"Компл. термометров/Термометр сопротивления", col:1 },
-                    { id:3, name:"Датчик давления", col:2 },
-                    { id:4, name:"Кран шаровой T3 (ИП)", col:1 },
-                    { id:5, name:"Кран шаровой T3 (ИПТ)", col:0 },
-                    { id:6, name:"Кран шаровой T4 (ИП)", col:1 },
-                    { id:7, name:"Кран шаровой T4 (ИПТ)", col:0 },
-                    { id:8, name:"Обратный клапан", col:0 },
-                    { id:9, name:"Фильтр/Грязевик T3", col:0 },
-                    { id:10, name:"Фильтр/Грязевик T4", col:0 },
-                    { id:11, name:"Кран 3-х ходовой", col:6 },
-                    { id:12, name:"Манометр", col:6 },
-                    { id:13, name:"Термометр", col:2 },
-                    { id:14, name:"Кран шаровой муфт. Ду15", col:2 },
-                    { id:15, name:"Кран шаровой муфт. Ду25", col:0 },
-                    { id:16, name:"Вставка габаритная Т3", col:1 },
-                    { id:17, name:"Вставка габаритная Т4", col:0 },
+                    { id:0, name:"im3", col:1 },
+                    { id:1, name:"im4", col:0 },
+                    { id:2, name:"sensT", col:1 },
+                    { id:3, name:"sensD", col:2 },
+                    { id:4, name:"kr3", col:1 },
+                    { id:5, name:"kr33", col:0 },
+                    { id:6, name:"kr4", col:1 },
+                    { id:7, name:"kr44", col:0 },
+                    { id:8, name:"ok", col:0 },
+                    { id:9, name:"filtr3", col:0 },
+                    { id:10, name:"filtr4", col:0 },
+                    { id:11, name:"kr3x", col:6 },
+                    { id:12, name:"man", col:6 },
+                    { id:13, name:"term", col:2 },
+                    { id:14, name:"spu15", col:2 },
+                    { id:15, name:"spu25", col:0 },
+                    { id:16, name:"vst3", col:1 },
+                    { id:17, name:"vst4", col:0 },
                 ],
                 options: [{
                         plt: 'GSM-модем',
@@ -1618,6 +1618,29 @@
         },
         
         methods: {
+            axio () {
+            // this.mess = [];
+            // let asd = [];
+            // console.log('это отооооооооооо вет')
+            // axios.defaults.headers.common['Authorization'] = resp.token
+             let jf = JSON.stringify(this.isx);
+            // let tokenStr = 'xxyyzz'
+            let config = {
+                    headers: {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${tokenStr}`
+                    }
+            };
+            axios.post('./pdf/project/test.php', {jf}, config)
+                        .then((response)=> {
+                            console.log('это ответ',response)
+                            console.log(response.data)
+                        })
+
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+        },
             onOk() {
                 let ee = '';
                 if (this.top || this.bottom) {
