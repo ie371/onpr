@@ -1,8 +1,8 @@
 function podbor(Gm,t,p,tipL,sk) {
     var THRESHOLD = sk;
     var du = [];
-    var fees = [];
-    var fes = [];
+    var d = [];
+    var v = [];
     var Gv = +(Gm/ro(t,p)*1000).toFixed(3);
     var du = [ 15, 25, 32, 40, 50, 65, 80, 100, 150, 200, 300 ];
     
@@ -12,28 +12,28 @@ function podbor(Gm,t,p,tipL,sk) {
         var vs = Gv*1/((3.14*a1))/3600;
 
             if (vs.toFixed(2) <= +THRESHOLD) {
-                    fees.push(el);
-                    fes.push(vs.toFixed(2));
+                    d.push(el);
+                    v.push(vs.toFixed(2));
                 } 
     });
 
-    if  (fees.length == 0) {
+    if  (d.length == 0) {
 
             var eel =  du[du.length - 1];
             var a2 = Math.pow(eel*0.001, 2)/4;
             var vs2 = Gm*1/((3.14*a2))/3600;
-            fees.push(eel);
-            fes.push(vs2.toFixed(2));
+            d.push(eel);
+            v.push(vs2.toFixed(2));
     } 
     // console.log(fes[0], fees[0])
-    return [ fes[0], fees[0] ];   
+    return [ v[0], d[0], d[1] ];   
 }
 
 
 function podborPodp(Gm, t, p, sk ) {
     var THRESHOLD = sk;
-    var fees = [];
-    var fes = [];
+    var d = [];
+    var v = [];
 
     var Gv = +(Gm/ro(t,p)*1000).toFixed(3);
 
@@ -42,11 +42,11 @@ function podborPodp(Gm, t, p, sk ) {
         var a1 = Math.pow(el*0.001, 2)/4;
         var vs = Gv*1/((3.14*a1))/3600;
             if (vs.toFixed(2) <= +THRESHOLD) {
-                    fees.push(el);
-                    fes.push(vs.toFixed(2));
+                    d.push(el);
+                    v.push(vs.toFixed(2));
                 } 
     });
-    return [ fes[0], fees[0] ];   
+    return [ v[0], d[0], d[1] ];   
 }
 function speed(ss,d) {
         var a1 = Math.pow(ss.S*0.001, 2)/4;
@@ -272,7 +272,8 @@ function pr(isx, sk, peres, R) {
                     } else {
                         var n1 = podbor( GGG, t1, p1, tipL,sk );
                         var DUim1 = n1[1];
-                        var duTr1 = DUim1;
+                        // var duTr1 = DUim1;
+                        var duTr1 = n1[2];
                     } 
   
                 var gdr1 = gidr( t1, DUim1, duTr1, Gm1, p1, tipL, gg1, t3, p3, otpen );
@@ -326,7 +327,8 @@ function pr(isx, sk, peres, R) {
                 } else {
                     var n1 = podbor( Gm3, t3, p3, tipL, sk );
                 var DUim3 = n1[1];
-                var duTr3 = DUim3;
+                // var duTr3 = DUim3;
+                var duTr3 = n1[2];
                 }
                 var gdr3 = gidr( t3, DUim3, duTr3, Gm3, p3,  tipL, null, null, null  );
 
@@ -337,6 +339,7 @@ function pr(isx, sk, peres, R) {
                     var n2 = podbor( Gm4, t4, p4, tipL, sk  );
                     var DUim4 = n2[1];
                     var duTr4 = DUim4;
+                    var duTr4 = n2[2];
                 } 
                 
                 if(DUim4 >0){
