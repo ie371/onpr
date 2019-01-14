@@ -257,12 +257,13 @@ function pr(isx, sk, peres, R) {
                         var GGG = Gm1sum;
                         var Gm2sum = +(gg2 + Gm2).toFixed(3);
                         var otpen =1;
-
+                        var PL3 = ro(t3,p3);
+                        var PL4 = ro(t4,p4);
                         var objgvs = {
-                            gdr3:{ Gv: '',  V:'',  du_im:0 },
-			                gdr4:{ Gv: '',  V:'',  du_im:0 },
+                            gdr3:{ Gv: '',  V:'',  du_im:0, PL:PL3 },
+			                gdr4:{ Gv: '',  V:'',  du_im:0, PL:PL4 },
                             Ggvs:Gg
-                    };
+                        };
                 }
 
 
@@ -288,7 +289,8 @@ function pr(isx, sk, peres, R) {
                     } else {
                     var n9 = podborPodp( Gm9, t2, p2 ,sk );
                     var DUim9 = n9[1];
-                    var duTr9 = DUim9;
+                    // var duTr9 = DUim9;
+                    var duTr9 = n9[2];
                     }
                 var gdr9 = gidr( t2, DUim9, duTr9, Gm9, p2, tipL, null, null, null, null  );
 

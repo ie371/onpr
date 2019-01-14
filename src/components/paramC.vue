@@ -1619,28 +1619,28 @@
         
         methods: {
             axio () {
-            // this.mess = [];
-            // let asd = [];
-            // console.log('это отооооооооооо вет')
-            // axios.defaults.headers.common['Authorization'] = resp.token
-             let jf = JSON.stringify(this.isx);
-            // let tokenStr = 'xxyyzz'
-            let config = {
-                    headers: {
-                    'Content-Type': 'application/json',
-                    // 'Authorization': `Bearer ${tokenStr}`
-                    }
-            };
-            axios.post('./pdf/project/test.php', {jf}, config)
-                        .then((response)=> {
-                            console.log('это ответ',response)
-                            console.log(response.data)
-                        })
+                // this.mess = [];
+                // let asd = [];
+                // console.log('это отооооооооооо вет')
+                // axios.defaults.headers.common['Authorization'] = resp.token
+                let jf = JSON.stringify(this.isx);
+                // let tokenStr = 'xxyyzz'
+                let config = {
+                        headers: {
+                        'Content-Type': 'application/json',
+                        // 'Authorization': `Bearer ${tokenStr}`
+                        }
+                };
+                axios.post('./pdf/project/test.php', {jf}, config)
+                            .then((response)=> {
+                                console.log('это ответ',response)
+                                console.log(response.data)
+                            })
 
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-        },
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+            },
             onOk() {
                 let ee = '';
                 if (this.top || this.bottom) {
@@ -1724,16 +1724,19 @@
                     case 'qco':
                         this.$store.dispatch('actnum', this.isx.qco)
                         this.$store.dispatch('change_pr_ot', 1)
-
-                        //не более 10
+                         //не более 10
                         break;
                     case 'qmax':
                         this.$store.dispatch('actqs', this.isx.qmax)
                         this.$store.dispatch('change_pr_gvs', 1)
+                        this.$store.dispatch('actGVSto', '0')
+                        this.stup=false
                         break;
                     case 'qgvssr':
                         this.$store.dispatch('actqm', this.isx.qgvssr)
                         this.$store.dispatch('change_pr_gvs', 1)
+                        this.$store.dispatch('actGVSto', '0')
+                        // this.stup=false
                         break;
                     case 'itp0':
                         this.stup=false

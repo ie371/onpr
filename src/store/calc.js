@@ -121,10 +121,13 @@ export default {
 				// console.log(payload)
 				state.isxcalc.t3 = 60;
 				state.isxcalc.t4 = 50;
+				state.isxcalc.sx_gvs_dep = 0;
+				
 			} else {
 				// console.log('payload',payload)
 				state.isxcalc.t3 = 70;
 				state.isxcalc.t4 = 40;
+				
 			}
 			
 		},
@@ -237,18 +240,21 @@ export default {
 		},
 
 		muqm(state, payload){
-			if(payload<=0){ state.isxcalc.qmax = null 
+			if(payload<=0){ 
+				state.isxcalc.qmax = null
+				state.isxcalc.sx_gvs_dep = 0; 
 	 
 			} else { 
 				if(payload>10){payload = payload/100;}
 				state.isxcalc.qgvssr = payload
 				state.isxcalc.qmax = (payload * (state.isxcalc.kch)).toFixed(6);
-				state.isxcalc.sx_gvs = 0;
+				// state.isxcalc.sx_gvs = 0;
 			}
 		},
 
 		muqs(state, payload){
 			if(payload<=0){ state.isxcalc.qgvssr = null 
+				state.isxcalc.sx_gvs_dep = 0;
 
 			} else { 
 
