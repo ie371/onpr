@@ -70,17 +70,20 @@ function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen ) {
     var suj = 1;
     var trm = 1;    
     var man = 1; 
-
     var PL = ro(t,p);
 
-    if(otpen === 0) { var Gv = Gm*1000 / PL;
-                    } else { 
-                        var PLo = ro(t,p);
-                        var Gvo = Gm*1000 / PLo;
-                        var PLg = ro(tg,pg);
-                        var Gvg = Gg*1000 / PLg;
-                        var Gv = Gvo + Gvg;
-            }
+    if(otpen === 0) { 
+        var Gv = Gm*1000 / PL;
+    } else if(otpen === 1){ 
+        var PLo = ro(t,p);
+        var Gvo = Gm*1000 / PLo;
+        var PLg = ro(tg,pg);
+        var Gvg = Gg*1000 / PLg;
+        var Gv = Gvo + Gvg;
+    } else if(otpen === 2){
+        var Gmo = Gm + Gg;
+        var Gv = Gmo*1000 / PL;
+    }
 
     var a1 = Math.pow(du_im*0.001, 2)/4;    
     var V = (Gv*1/((3.14*a1))/3600).toFixed(2);
@@ -184,7 +187,7 @@ function rashgvs_cirk(Qgvsmax, t3, t4, Kchn, txvL, txvZ, koef, t1, Ktp, Knp, bet
 }
 
 function ro (t,p) {
-    var ror = (Math.pow(t*0.01, 5)*(-0.0005625*p - 1.3864) + Math.pow(t*0.01, 4)*(0.054517*p + 7.325) + Math.pow(t*0.01, 3)*(-2.26713662288534E-25*p - 15.474) + Math.pow(t*0.01, 2)*(0.52327*p-5.0668) + (t*0.01)*(-0.42067*p - 38.224) + 0.16333*p + 1011.185).toFixed(4);
+    var ror = (Math.pow(t*0.01, 5)*(-0.0005625*p - 1.3864) + Math.pow(t*0.01, 4)*(0.054517*p + 7.325) + Math.pow(t*0.01, 3)*(-2.26713662288534E-25*p - 15.474) + Math.pow(t*0.01, 2)*(0.52327*p-5.0668) + (t*0.01)*(-0.42067*p - 38.224) + 0.16333*p + 1011.185).toFixed();
      return  ror;   
 }
 
@@ -237,16 +240,13 @@ function pr(isx, sk, peres, R) {
                 }
 
                 if(+isx.sx_gvs_dep > 0){
-                    // console.log('isx.sx_gvs_dep', +isx.sx_gvs_dep)
-                    
-                    if(+isx.sx_gvs_dep===2){koef=0.55}
+                     if(+isx.sx_gvs_dep===2){koef=0.55}
                         var ngrg = +isx.qmax;
                         var t3 = +isx.t3;
                         var t4 = +isx.t4;
                         if (+isx.p3===0 || isx.p3===''){ var p3 = 4.5;}else {var p3 = +isx.p3/10;}
                         if (+isx.p4===0 || isx.p4===''){ var p4 = 3.5;}else {var p4 = +isx.p4/10;}
                         var kch = isx.kch;
-                        // var Gg = rashgvs_cirk( ngrg, t3, t4, kch, txvL, txvZ );
                         var Gg = rashgvs_cirk( ngrg, t3, 55, kch, t4, t4, koef, t1, Ktp, Knp, beta  );
                         var gg1 =+Gg.Gm3;
                         var gg2 =+Gg.Gm3;
@@ -256,7 +256,7 @@ function pr(isx, sk, peres, R) {
                         var Gm1sum = +(gg1 + Gm1).toFixed(3);
                         var GGG = Gm1sum;
                         var Gm2sum = +(gg2 + Gm2).toFixed(3);
-                        var otpen =1;
+                        var otpen = 2;
                         var PL3 = ro(t3,p3);
                         var PL4 = ro(t4,p4);
                         var objgvs = {
@@ -292,7 +292,7 @@ function pr(isx, sk, peres, R) {
                     // var duTr9 = DUim9;
                     var duTr9 = n9[2];
                     }
-                var gdr9 = gidr( t2, DUim9, duTr9, Gm9, p2, tipL, null, null, null, null  );
+                var gdr9 = gidr( t2, DUim9, duTr9, Gm9, p2, tipL, null, null, null, 0  );
 
                 // var OT = {Gm1,Gm2,Gv1,Gv2,Gm1sum,Gm2sum,Gm9}
                 var OT = {Gm1,Gm2,Gv1,Gv2,Gm1sum,Gm2sum,Gm9}
@@ -332,7 +332,7 @@ function pr(isx, sk, peres, R) {
                 // var duTr3 = DUim3;
                 var duTr3 = n1[2];
                 }
-                var gdr3 = gidr( t3, DUim3, duTr3, Gm3, p3,  tipL, null, null, null  );
+                var gdr3 = gidr( t3, DUim3, duTr3, Gm3, p3,  tipL, null, null, null, 0  );
 
                 if(peres==='peres') {          
                     var DUim4 =  isx.di4;
@@ -345,7 +345,7 @@ function pr(isx, sk, peres, R) {
                 } 
                 
                 if(DUim4 >0){
-                var gdr4 = gidr( t4, DUim4, duTr4, Gm4, p4,  tipL, null, null, null  );
+                var gdr4 = gidr( t4, DUim4, duTr4, Gm4, p4,  tipL, null, null, null, 0  );
                 } else {
                     var gdr4={du_im:0}
                 }

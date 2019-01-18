@@ -666,7 +666,7 @@
 
                     <!-- <b-btn v-b-modal.modallg variant="warning" class="btn btn-sm btn-block mb-3">Текст КП</b-btn> -->
 
-                    <b-btn type='submit' class="btn btn-sm btn-block mb-3" formaction='./pdf/project/prSt.php'
+                    <b-btn type='submit' class="btn btn-sm btn-block mb-3" formaction='./pdf/project/pr.php'
                     v-if="isUserAuthenticated"
                         :disabled="imgsx.bf7 ===1 ? true : false"
                         >
