@@ -58,7 +58,7 @@ function speed(ss,d) {
                 };
 }
 
-function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen ) {
+function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen, filtr, ok ) {
 
     if(tipL==='kl'){ var L = du_im*6 + 200; } else if (tipL==='ml'){ var L = du_im*6; }
     var alf = 20;    
@@ -67,10 +67,26 @@ function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen ) {
     var Ltr = 0.4;
     var lambda = 0.032;
     var kr = 2;    
-    var suj = 1;
-    var trm = 1;    
-    var man = 1; 
+    // var suj = 1;
+    // var trm = 1;    
+    // var man = 1; 
     var PL = ro(t,p);
+
+
+    switch (+filtr) {
+        case 0:
+            var fil = 0;
+            var grz = 0;
+            break;
+        case 1:
+            var fil = 1;
+            var grz = 0;
+            break;
+        case 2:
+            var fil = 0;
+            var grz = 1;
+            break;
+    }
 
     if(otpen === 0) { 
         var Gv = Gm*1000 / PL;
@@ -100,7 +116,8 @@ function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen ) {
     var Hd = (Xr+Xtr)*Math.pow(V, 2)/(2*9.81); 
     var H = Hk + Hi + Hd; 
     var Ptr = ((Ltr*0.00638*lambda*Math.pow(Gv,2))/( Math.pow(0.001*du_tr, 5) * 958.4))/1000;
-    var Ptrmestn = Math.pow(V, 2)*(kr+suj+trm+man)*48.9/9810;
+    // var Ptrmestn = Math.pow(V, 2)*(kr+suj+trm+man)*48.9/9810;
+    var Ptrmestn = Math.pow(V, 2)*(kr+fil+grz+ok)*48.9/9810;
     var Puu = (H + Ptr + Ptrmestn).toFixed(4);
 
     var Gidr = {
@@ -132,9 +149,10 @@ function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen ) {
                     Ptr: Ptr.toFixed(4),
                     Ptrmestn: Ptrmestn.toFixed(4),
                     kr:  kr,
-                    suj: suj,
-                    trm: trm,
-                    man: man,
+                    filtr:fil,
+                    grz: grz,
+                    ok: ok,
+                    // man: man,
               };
     return  Gidr; 
 }
@@ -276,10 +294,10 @@ function pr(isx, sk, peres, R) {
                         // var duTr1 = DUim1;
                         var duTr1 = n1[2];
                     } 
-  
-                var gdr1 = gidr( t1, DUim1, duTr1, Gm1, p1, tipL, gg1, t3, p3, otpen );
+
+                var gdr1 = gidr( t1, DUim1, duTr1, Gm1, p1, tipL, gg1, t3, p3, otpen, isx.filo, 0 );
                 var DUim2 = DUim1;
-                var gdr2 = gidr( t2, DUim2, duTr1, Gm2, p2, tipL, gg2, t4, p4, otpen );
+                var gdr2 = gidr( t2, DUim2, duTr1, Gm2, p2, tipL, gg2, t4, p4, otpen, isx.filo, 0 );
                
                 var Gm9 = +(ngr*3.6).toFixed(4);
 
@@ -292,7 +310,7 @@ function pr(isx, sk, peres, R) {
                     // var duTr9 = DUim9;
                     var duTr9 = n9[2];
                     }
-                var gdr9 = gidr( t2, DUim9, duTr9, Gm9, p2, tipL, null, null, null, 0  );
+                var gdr9 = gidr( t2, DUim9, duTr9, Gm9, p2, tipL, null, null, null, 0, 0, 0  );
 
                 // var OT = {Gm1,Gm2,Gv1,Gv2,Gm1sum,Gm2sum,Gm9}
                 var OT = {Gm1,Gm2,Gv1,Gv2,Gm1sum,Gm2sum,Gm9}
@@ -332,7 +350,7 @@ function pr(isx, sk, peres, R) {
                 // var duTr3 = DUim3;
                 var duTr3 = n1[2];
                 }
-                var gdr3 = gidr( t3, DUim3, duTr3, Gm3, p3,  tipL, null, null, null, 0  );
+                var gdr3 = gidr( t3, DUim3, duTr3, Gm3, p3,  tipL, null, null, null, 0, isx.filg, 0  );
 
                 if(peres==='peres') {          
                     var DUim4 =  isx.di4;
@@ -345,7 +363,7 @@ function pr(isx, sk, peres, R) {
                 } 
                 
                 if(DUim4 >0){
-                var gdr4 = gidr( t4, DUim4, duTr4, Gm4, p4,  tipL, null, null, null, 0  );
+                var gdr4 = gidr( t4, DUim4, duTr4, Gm4, p4,  tipL, null, null, null, 0, isx.filg, 1  );
                 } else {
                     var gdr4={du_im:0}
                 }

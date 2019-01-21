@@ -132,7 +132,7 @@
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
-                        <select class='form-control form-control-sm' v-model="isx.filo" :disabled="fo" :class="{'red-error' : grzO }">
+                        <select class='form-control form-control-sm' v-model="isx.filo" :disabled="fo" :class="{'red-error' : grzO }" @change="proj('t1','qco')">
                             <option value='0'>без фильтра</option>
                             <option value='1'>сетчатый фильтр</option>
                             <option value='2'>грязевик</option>
@@ -381,7 +381,7 @@
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
-                        <select class='form-control form-control-sm' id="fig" v-model="isx.filg" :disabled="fg||stup" :class="{'red-error' : grzG }">
+                        <select class='form-control form-control-sm' id="fig" v-model="isx.filg" :disabled="fg||stup" :class="{'red-error' : grzG }"  @change="proj('t3','qmax')">
                             <option value='0'>без фильтра</option>
                             <option value='1'>сетчатый фильтр</option>
                             <option value='2'>грязевик</option>
@@ -1591,7 +1591,8 @@
                     case 'og':
                         z1 = '3'
                         z = z1 + z2 + z3 + z4
-                        zz = 'ЦО + ГВС'
+                        if(this.isx.sx_gvs_dep < 1 ){zz = 'ЦО + ГВС'}else{zz = 'ИТП'}
+                        
 
                         if (this.check6.y1 || this.check6.y3 || this.check6.y4 || this.mlO || this.mlG) { v1 = 1; } else { v1 = 0; }
 
@@ -1740,6 +1741,7 @@
                         break;
                     case 'itp0':
                         this.stup=false
+                        this.$store.dispatch('actGVSto', '0')
                         break;    
                     case 'itp1':
                     // console.log('teploobmen', m)
