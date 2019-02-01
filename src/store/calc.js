@@ -98,6 +98,7 @@ export default {
 		actPodp(context, s){ context.commit('muPodp', s) },
 		actOKP(context, s){ context.commit('muOKP', s) },
 		actGVSto(context, s){ context.commit('muGVSto', s) },
+		actGVSNO(context){ context.commit('muGVSNO') },
 	},
 
 	mutations:{
@@ -158,9 +159,19 @@ export default {
 				state.isxcalc.dut3 = null;
 				state.isxcalc.dut4 = null;
 			}
-
 		},
-		
+		muGVSNO(state, payload){
+			// state.rescalc.Ggvs = {};
+			state.rescalc.gdr3 = { Gv:'',  V:'', du_im:0 };
+			state.rescalc.gdr4 = { Gv:'',  V:'', du_im:0 };
+
+			// if(payload !==''){
+				state.isxcalc.di3 = 0;
+				state.isxcalc.di4 = 0;
+				state.isxcalc.dut3 = null;
+				state.isxcalc.dut4 = null;
+			// }
+		},
 		mupeR(state, payload){
 			if(payload.d==='t1'){
 				state.rescalc.gdr1 = payload.result.gdr1;

@@ -105,20 +105,16 @@
                     <div class='col'>
                         <label class='col-form-label'> Нагр отопления, Гкал/ч </label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qцо' v-model="isx.qco"
-                            v-on:input="proj('qco')" step='0.0000001' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            v-on:input="proj('t1','qco')" step='0.0000001' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="8">
                     </div>
 
                      <div class='col-md-6'>
                         <label class='col-form-label'>Схема теплопотребления</label>
-                        <select class='form-control form-control-sm'
-                         v-model="isx.sx_otkr"
-                         @change="proj('wgvs'+$event.target.value)"
+                        <select class='form-control form-control-sm' v-model="isx.sx_otkr" v-on:change="proj('t1','sx_otkr')"
                             :disabled="otkrco">
                             <option value='0'>закрытая</option>
                             <option value='1'>открытая</option>
-                            <option value='2'>открытая ГВС цирк без УУ</option>
-                            <option value='3'>открытая ГВС тупик без УУ</option>
                         </select>
                     </div>
 
@@ -132,11 +128,11 @@
                             <option value='kl'>Классическая</option>
                             <option value='ml'>Модифицированная</option>
                         </select>
-                        <b-popover :disabled="!mlO" :show="mlO" triggers="hover" target="mlo"> {{warn.m}}</b-popover>
+                        <b-popover :disabled="!mlO" :show="mlO" triggers="hover" target="mlo"> {{diapIMml}}</b-popover>
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
-                        <select class='form-control form-control-sm' v-model="isx.filo" :disabled="fo" :class="{'red-error' : grzO }" @change="proj('qco')">
+                        <select class='form-control form-control-sm' v-model="isx.filo" :disabled="fo" :class="{'red-error' : grzO }" @change="proj('t1','qco')">
                             <option value='0'>без фильтра</option>
                             <option value='1'>сетчатый фильтр</option>
                             <option value='2'>грязевик</option>
@@ -147,7 +143,7 @@
                 <div class="form-row">
                     <div class='col'>
                         <label class='col-form-label'>Схема присоединения</label>
-                        <select class='form-control form-control-sm' v-model="isx.sx_ot" v-on:change="proj('sx_ot')">
+                        <select class='form-control form-control-sm' v-model="isx.sx_ot" v-on:change="proj('t9','sx_ot')">
                             <option value='0'>зависимая</option>
                             <option value='1'>независимая (с подпиткой)</option>
                         </select>
@@ -181,11 +177,11 @@
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='T1' v-model="isx.t1"
-                            v-on:input="proj('')">
+                            v-on:input="proj('t1','')">
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='T2' v-model="isx.t2"
-                            v-on:input="proj('')">
+                            v-on:input="proj('t1','')">
                     </div>
                 </div>
                 <div class="form-row mb-2">
@@ -194,11 +190,11 @@
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='50' v-model="isx.p1"
-                            v-on:input="proj('')">
+                            v-on:input="proj('t1','')">
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='40' v-model="isx.p2"
-                            v-on:input="proj('')">
+                            v-on:input="proj('t1','')">
                     </div>
                 </div>
 
@@ -242,7 +238,7 @@
                     <div class='col'>
                         <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr1.V" :class="{'red-error' : !speed.v0 }"
                             id='V1' readonly>
-                        <b-popover :disabled="speed.v0" :show="!speed.v0" triggers="hover" target="V1"> {{warn.s}}</b-popover>
+                        <b-popover :disabled="speed.v0" :show="!speed.v0" triggers="hover" target="V1"> {{maxSpeed}}</b-popover>
 
 
 
@@ -265,7 +261,7 @@
                         </select>
 
 
-                        <b-popover :disabled="!check6.y1" :show="check6.y1" triggers="hover" target="im1"> {{warn.d}}</b-popover>
+                        <b-popover :disabled="!check6.y1" :show="check6.y1" triggers="hover" target="im1"> {{diapIM}}</b-popover>
                     </div>
 
 
@@ -317,7 +313,7 @@
                             <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr9.V" :class="{'red-error' : !speed.v1 }"
                                 id='V9' readonly>
                         </div>
-                        <b-popover :disabled="speed.v1" triggers="hover focus" target="V9"> {{warn.s}}</b-popover>
+                        <b-popover :disabled="speed.v1" triggers="hover focus" target="V9"> {{maxSpeed}}</b-popover>
                         <div class='col'>
                             <label class='col-form-label'>Ду Т94</label>
                             <select class='form-control form-control-sm' v-model="isx.dut9" v-on:change="change_du('t9','peres')">
@@ -346,14 +342,14 @@
                     <div class='col-md-3'>
                         <label class='col-form-label'>Qmax</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qmax' step='0.0000001'
-                            v-model="isx.qmax" v-on:input="proj('qmax')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            v-model="isx.qmax" v-on:input="proj('t3','qmax')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="8" v-b-popover.hover.bottomright.html="Qmax">
                     </div>
 
                     <div class='col-md-3'>
                         <label class='col-form-label'>Qсред</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qср' step='0.0000001'
-                            v-model="isx.qgvssr" v-on:input="proj('qgvssr')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            v-model="isx.qgvssr" v-on:input="proj('t4','qgvssr')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="8" v-b-popover.hover.bottomright.html="Qsr">
 
                     </div>
@@ -362,7 +358,7 @@
                         <label class='col-form-label'>Схема теплопотребления</label>
                         <select class='form-control form-control-sm'
                         v-model="isx.sx_gvs_dep"
-                         @change="proj('itp'+$event.target.value)"
+                         @change="proj('','itp'+$event.target.value)"
                          :disabled="otkrgvs"
                             >
                             <option value=0>открытая</option>
@@ -381,16 +377,11 @@
                             <option value='kl'>Классическая</option>
                             <option value='ml'>Модифицированная</option>
                         </select>
-                        <b-popover :disabled="!mlG" :show="mlG" triggers="hover" target="mlg"> {{warn.m}}</b-popover>
+                        <b-popover :disabled="!mlG" :show="mlG" triggers="hover" target="mlg"> {{diapIMml}}</b-popover>
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
-                        <select class='form-control form-control-sm' id="fig" 
-                        v-model="isx.filg" 
-                        :disabled="fg||stup" 
-                        :class="{'red-error' : grzG }"  
-                        @change="proj('qmax')"
-                        >
+                        <select class='form-control form-control-sm' id="fig" v-model="isx.filg" :disabled="fg||stup" :class="{'red-error' : grzG }"  @change="proj('t3','qmax')">
                             <option value='0'>без фильтра</option>
                             <option value='1'>сетчатый фильтр</option>
                             <option value='2'>грязевик</option>
@@ -413,19 +404,19 @@
                     <div class='col'>
                         <label class='col-form-label'>Тхвл</label>
                         <input type='text' class='form-control form-control-sm' v-model="isx.txvL" value='15'
-                            v-on:input="proj('')" v-b-popover.hover.bottomright="'Температура хол. воды (лето - 15 °С)'">
+                            v-on:input="proj('t3','txvL')" v-b-popover.hover.bottomright="'Температура хол. воды (лето - 15 °С)'">
                     </div>
 
                     <div class='col'>
                         <label class='col-form-label'>Тхвз</label>
-                        <input type='text' class='form-control form-control-sm' v-model="isx.txvZ" value='5' v-on:input="proj('')"
+                        <input type='text' class='form-control form-control-sm' v-model="isx.txvZ" value='5' v-on:input="proj('t3','txvZ')"
                             v-b-popover.hover.bottomright="'Температура хол. воды (зима - 5 °С)'">
                     </div>
 
                     <div class='col'>
                         <label class='col-form-label'>Кнп</label>
                         <input type='number' class='form-control form-control-sm' step='0.01'
-                        v-model="isx.knp" v-on:input="proj('')"
+                        v-model="isx.knp" v-on:input="proj('t3','txvL')"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="4"    
                         v-b-popover.hover.bottomright="'коэффициент, учитывающий уменьшение расхода тепла в трубопроводах ГВС в летний период'">
@@ -434,7 +425,7 @@
                     <div class='col'>
                         <label class='col-form-label'>Ктп</label>
                         <input type='number' class='form-control form-control-sm' step='0.01' 
-                         v-model="isx.ktp" v-on:input="proj('')"
+                         v-model="isx.ktp" v-on:input="proj('t3','txvL')"
                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="4"    
                         v-b-popover.hover.bottomright="'коэффициент, учитывающий потери тепла в трубопроводах '">
@@ -443,7 +434,7 @@
                     <div class='col'>
                         <label class='col-form-label'>&beta;</label>
                         <input type='number' class='form-control form-control-sm' step='0.01' 
-                         v-model="isx.beta" v-on:input="proj('')"
+                         v-model="isx.beta" v-on:input="proj('t3','txvL')"
                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="4"    
                         v-b-popover.hover.bottomright="'коэффициент запаса на разрегулировку стояков ГВС'" >
@@ -479,11 +470,11 @@
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='T3' v-model="isx.t3"
-                            v-on:input="proj('')">
+                            v-on:input="proj('t3','t3')">
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='T4' v-model="isx.t4"
-                            v-on:input="proj('')">
+                            v-on:input="proj('t4','t4')">
                     </div>
                 </div>
                 <div class="form-row mb-2">
@@ -492,12 +483,12 @@
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='50' v-model="isx.p3"
-                            v-on:input="proj('')"
+                            v-on:input="proj('t3','p3')"
                            :disabled="stup" >
                     </div>
                     <div class='col'>
                         <input type='number' class='form-control form-control-sm' placeholder='40' v-model="isx.p4"
-                            v-on:input="proj('')" :disabled="stup">
+                            v-on:input="proj('t4','p4')" :disabled="stup">
                     </div>
                 </div>
 
@@ -530,11 +521,8 @@
                         </select>
                     </div>
                     <div class='col'>
-                        <select class='form-control form-control-sm'
-                        v-model="isx.di4"
-                        v-on:change="change_du('t4','peres')"
-                            :disabled="im4||stup" 
-                            >
+                        <select class='form-control form-control-sm' v-model="isx.di4" v-on:change="change_du('t4','peres')"
+                            :disabled="i4||stup" >
                             <option v-for="(option, index) in optionso" v-bind:value="option.value" :key="index">
                                 {{ option.text }}
                             </option>
@@ -550,12 +538,12 @@
                         <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr3.V" :class="{'red-error' : !speed.v2 }"
                             id='V3' readonly>
                     </div>
-                    <b-popover :disabled="speed.v2" :show="!speed.v2" triggers="hover" target="V3"> {{warn.s}}</b-popover>
+                    <b-popover :disabled="speed.v2" :show="!speed.v2" triggers="hover" target="V3"> {{maxSpeed}}</b-popover>
                     <div class='col'>
                         <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr4.V" :class="{'red-error' : !speed.v3 }"
                             id='V4' readonly>
                     </div>
-                    <b-popover :disabled="speed.v3" :show="!speed.v3" triggers="hover" target="V4"> {{warn.s}}</b-popover>
+                    <b-popover :disabled="speed.v3" :show="!speed.v3" triggers="hover" target="V4"> {{maxSpeed}}</b-popover>
                 </div>
 
                 <div class="form-row mb-2">
@@ -569,7 +557,7 @@
                             <option value='6'>И6</option>
                             <option value='5'>К5</option>
                         </select>
-                        <b-popover :disabled="!check6.y3" :show="check6.y3" triggers="hover" target="im3"> {{warn.d}}</b-popover>
+                        <b-popover :disabled="!check6.y3" :show="check6.y3" triggers="hover" target="im3"> {{diapIM}}</b-popover>
                     </div>
                     <div class='col'>
                         <select class='form-control form-control-sm' v-model="isx.tipIMg4" :class="{'red-error' : check6.y4 }"
@@ -577,7 +565,7 @@
                             <option value='6'>И6</option>
                             <option value='5'>К5</option>
                         </select>
-                        <b-popover :disabled="!check6.y4" :show="check6.y4" triggers="hover" target="im4"> {{warn.d}}</b-popover>
+                        <b-popover :disabled="!check6.y4" :show="check6.y4" triggers="hover" target="im4"> {{diapIM}}</b-popover>
                     </div>
                 </div>
                 <div class="form-row mb-2">
@@ -586,11 +574,7 @@
                     </div>
 
                     <div class='col'>
-                        <select class='form-control form-control-sm'
-                         v-model="isx.dut3" 
-                         v-on:change="change_du('t3','peres')" 
-                         :disabled="stup"
-                         >
+                        <select class='form-control form-control-sm' v-model="isx.dut3" v-on:change="change_du('t3','peres')" :disabled="stup">
                             <option v-for="(option,index) in diptr.duu3" v-bind:value="option.value" :key="index">
                                 {{ option.value }}
                             </option>
@@ -598,11 +582,7 @@
                     </div>
 
                     <div class='col'>
-                        <select class='form-control form-control-sm' 
-                        v-model="isx.dut4" 
-                        v-on:change="change_du('t4','peres')" 
-                        :disabled="stup"
-                        >
+                        <select class='form-control form-control-sm' v-model="isx.dut4" v-on:change="change_du('t4','peres')" :disabled="stup">
                             <option v-for="(option,index) in diptr.duu4" v-bind:value="option.value" :key="index">
                                 {{ option.value }}
                             </option>
@@ -1138,12 +1118,11 @@
                 infg: 'Параметры ГВС',
                 rg: true,
                 fg: false,
-                im4: true,
+                i4: true,
                 top: '',
                 bottom: 'Настоящее предложение не является офертой (в соответствии со ст.435 ГК РФ) и не влечет за собой обязательств ООО «Интелприбор» по заключению Договора на условиях настоящего предложения. Размер предоставляемой скидки и условия оплаты уточняются в зависимости от номенклатуры закупаемого оборудования и объемов закупки.     Стоимость указана на условиях: склад Поставщика – Московская обл., г. Жуковский, ул. Энергетическая, д. 15. При необходимости, условия и стоимость доставки согласовываются дополнительно. Срок поставки – в течение 1÷2 недель с даты зачисления денежных средств в оплату за оборудование на расчетный счет Поставщика, получения Поставщиком оригинала, подписанного Покупателем договора поставки (в случае поставки оборудования по договору), в зависимости от того, что произойдет позднее (при условии наличия согласованной Покупателем конфигурации узлов учета на складе Поставщика). Досрочная поставка оборудования допускается по согласованию с Покупателем. Срок действия данного Коммерческого предложения составляет 30 календарных дней',
                 show: false,
-                stup:false,
-                stup4:false
+                stup:false
             }
         },
         computed: {
@@ -1261,18 +1240,29 @@
             isUserAuthenticated(){
                 return this.$store.getters.isUserAuthenticated
             },
-            isx() { return this.$store.getters.getisxcalc; },
-            rescalc() {  return this.$store.getters.getrescalc },
-            sb() { return this.$store.getters.getSbKp  },
+
+            isx() {
+                return this.$store.getters.getisxcalc;
+            },
+            rescalc() {
+                return this.$store.getters.getrescalc
+            },
+            sb() {
+                return this.$store.getters.getSbKp;
+            },
             php() {
-                let plll = {  plt: this.plats }
+                let plll = {
+                    plt: this.plats
+                }
                 let ppp = JSON.stringify(Object.assign({}, this.isx, this.rescalc, this.sb, plll));
                 return ppp
             },
             phpS() {
+                
                 let sss = JSON.stringify(Object.assign({}, this.pozOt.arSpOt,this.pozOt.arSpGvs ))
                 return sss
             },
+
             optionso() {
                 let opt = [];
                 opt = [{
@@ -1346,26 +1336,46 @@
                     return false;
                 }
             },
-            tipImT2(){ if (this.isx.tipIMo == 6) { return 'И6' } else {  return 'К5' } },
-            duImT2() { if (+this.isx.di1 === 0) {  return 'нет' } else {  return this.isx.di1 } },
-            dutrT2() { if (+this.isx.dut2 === 0) { return '' } else { return this.isx.dut2 } },
-            otkrco() {
-                 if (this.isx.qco > 0 && this.isx.qmax > 0) {
-                   if(this.isx.sx_gvs_dep > 0 ) { 
-                       this.$store.dispatch('actdisotkr', 0)
-                       return true
-                    }
-                    return false
+
+            tipImT2() {
+                if (this.isx.tipIMo == 6) {
+                    return 'И6';
                 } else {
-                    return true
+                    return 'К5';
                 }
             },
-            otkrgvs() { 
-                if (this.isx.qco > 0 && this.isx.qmax > 0){
-                    if (this.isx.sx_otkr < 2 ){ return false } else { return true }
-                    } else { return true }
+            duImT2() {
+                if (+this.isx.di1 === 0) {
+                    return 'нет';
+                } else {
+                    return this.isx.di1;
+                }
+            },
+            dutrT2() {
+                if (+this.isx.dut2 === 0) {
+                    return '';
+                } else {
+                    return this.isx.dut2;
+                }
+            },
+            otkrco() {
+                if ( this.isx.qco >0 && this.isx.qmax>0 ) {
 
-                },
+                   if(this.isx.sx_gvs_dep > 0) {
+                       this.$store.dispatch('actdisotkr', 0)
+                       return true
+                       }
+
+                    return false
+                } else { return true }
+            },
+            otkrgvs() {
+                if ( this.isx.qco >0 && this.isx.qmax>0 ) {
+
+                    return false
+                } else { return true }
+            },
+
             mlO() {
                 if (this.isx.tipLo == 'ml' && this.isx.di1) {
                     if (this.isx.di1 > 80 || this.isx.di1 < 32) {
@@ -1420,12 +1430,14 @@
                     });
                 return are    
             },
-            warn(){
-                return {
-                    s:'Скорость потока в ИМ больше 1,5 м/с,',
-                    d:'диап. Ду ИМ И6: 25 - 80',
-                    m:'диап. Ду ИМ для модифиц. линий: 32 - 80'
-                }
+            maxSpeed() {
+                return "Скорость потока в ИМ больше 1,5 м/с"
+            },
+            diapIM() {
+                return 'диап. Ду ИМ И6: 25 - 80'
+            },
+            diapIMml() {
+                return 'диап. Ду ИМ для модифиц. линий: 32 - 80'
             },
             diptr() {
                 let du = [15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300];
@@ -1531,15 +1543,25 @@
                 }
             },
             imgsx() {
+                let tipUZ = this.isx.tipuu;
+                console.log('tipUZ',tipUZ)
+                let tipu = ''
                 let z = '10'
                 let z1 = ''
                 let zz = ''
                 let bf7 = 1;
                 let bf8 = 0;
-                let v1 = 0;
-                let v2 = 0;
-                let v3 = 0;
-                let tipu = this.tipProject;
+                let v1=0;
+                let v2=0;
+                let v3=0;
+                if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !==
+                        '0' && this.isx.qmax !== '0')) {
+                    tipu = 'og'
+                } else if (this.isx.qco && this.isx.qco !== '' && this.isx.qco !== '0') {
+                    tipu = 'o'
+                } else if (this.isx.qmax && this.isx.qmax !== '' && this.isx.qmax !== '0') {
+                    tipu = 'g'
+                }
                 let z2 = this.isx.sx_ot;
                 let z3 = this.isx.sx_otkr;
                 let z4 = this.isx.sx_gvs;
@@ -1551,6 +1573,7 @@
                         zz = 'ЦО'
                         if (this.check6.y1 || this.mlO) {  v1 = 1; } else {  v1 = 0; }
                         if (this.isx.dut1 < 33 && this.isx.filo == '2') {  v2 = 1 } else { v2 = 0 }
+
                         bf8 = v1 + v2;
                         if(bf8>0){bf7=1}else{bf7=0}
                         break;
@@ -1566,71 +1589,38 @@
                         if(bf8>0){bf7=1}else{bf7=0}
                         break;
                     case 'og':
-
-                    // console.log(';dfjgdfslkgjdfslkjg')
-                        // if (this.isx.di3 > 0) {  z1 = '3' } else {  z1 = '4' }  
                         z1 = '3'
                         z = z1 + z2 + z3 + z4
-
-                        if(this.isx.sx_gvs_dep < 1 ){ 
-                            if (this.isx.sx_otkr < 2){ zz = 'ЦО + ГВС'} else { zz = 'TC' }
-                            // zz = 'ЦО + ГВС' 
-                            
-                            } else {  zz = 'ИТП' }
+                        if(this.isx.sx_gvs_dep < 1 ){zz = 'ЦО + ГВС'}else{zz = 'ИТП'}
+                        
 
                         if (this.check6.y1 || this.check6.y3 || this.check6.y4 || this.mlO || this.mlG) { v1 = 1; } else { v1 = 0; }
-                        if (
-                            (this.isx.dut1 < 33 && this.isx.filo == '2') || 
-                            (this.isx.dut3 < 33 && this.isx.di3 > 0 && this.isx.filg == '2') || 
-                            (this.isx.dut4 < 33 && this.isx.di4 > 0 && this.isx.filg == '2')
-                        )  {  v2 = 1 } else {  v2 = 0 }
 
-                        if (this.isx.di4 > 0 && (this.isx.tipIMg3 !== this.isx.tipIMg4)) {  v3 = 1; } else {  v3 = 0; }  
+                        if ((this.isx.dut1 < 33 && this.isx.filo == '2') || (this.isx.dut3 < 33 && this.isx.di3 > 0 && this.isx.filg == '2') || (this.isx.dut4 < 33 && this.isx.di4 > 0 && this.isx.filg == '2'))  {  v2 = 1 } else {  v2 = 0 }
 
+                        if (this.isx.di4 > 0 && (this.isx.tipIMg3 !== this.isx.tipIMg4)) {  v3 = 1; } else {  v3 = 0; }    
                         bf8 = v1 + v2 + v3;
-
-                        if( bf8>0 ){ bf7=1 } else { bf7=0 }
-
+                        if(bf8>0){bf7=1}else{bf7=0}
                         break;
                     default:
                         zz = ''
                         bf7 = 1;
                         break;
                 }
+
                 let sx = './build/img/' + z + '.svg'
-                // console.log('sx',sx)
+
                 return {
                     sx,
                     zz,
                     bf7
                 }
             },
-             tipProject() {
-                let tipu = this.isx.tipuu;
-                    if ( this.isx.qco >0 && this.isx.qmax>0 ) {
-                        tipu = 'og'
-                    } else if (this.isx.qco >0) {
-                        tipu = 'o'
-                    } else if (this.isx.qmax>0) {
-                        tipu = 'g'
-                    } else {
-                        tipu = ''
-                    }
-                return tipu;
-            },
-            tipKP() {
-                let tipk = ''
-                if ( this.isx.di1>0 && this.isx.di3>0 ) {
-                    tipk = 'og'
-                } else if ( this.isx.di1>0 ) {
-                    tipk = 'o'
-                } else if (this.isx.di3>0) {
-                    tipk = 'g'
-                } else {
-                    tipk = ''
-                }
-                return tipk;
-            },
+
+
+            
+
+
         },
         
         methods: {
@@ -1656,6 +1646,40 @@
                         .catch(function (error) {
                             console.log(error);
                         });
+            },
+
+            tipProject(m) {
+
+                let tipu = this.isx.tipuu;
+                // let tipu = '';
+                if ( this.isx.qco >0 && this.isx.qmax>0 ) {
+                    if(m == 'itp1' || m == 'itp2'){  tipu = m } else {tipu = 'og'}
+                } else if (this.isx.qco >0) {
+                    tipu = 'o'
+                } else if (this.isx.qmax>0) {
+                    tipu = 'g'
+                } else {
+                    tipu = ''
+                }
+                 console.log('tipu', tipu)
+                return tipu;
+            },
+
+            tipKP() {
+
+                let tipk = ''
+                if ( this.isx.di1>0 && this.isx.di3>0 ) {
+                    tipk = 'og'
+                } else if ( this.isx.di1>0 ) {
+                    tipk = 'o'
+                } else if (this.isx.di3>0) {
+                    tipk = 'g'
+                } else {
+                    tipk = ''
+                }
+                // console.log('tipk', tipk)
+                return tipk;
+
             },
             onOk() {
                 let ee = '';
@@ -1713,20 +1737,17 @@
                 this.$refs.myModalRef.hide()
             },
 
-            proj(m) {
+            proj(d, m) {
+                // @change="gvs_to($event.target.value)"
+                // console.log(m)
 
-                let tipu = this.tipProject;
-                this.$store.dispatch('tipuz', tipu)
-
-                let kp = this.tipKP;
-                this.$store.dispatch('tipkp', kp)
-
-                // console.log('m ==== ',m)
+             
 
                 switch (m) {
                     case 'qco':
                         this.$store.dispatch('actnum', this.isx.qco)
                         this.$store.dispatch('change_pr_ot', 1)
+                         //не более 10
                         break;
                     case 'qmax':
                         this.$store.dispatch('actqs', this.isx.qmax)
@@ -1738,45 +1759,40 @@
                         this.$store.dispatch('actqm', this.isx.qgvssr)
                         this.$store.dispatch('change_pr_gvs', 1)
                         this.$store.dispatch('actGVSto', '0')
+                        // this.stup=false
                         break;
                     case 'itp0':
                         this.stup=false
                         this.$store.dispatch('actGVSto', '0')
                         break;    
                     case 'itp1':
+                    // console.log('teploobmen', m)
                         this.stup=true
                         this.$store.dispatch('actGVSto', 1)
                         break;
                     case 'itp2':
+                    // console.log('teploobmen', m)
                         this.stup=true
                         this.$store.dispatch('actGVSto', 2)
                         break;
-                    case 'wgvs0':
-                    case 'wgvs1':
-                        this.stup=false
-                        break;    
-                    case 'wgvs2':
-                        this.stup=true
-                        this.$store.dispatch('tupik', 0);
-                        break;
-                    case 'wgvs3':
-                        this.stup=true
-                        this.$store.dispatch('tupik', 1);
-                        break;    
-                    default:
-                    break;
                 }
 
                 if (this.otkrco) {  this.$store.dispatch('actdisotkr', 0) }
 
-                // this.$store.dispatch('tupik', 0);
+                this.$store.dispatch('tupik', 0);
 
                 let result = clc_pr(this.isx, 1.5, m, 0);
                 this.$store.dispatch({
                     type: 'actrescalc',
                     result: result
                 });
-                this.im4 = false
+                this.i4 = false
+
+                let tu = this.tipProject(m);
+                this.$store.dispatch('tipuz', tu)
+
+                let kp = this.tipKP();
+                this.$store.dispatch('tipkp', kp)
 
             },
 
@@ -1810,7 +1826,7 @@
                         break;
                     case 't3':
                         R = this.rescalc.gdr3.Gv;
-                        this.im4 = false
+                        this.i4 = false
                         this.$store.dispatch('change_pr_gvs', 0)
                         //пересчитываем отопление если открытая схема
                         if (this.isx.sx_otkr) {
@@ -1820,7 +1836,7 @@
                                 type: 'actrescalc',
                                 result: reslt
                             });
-                            this.im4 = false
+                            this.i4 = false
                         }
                         this.$store.dispatch('tupik', 0);
 
@@ -1845,28 +1861,26 @@
                             this.$store.dispatch('act_gvs_null', '')
                         }
                         break;
-                        // case 't9':
-                        // R = this.rescalc.gdr9.Gv;
-                        // break;
+                    case 't9':
+                        R = this.rescalc.gdr9.Gv;
+                        break;
                 }
-                let tipu = this.tipProject;
-                this.$store.dispatch('tipuz', tipu)
 
-                let kp = this.tipKP;
+                let tu = this.tipProject(m);
+                this.$store.dispatch('tipuz', tu)
+
+                let kp = this.tipKP();
                 this.$store.dispatch('tipkp', kp)
             },
 
 
             change_du(d, h) {
+
+                let tipUZ = this.isx.tipuu;
+                // console.log('tipUZ',tipUZ)
                 let R = '';
                 let tipo = this.isx.pr_ot
                 let tipg = this.isx.pr_gvs
-
-                let tipu = this.tipProject;
-                this.$store.dispatch('tipuz', tipu)
-
-                let kp = this.tipKP;
-                this.$store.dispatch('tipkp', kp)
 
                 switch (d) {
                     case 't1':
@@ -1879,17 +1893,14 @@
                                     t: 't1'
                                 });
                             }
-
                             if (tipo === 1) {
                                 let result = clc_pr(this.isx, 1.5, 'peres');
                                 this.$store.dispatch({
                                     type: 'actrescalc',
                                     result: result
                                 });
-                                this.im4 = false
-                                
+                                this.i4 = false
                             } else {
-
                                 R = this.rescalc.gdr1.Gv;
                                 if (R > 0) {
                                     let result = clc_kp(R, 1.5, d, 'peres', this.isx.di1, '')
@@ -1932,17 +1943,11 @@
                                     });
                                 }
                             }
-                            this.im4 = false
-
+                            this.i4 = false
                         } else {
-                            if(tipu !=='og'){
                             this.$store.dispatch('change_pr_gvs', 0)
                             this.$store.dispatch('act_gvs_null', 'dutrnull')
-                            this.im4 = true
-                            } else {
-                              this.$store.dispatch('actGVSNO')
-                              this.im4 = true  
-                            }
+                            this.i4 = true
                         }
 
                         break;
@@ -1963,7 +1968,7 @@
                                     type: 'actrescalc',
                                     result: result
                                 });
-                                this.im4 = false
+                                this.i4 = false
                             } else {
                                 R = this.rescalc.gdr4.Gv;
                                 if (R > 0) {
@@ -1978,15 +1983,6 @@
                         } else {
                             // переключаем на тупик
                             this.$store.dispatch('tupik', 1)
-                            if (tipg === 1) {
-                                let result = clc_pr(this.isx, 1.5, 'peres');
-                                // let result = clc_pr(this.isx, 1.5, '', 0);
-                                this.$store.dispatch({
-                                    type: 'actrescalc',
-                                    result: result
-                                });
-                                this.im4 = false
-                            }
                         }
 
                         break;
@@ -2006,7 +2002,7 @@
                                     type: 'actrescalc',
                                     result: result
                                 });
-                                this.im4 = false
+                                this.i4 = false
                             } else {
                                 R = this.rescalc.gdr9.Gv;
                                 if (R > 0) {
@@ -2023,11 +2019,36 @@
                         }
                         break;
                 }
-                // let tipu = this.tipProject;
+
+                // let tipu = ''
+                // if ((this.isx.qco && this.isx.qmax) && (this.isx.qco !== '' && this.isx.qmax !== '') && (this.isx.qco !==
+                //         '0' && this.isx.qmax !== '0')) {
+                //     tipu = 'og'
+                // } else if (this.isx.qco && this.isx.qco !== '' && this.isx.qco !== '0') {
+                //     tipu = 'o'
+                // } else if (this.isx.qmax && this.isx.qmax !== '' && this.isx.qmax !== '0') {
+                //     tipu = 'g'
+                // }
                 // this.$store.dispatch('tipuz', tipu)
 
-                // let kp = this.tipKP;
+                // let tipu = ''
+                // if ( this.isx.qco >0 && this.isx.qmax>0 ) {
+                //     if(m == 'itp1' || m == 'itp2'){  tipu = m } else {tipu = 'og'}
+                // } else if (this.isx.qco >0) {
+                //     tipu = 'o'
+                // } else if (this.isx.qmax>0) {
+                //     tipu = 'g'
+                // } else {
+                //     tipu = ''
+                // }
+                // this.$store.dispatch('tipuz', tipu)
+
+                // let tu = this.tipProject(m);
+                // this.$store.dispatch('tipuz', tu)
+
+                // let kp = this.tipKP();
                 // this.$store.dispatch('tipkp', kp)
+
             },
 
             dipTR(du_im, du_tr) {

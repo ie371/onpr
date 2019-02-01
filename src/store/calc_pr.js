@@ -87,6 +87,7 @@ function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen, filtr, ok ) 
             var grz = 1;
             break;
     }
+    // console.log('otpen = ',otpen)
 
     if(otpen === 0) { 
         var Gv = Gm*1000 / PL;
@@ -97,6 +98,9 @@ function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen, filtr, ok ) 
         var Gvg = Gg*1000 / PLg;
         var Gv = Gvo + Gvg;
     } else if(otpen === 2){
+        var Gmo = Gm + Gg;
+        var Gv = Gmo*1000 / PL;
+    }else if(otpen === 3){
         var Gmo = Gm + Gg;
         var Gv = Gmo*1000 / PL;
     }
@@ -217,8 +221,7 @@ function pr(isx, sk, peres, R) {
             var Knp = +isx.knp;
             var beta = +isx.beta;
 
-        if( isx.qco && isx.qco!='' && isx.qco!='0'  ){
-
+        if( isx.qco > 0  ){
                 var ngr = +isx.qco;
                 var t1 = +isx.t1;
                 var t2 = +isx.t2;
@@ -236,9 +239,7 @@ function pr(isx, sk, peres, R) {
                 var Gv2 = +(Gm2*1000/PL2).toFixed(3);
                 var otpen =0;
                 
-               
-                if(+isx.sx_otkr === 1){
-                    // console.log('+isx.sx_otkr', +isx.sx_otkr)
+                if(+isx.sx_otkr > 0){
                             var ngrg = +isx.qmax;
                             var t3 = +isx.t3;
                             var t4 = +isx.t4;
@@ -247,17 +248,15 @@ function pr(isx, sk, peres, R) {
                             var kch = isx.kch;
                             var Gg = rashgvs_cirk( ngrg, t3, t4, kch, txvL, txvZ, koef, '', Ktp, Knp, beta );
                             var gg1 =+Gg.Gm3;
-                            var gg2 =+Gg.Gm4;
-
-                            if(!t4){ gg2 = 0; }
-
+                            if( isx.sx_gvs > 0 ){  gg2 = 0; } else { var gg2 =+Gg.Gm4; }
                             var Gm1sum = +(gg1 + Gm1).toFixed(3);
                             var GGG = Gm1sum;
                             var Gm2sum = +(gg2 + Gm2).toFixed(3);
                             var otpen =1;
                 }
 
-                if(+isx.sx_gvs_dep > 0){
+                if(+isx.sx_gvs_dep > 0 ){
+
                      if(+isx.sx_gvs_dep===2){koef=0.55}
                         var ngrg = +isx.qmax;
                         var t3 = +isx.t3;
@@ -283,7 +282,26 @@ function pr(isx, sk, peres, R) {
                             Ggvs:Gg
                         };
                 }
+                
+                if( +isx.sx_otkr > 1 ){
+                       var PL3 = ro(t3,p3);
+                       var Gv3 = (Gg.Gm3/PL3*1000).toFixed(3);
 
+                       if( +isx.sx_otkr < 3 ){
+                       var PL4 = ro(t4,p4);
+                       var Gv4 = (Gg.Gm4/PL4*1000).toFixed(3);
+                       } else {
+                        var PL4 = ''; 
+                        var Gv4 = '';
+                     }
+
+
+                       var objgvs = {
+                           gdr3:{ Gv:Gv3,  V:'',  du_im:0, PL:PL3 },
+                           gdr4:{ Gv:Gv4,  V:'',  du_im:0, PL:PL4 },
+                           Ggvs:Gg
+                       };
+               }
 
                     if(peres==='peres') {          
                         var DUim1 = isx.di1;
@@ -291,7 +309,6 @@ function pr(isx, sk, peres, R) {
                     } else {
                         var n1 = podbor( GGG, t1, p1, tipL,sk );
                         var DUim1 = n1[1];
-                        // var duTr1 = DUim1;
                         var duTr1 = n1[2];
                     } 
 
@@ -307,12 +324,10 @@ function pr(isx, sk, peres, R) {
                     } else {
                     var n9 = podborPodp( Gm9, t2, p2 ,sk );
                     var DUim9 = n9[1];
-                    // var duTr9 = DUim9;
                     var duTr9 = n9[2];
                     }
                 var gdr9 = gidr( t2, DUim9, duTr9, Gm9, p2, tipL, null, null, null, 0, 0, 0  );
 
-                // var OT = {Gm1,Gm2,Gv1,Gv2,Gm1sum,Gm2sum,Gm9}
                 var OT = {Gm1,Gm2,Gv1,Gv2,Gm1sum,Gm2sum,Gm9}
                     var objot = {
                         OT:OT,
@@ -327,8 +342,8 @@ function pr(isx, sk, peres, R) {
                     var objot = {} 
                 }
 
-  if(+isx.sx_gvs_dep===0){
-        if( isx.qmax && isx.qmax!='' && isx.qmax!=0 ){
+  if(+isx.sx_gvs_dep===0 && +isx.sx_otkr < 2){
+        if( isx.qmax > 0 ){
             // console.log('не считаем <><><><><><<><><>><>><>udc ', +isx.sx_gvs_dep)
                 var ngr = isx.qmax;
                 var t3 = isx.t3;
@@ -394,9 +409,7 @@ function pr(isx, sk, peres, R) {
 
 
 function calc(isx, sk, peres, R) {
-    // console.log('это вход  ', R)
     var result = pr(isx,  sk, peres, R) 
-
 return result;
 
 } 
