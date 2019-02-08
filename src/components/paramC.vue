@@ -79,15 +79,40 @@
 
 
             <div class="form-group">
-                <div class='col'>
-                    <h6><span class="badge">Ситуационный план</span></h6>
-                    <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
-                    <input type="file" name="sitplan_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;"
-                        v-b-popover.hover.righttop="'Изображение в формате JPG или PNG с соотношением сторон 1,735 (Ш/В)'"
-                        title="Ситуационный план">
-                </div>
-            </div>
 
+                <!-- <div class="form-row"> -->
+                    <div class='col'>
+                        <h6><span class="badge">Ситуационный план</span></h6>
+                        <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
+                        <input type="file" name="sitplan_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;"
+                            v-b-popover.hover.righttop="'Изображение в формате JPG или PNG с соотношением сторон 1,735 (Ш/В)'"
+                            title="Ситуационный план">
+                    </div>
+            </div>
+            <div class="form-group">
+                    <div class='col'>
+
+
+                        <h6><span class="badge">Принципиальная схема</span></h6>
+
+                        <div class="form-row">
+                            <div class='col'>
+                                <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
+                                <input type="file" name="princ_sx_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;"
+                                    v-b-popover.hover.righttop="'Изображение в формате JPG или PNG с соотношением сторон 1,735 (Ш/В)'"
+                                    title="Принципиальная схема">
+                            </div>
+                            <div class='col'>
+                                    <label class='col-form-label'>Формат листа:</label>
+                                    <select class='form-control form-control-sm' name="formatPRSX">
+                                    <option value='A3'>А3</option>
+                                    <option value='A2'>А2</option>
+                                    </select> 
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
         </div>
 
 
