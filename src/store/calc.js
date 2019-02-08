@@ -290,9 +290,11 @@ export default {
 			state.isxcalc.indexnas = payload[0].item; }
 		},
 		mutupik(state,payload){ 
+			// console.log('payload',payload)
 			state.isxcalc.sx_gvs = payload;
 			if(payload===1){
 				// console.log('tupik')
+
 			state.rescalc.gdr4 = { Gv:'',  V:'', du_im:0 };
 			state.isxcalc.dut4 = null;} 
 		

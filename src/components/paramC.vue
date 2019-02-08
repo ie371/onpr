@@ -128,15 +128,16 @@
                     <div class='col'>
                         <label class='col-form-label'>Тип изм. линии</label>
                         <select class='form-control form-control-sm' v-model="isx.tipLo" :class="{'red-error' : mlO }"
-                            @change="mmo" id='mlo'>
+                            @change="modL" id='mlo'>
                             <option value='kl'>Классическая</option>
                             <option value='ml'>Модифицированная</option>
                         </select>
-                        <b-popover :disabled="!mlO" :show="mlO" triggers="hover" target="mlo"> {{warn.m}}</b-popover>
+                        <b-popover :disabled="!mlO" :show="mlO" triggers="hover" target="mlo"> {{popup.m}}</b-popover>
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
-                        <select class='form-control form-control-sm' v-model="isx.filo" :disabled="fo" :class="{'red-error' : grzO }" @change="proj('qco')">
+                        <select class='form-control form-control-sm' v-model="isx.filo" :disabled="fo" :class="{'red-error' : grzO }" 
+                        >
                             <option value='0'>без фильтра</option>
                             <option value='1'>сетчатый фильтр</option>
                             <option value='2'>грязевик</option>
@@ -242,7 +243,7 @@
                     <div class='col'>
                         <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr1.V" :class="{'red-error' : !speed.v0 }"
                             id='V1' readonly>
-                        <b-popover :disabled="speed.v0" :show="!speed.v0" triggers="hover" target="V1"> {{warn.s}}</b-popover>
+                        <b-popover :disabled="speed.v0" :show="!speed.v0" triggers="hover" target="V1"> {{popup.s}}</b-popover>
 
 
 
@@ -265,7 +266,7 @@
                         </select>
 
 
-                        <b-popover :disabled="!check6.y1" :show="check6.y1" triggers="hover" target="im1"> {{warn.d}}</b-popover>
+                        <b-popover :disabled="!check6.y1" :show="check6.y1" triggers="hover" target="im1"> {{popup.d}}</b-popover>
                     </div>
 
 
@@ -317,7 +318,7 @@
                             <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr9.V" :class="{'red-error' : !speed.v1 }"
                                 id='V9' readonly>
                         </div>
-                        <b-popover :disabled="speed.v1" triggers="hover focus" target="V9"> {{warn.s}}</b-popover>
+                        <b-popover :disabled="speed.v1" triggers="hover focus" target="V9"> {{popup.s}}</b-popover>
                         <div class='col'>
                             <label class='col-form-label'>Ду Т94</label>
                             <select class='form-control form-control-sm' v-model="isx.dut9" v-on:change="change_du('t9','peres')">
@@ -347,14 +348,14 @@
                         <label class='col-form-label'>Qmax</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qmax' step='0.0000001'
                             v-model="isx.qmax" v-on:input="proj('qmax')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                            maxlength="8" v-b-popover.hover.bottomright.html="Qmax">
+                            maxlength="8" v-b-popover.hover.bottomright.html="popup.qm">
                     </div>
 
                     <div class='col-md-3'>
                         <label class='col-form-label'>Qсред</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qср' step='0.0000001'
                             v-model="isx.qgvssr" v-on:input="proj('qgvssr')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                            maxlength="8" v-b-popover.hover.bottomright.html="Qsr">
+                            maxlength="8" v-b-popover.hover.bottomright.html="popup.qs">
 
                     </div>
 
@@ -377,11 +378,11 @@
                     <div class='col'>
                         <label class='col-form-label'>Тип изм. линии</label>
                         <select class='form-control form-control-sm' v-model="isx.tipLg" :class="{'red-error' : mlG }"
-                            @change="mmg" id='mlg' :disabled="stup">
+                            @change="modL" id='mlg' :disabled="stup">
                             <option value='kl'>Классическая</option>
                             <option value='ml'>Модифицированная</option>
                         </select>
-                        <b-popover :disabled="!mlG" :show="mlG" triggers="hover" target="mlg"> {{warn.m}}</b-popover>
+                        <b-popover :disabled="!mlG" :show="mlG" triggers="hover" target="mlg"> {{popup.m}}</b-popover>
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
@@ -405,7 +406,7 @@
                     <div class='col'>
                         <label class='col-form-label'>Кчн</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Кчн' step='0.1' v-model="isx.kch"
-                            v-on:input="cre" v-b-popover.hover.bottomright.html="KCHN"
+                            v-on:input="cre" v-b-popover.hover.bottomright.html="popup.kc"
                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="4">
                     </div>
@@ -550,12 +551,12 @@
                         <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr3.V" :class="{'red-error' : !speed.v2 }"
                             id='V3' readonly>
                     </div>
-                    <b-popover :disabled="speed.v2" :show="!speed.v2" triggers="hover" target="V3"> {{warn.s}}</b-popover>
+                    <b-popover :disabled="speed.v2" :show="!speed.v2" triggers="hover" target="V3"> {{popup.s}}</b-popover>
                     <div class='col'>
                         <input type='text' class='form-control form-control-sm' v-model="rescalc.gdr4.V" :class="{'red-error' : !speed.v3 }"
                             id='V4' readonly>
                     </div>
-                    <b-popover :disabled="speed.v3" :show="!speed.v3" triggers="hover" target="V4"> {{warn.s}}</b-popover>
+                    <b-popover :disabled="speed.v3" :show="!speed.v3" triggers="hover" target="V4"> {{popup.s}}</b-popover>
                 </div>
 
                 <div class="form-row mb-2">
@@ -569,7 +570,7 @@
                             <option value='6'>И6</option>
                             <option value='5'>К5</option>
                         </select>
-                        <b-popover :disabled="!check6.y3" :show="check6.y3" triggers="hover" target="im3"> {{warn.d}}</b-popover>
+                        <b-popover :disabled="!check6.y3" :show="check6.y3" triggers="hover" target="im3"> {{popup.d}}</b-popover>
                     </div>
                     <div class='col'>
                         <select class='form-control form-control-sm' v-model="isx.tipIMg4" :class="{'red-error' : check6.y4 }"
@@ -577,7 +578,7 @@
                             <option value='6'>И6</option>
                             <option value='5'>К5</option>
                         </select>
-                        <b-popover :disabled="!check6.y4" :show="check6.y4" triggers="hover" target="im4"> {{warn.d}}</b-popover>
+                        <b-popover :disabled="!check6.y4" :show="check6.y4" triggers="hover" target="im4"> {{popup.d}}</b-popover>
                     </div>
                 </div>
                 <div class="form-row mb-2">
@@ -646,7 +647,7 @@
                     Узел учета ЦО:
                     <ul id="example-1">
                         <li v-for="(item, index) in pozOt.arSpOt" :key="index">
-                            поз. - {{ item }}, наим: {{index}} 
+                            поз. - {{ item }} - {{index}} 
                            
                         </li>
                         </ul>
@@ -662,9 +663,9 @@
                             {{ item }} - {{index}} 
                            
                         </li>
-                    </ul>
+                    </ul> -->
                     
-                    <ul id="example-2">
+                    <!-- <ul id="example-2">
                         <li v-for="(item, index) in rescalc.Ggvs" :key="index">
                              {{index}}: {{ item }}
                            
@@ -765,9 +766,9 @@
                     { id:1, name:"im9", col:0 },
                     { id:2, name:"sensT", col:1 },
                     { id:3, name:"sensD", col:2 },
-                    { id:4, name:"kr1", col:1 },
-                    { id:5, name:"kr11", col:0 },
-                    { id:6, name:"kr9", col:0 },
+                    { id:4, name:"kr9", col:0 },
+                    { id:5, name:"kr1", col:1 },
+                    { id:6, name:"kr11", col:0 },
                     { id:7, name:"filtr1", col:0 },
                     { id:8, name:"filtr9", col:0 },
                     { id:9, name:"kr3x", col:6 },
@@ -1155,12 +1156,12 @@
                     if(this.isx.pr_ot !==0){
                         if(this.isx.sx_ot > 0){
                             this.pozOtisx[1].col = 1
-                            this.pozOtisx[6].col = 1
+                            this.pozOtisx[4].col = 1
                             this.pozOtisx[15].col = 1
                             if(this.isx.filp > 0){this.pozOtisx[8].col = 1}else{this.pozOtisx[8].col = 0}
                         } else {
                         this.pozOtisx[1].col = 0
-                            this.pozOtisx[6].col = 0
+                            this.pozOtisx[4].col = 0
                             this.pozOtisx[15].col = 0
                         }
                         if(this.isx.filo > 0){this.pozOtisx[7].col = 1}else{this.pozOtisx[7].col = 0}
@@ -1168,7 +1169,7 @@
                         if(this.isx.filo > 1){ this.pozOtisx[13].col = 1
                         }else {this.pozOtisx[13].col = 0}
 
-                        if(this.isx.tipLo === 'ml'){this.pozOtisx[5].col = 1}else{this.pozOtisx[5].col = 0}
+                        if(this.isx.tipLo === 'ml'){this.pozOtisx[6].col = 1}else{this.pozOtisx[6].col = 0}
 
                         
                         this.pozOtisx.forEach(function (el) {
@@ -1254,7 +1255,8 @@
                                 } 
                             });
                     }
-
+                // console.log('arSpOt',arSpOt)
+                // console.log('arSpGvs',arSpGvs)
                return {arSpOt,arSpGvs}
             },
 
@@ -1270,7 +1272,8 @@
                 return ppp
             },
             phpS() {
-                let sss = JSON.stringify(Object.assign({}, this.pozOt.arSpOt,this.pozOt.arSpGvs ))
+                // let sss = JSON.stringify(Object.assign({}, this.pozOt.arSpOt,this.pozOt.arSpGvs ))
+                let sss = JSON.stringify(this.pozOt)
                 return sss
             },
             optionso() {
@@ -1403,6 +1406,33 @@
                     return false;
                 }
             },
+            grz() {
+
+                let oo = false;
+                let gg = false;
+                if (this.isx.dut1 < 33 && this.isx.di1 !== '0' && this.isx.di1 !== 0 && this.isx.filo == 2) {
+                    // return true;
+                    console.log('ddddddddd')
+                    let oo = true;
+                } 
+                // else {
+                //     // return false;
+                //     let o = false;
+                // }
+                if (this.isx.dut4 < 33 && this.isx.di4 !== '0' && this.isx.di4 !== 0 && this.isx.filg == 2) {
+                    // return true;
+                    let gg = true;
+                } 
+                // else {
+                //     // return false;
+                //     let o = false;
+                // }
+                return {
+                    o:oo,
+                    g:gg,
+                }
+
+            },
             speed() {
                 let are = {};
                 let sp =[
@@ -1420,8 +1450,12 @@
                     });
                 return are    
             },
-            warn(){
+            popup() {
                 return {
+                    qm:'Qмакс = Qср * Kчн',
+                    qs:'Qср = Qмакс / Kчн',
+                    kc:'коэффициент часовой неравномерности <br> Kчн = Qмакс / Qср',
+                    r:'Данный параметр необходим для подбора датчиков температуры.<br> При Ду ИМ менее 50, датчики устанавливаются в расширение Ду65.',
                     s:'Скорость потока в ИМ больше 1,5 м/с,',
                     d:'диап. Ду ИМ И6: 25 - 80',
                     m:'диап. Ду ИМ для модифиц. линий: 32 - 80'
@@ -1567,16 +1601,17 @@
                         break;
                     case 'og':
 
-                    // console.log(';dfjgdfslkgjdfslkjg')
-                        // if (this.isx.di3 > 0) {  z1 = '3' } else {  z1 = '4' }  
+                        if(this.isx.sx_gvs_dep < 1 ){ 
+
+                            if (this.isx.sx_otkr < 2){ zz = 'ЦО + ГВС'} else { zz = 'TC' }
+                           
+                            } else {    zz = 'ИТП';
+                                        z4 = +this.isx.sx_gvs_dep + 3
+                            
+                            }
+
                         z1 = '3'
                         z = z1 + z2 + z3 + z4
-
-                        if(this.isx.sx_gvs_dep < 1 ){ 
-                            if (this.isx.sx_otkr < 2){ zz = 'ЦО + ГВС'} else { zz = 'TC' }
-                            // zz = 'ЦО + ГВС' 
-                            
-                            } else {  zz = 'ИТП' }
 
                         if (this.check6.y1 || this.check6.y3 || this.check6.y4 || this.mlO || this.mlG) { v1 = 1; } else { v1 = 0; }
                         if (
@@ -1675,27 +1710,14 @@
                 this.$store.dispatch('actqm', null)
                 this.$store.dispatch('actqs', null)
             },
-            Qmax() {
-                return 'Qмакс = Qср * Kчн'
-            },
-            Qsr() {
-                return 'Qср = Qмакс / Kчн'
-            },
-            KCHN() {
-                return 'коэффициент часовой неравномерности <br> Kчн = Qмакс / Qср'
-            },
-            rasshir() {
-                return 'Данный параметр необходим для подбора датчиков температуры.<br> При Ду ИМ менее 50, датчики устанавливаются в расширение Ду65.'
-            },
-            mmo() {
+           
+            modL(){
                 if (this.isx.tipLo == 'ml') {
                     this.fo = true;
                     this.$store.dispatch('filO', 0)
                 } else {
                     this.fo = false
                 }
-            },
-            mmg() {
                 if (this.isx.tipLg == 'ml') {
                     this.fg = true;
                     this.$store.dispatch('filG', 0)
@@ -1703,6 +1725,7 @@
                     this.fg = false
                 }
             },
+
             gvs_to(to) {
                     this.$store.dispatch('actGVSto', to)
             },
@@ -1726,7 +1749,13 @@
                 switch (m) {
                     case 'qco':
                         this.$store.dispatch('actnum', this.isx.qco)
+                        if(this.isx.qco > 0){
                         this.$store.dispatch('change_pr_ot', 1)
+                        } 
+                        // else {
+                        //  this.$store.dispatch('change_pr_ot', 0)   
+                        // }
+
                         break;
                     case 'qmax':
                         this.$store.dispatch('actqs', this.isx.qmax)
@@ -1750,16 +1779,19 @@
                     case 'itp2':
                         this.stup=true
                         this.$store.dispatch('actGVSto', 2)
+
                         break;
                     case 'wgvs0':
                     case 'wgvs1':
                         this.stup=false
+                        this.$store.dispatch('tupik', 0);
                         break;    
                     case 'wgvs2':
                         this.stup=true
                         this.$store.dispatch('tupik', 0);
                         break;
                     case 'wgvs3':
+                    // console.log('тупмковая дб')
                         this.stup=true
                         this.$store.dispatch('tupik', 1);
                         break;    
