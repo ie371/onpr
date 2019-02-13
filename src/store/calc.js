@@ -12,6 +12,7 @@ export default {
 			sx_otkr:0,
 			sx_gvs:0,
 			sx_gvs_dep:0,
+			fuCo:0,
 			qco:null,
 			qmax:null,
 			qgvssr:null,
@@ -51,12 +52,14 @@ export default {
 			mess:[],
 			indexnas:'',
 			onlineKP:true,
+			imagePlane:''
 
 		},
 		sbKP:{
 			tipSB:0,
 			lvru:30,
-			lsb:15,
+			lsbo:15,
+			lsbg:15,
 			},
 
 		rescalc:{
@@ -77,8 +80,8 @@ export default {
 		},
 
 	actions:{
-		change_pr_ot(context, pr ){context.commit('mu_pr_ot', pr)},
-		change_pr_gvs(context, pr ){context.commit('mu_pr_gvs', pr)},
+		change_pr_ot(context, p ){context.commit('mu_pr_ot', p)},
+		change_pr_gvs(context, p ){context.commit('mu_pr_gvs', p)},
 		actnum(context, q){ context.commit('munum', q) },
 		actkch(context, kc ){context.commit('mukch', kc)},
 		actqm(context, qs){context.commit('muqm', qs)},
@@ -99,6 +102,7 @@ export default {
 		actOKP(context, s){ context.commit('muOKP', s) },
 		actGVSto(context, s){ context.commit('muGVSto', s) },
 		actGVSNO(context){ context.commit('muGVSNO') },
+		change_fuCo(context,p){ context.commit('mufuCo',p) },
 	},
 
 	mutations:{
@@ -117,15 +121,12 @@ export default {
 			state.isxcalc.pr_gvs = payload;
 		},
 		muGVSto(state, payload){
-			// console.log(payload)
 			if(payload==='0'){
-				// console.log(payload)
 				state.isxcalc.t3 = 60;
 				state.isxcalc.t4 = 50;
 				state.isxcalc.sx_gvs_dep = 0;
 				
 			} else {
-				// console.log('payload',payload)
 				state.isxcalc.t3 = 70;
 				state.isxcalc.t4 = 40;
 				
@@ -304,6 +305,7 @@ export default {
 		mufilO(state,payload){ state.isxcalc.filo = payload; },
 		mufilG(state,payload){ state.isxcalc.filg = payload; },
 		muOKP(state,payload){ state.isxcalc.onlineKP = payload; },
+		mufuCo(state,payload){ state.isxcalc.fuCo = payload; },
 
 	}
 

@@ -34,13 +34,18 @@
                     <div class='form-row'>
 
                         <div class='col'>
-                            <label class='col-form-label'>от ВРУ до СБ</label>
+                            <label class='col-form-label'>ВРУ => СБ</label>
                             <input type='text' class='form-control form-control-sm' v-model="sb.lvru">
 
                         </div>
                         <div class='col'>
-                            <label class='col-form-label'>от СБ до ИМ</label>
-                            <input type='text' class='form-control form-control-sm' v-model="sb.lsb">
+                            <label class='col-form-label'>СБ => ИМ ЦО</label>
+                            <input type='text' class='form-control form-control-sm' v-model="sb.lsbo">
+
+                        </div>
+                        <div class='col'>
+                            <label class='col-form-label'>СБ => ИМ ГВС</label>
+                            <input type='text' class='form-control form-control-sm' v-model="sb.lsbg">
 
                         </div>
                     </div>
@@ -79,40 +84,46 @@
 
 
             <div class="form-group">
-
-                <!-- <div class="form-row"> -->
                     <div class='col'>
-                        <h6><span class="badge">Ситуационный план</span></h6>
-                        <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
-                        <input type="file" name="sitplan_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;"
-                            v-b-popover.hover.righttop="'Изображение в формате JPG или PNG с соотношением сторон 1,735 (Ш/В)'"
-                            title="Ситуационный план">
-                    </div>
-            </div>
-            <div class="form-group">
-                    <div class='col'>
-
-
                         <h6><span class="badge">Принципиальная схема</span></h6>
-
                         <div class="form-row">
                             <div class='col'>
                                 <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
-                                <input type="file" name="princ_sx_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;"
+                                <input type="file" id = "fileImagePrSx" name="princ_sx_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;" @change="ImageSPL"
                                     v-b-popover.hover.righttop="'Изображение в формате JPG или PNG с соотношением сторон 1,735 (Ш/В)'"
                                     title="Принципиальная схема">
                             </div>
                             <div class='col'>
                                     <label class='col-form-label'>Формат листа:</label>
-                                    <select class='form-control form-control-sm' name="formatPRSX">
+                                    <select class='form-control form-control-sm' name="formatPRSX" :disabled="otklFormatPrSx">
                                     <option value='A3'>А3</option>
                                     <option value='A2'>А2</option>
                                     </select> 
                             </div>    
                         </div>
                     </div>
-                </div>
-            <!-- </div> -->
+            </div>
+
+            <div class="form-group">
+                    <div class='col'>
+                        <h6><span class="badge">Ситуационный план</span></h6>
+                        <div class="form-row">
+                            <div class='col'>
+                                <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
+                                <input type="file" id = "fileImageSPL" name="sitplan_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;"  @change="ImageSPL"
+                                    v-b-popover.hover.righttop="'Изображение в формате JPG или PNG с соотношением сторон 1,735 (Ш/В)'"
+                                    title="Ситуационный план">
+                            </div>
+                            <div class='col'>
+                                    <label class='col-form-label'>Формат листа:</label>
+                                    <select class='form-control form-control-sm' name="formatSitPl" :disabled="otklFormatSPL">
+                                    <option value='A3'>А3</option>
+                                    <option value='A2'>А2</option>
+                                    </select> 
+                            </div>    
+                        </div>
+                    </div>
+            </div>
         </div>
 
 
@@ -128,22 +139,34 @@
 
                 <div class="form-row">
                     <div class='col'>
-                        <label class='col-form-label'> Нагр отопления, Гкал/ч </label>
+                        <label class='col-form-label'>Qco, Гкал/ч</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qцо' v-model="isx.qco"
                             v-on:input="proj('qco')" step='0.0000001' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="8">
                     </div>
 
-                     <div class='col-md-6'>
+                     <div class='col-md-5'>
                         <label class='col-form-label'>Схема теплопотребления</label>
                         <select class='form-control form-control-sm'
                          v-model="isx.sx_otkr"
                          @change="proj('wgvs'+$event.target.value)"
-                            :disabled="otkrco">
+                            :disabled="disablOtkr.diso">
                             <option value='0'>закрытая</option>
                             <option value='1'>открытая</option>
                             <option value='2'>открытая ГВС цирк без УУ</option>
                             <option value='3'>открытая ГВС тупик без УУ</option>
+                        </select>
+                    </div>
+
+                    <div class='col'>
+                        <label class='col-form-label'>Формула учета</label>
+                        <select class='form-control form-control-sm'
+                        v-model="isx.fuCo" 
+                        :disabled="fu_Co"
+                            >
+                            <option value='0'>закрытая (М1 = М2)</option>
+                            <option value='1'>открытая (М1 - М2)</option>
+
                         </select>
                     </div>
 
@@ -152,16 +175,16 @@
                 <div class="form-row">
                     <div class='col'>
                         <label class='col-form-label'>Тип изм. линии</label>
-                        <select class='form-control form-control-sm' v-model="isx.tipLo" :class="{'red-error' : mlO }"
+                        <select class='form-control form-control-sm' v-model="isx.tipLo" :class="{'red-error' : ml.o }"
                             @change="modL" id='mlo'>
                             <option value='kl'>Классическая</option>
                             <option value='ml'>Модифицированная</option>
                         </select>
-                        <b-popover :disabled="!mlO" :show="mlO" triggers="hover" target="mlo"> {{popup.m}}</b-popover>
+                        <b-popover :disabled="!ml.o" :show="ml.o" triggers="hover" target="mlo"> {{popup.m}}</b-popover>
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
-                        <select class='form-control form-control-sm' v-model="isx.filo" :disabled="fo" :class="{'red-error' : grzO }" 
+                        <select class='form-control form-control-sm' v-model="isx.filo" :disabled="fo" :class="{'red-error' : grz.o }" 
                         >
                             <option value='0'>без фильтра</option>
                             <option value='1'>сетчатый фильтр</option>
@@ -370,14 +393,14 @@
 
                 <div class="form-row">
                     <div class='col-md-3'>
-                        <label class='col-form-label'>Qmax</label>
+                        <label class='col-form-label'>Qmax, Гкал/ч</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qmax' step='0.0000001'
                             v-model="isx.qmax" v-on:input="proj('qmax')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="8" v-b-popover.hover.bottomright.html="popup.qm">
                     </div>
 
                     <div class='col-md-3'>
-                        <label class='col-form-label'>Qсред</label>
+                        <label class='col-form-label'>Qсред, Гкал/ч</label>
                         <input type='number' class='form-control form-control-sm' placeholder='Qср' step='0.0000001'
                             v-model="isx.qgvssr" v-on:input="proj('qgvssr')" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                             maxlength="8" v-b-popover.hover.bottomright.html="popup.qs">
@@ -389,7 +412,7 @@
                         <select class='form-control form-control-sm'
                         v-model="isx.sx_gvs_dep"
                          @change="proj('itp'+$event.target.value)"
-                         :disabled="otkrgvs"
+                         :disabled="disablOtkr.disg"
                             >
                             <option value=0>открытая</option>
                             <option value=1>закрытая 1 ступ</option>
@@ -402,19 +425,19 @@
                 <div class="form-row">
                     <div class='col'>
                         <label class='col-form-label'>Тип изм. линии</label>
-                        <select class='form-control form-control-sm' v-model="isx.tipLg" :class="{'red-error' : mlG }"
+                        <select class='form-control form-control-sm' v-model="isx.tipLg" :class="{'red-error' : ml.g }"
                             @change="modL" id='mlg' :disabled="stup">
                             <option value='kl'>Классическая</option>
                             <option value='ml'>Модифицированная</option>
                         </select>
-                        <b-popover :disabled="!mlG" :show="mlG" triggers="hover" target="mlg"> {{popup.m}}</b-popover>
+                        <b-popover :disabled="!ml.g" :show="ml.g" triggers="hover" target="mlg"> {{popup.m}}</b-popover>
                     </div>
                     <div class='col'>
                         <label class='col-form-label'>Фильтр</label>
                         <select class='form-control form-control-sm' id="fig" 
                         v-model="isx.filg" 
                         :disabled="fg||stup" 
-                        :class="{'red-error' : grzG }"  
+                        :class="{'red-error' : grz.g }"  
                         @change="proj('qmax')"
                         >
                             <option value='0'>без фильтра</option>
@@ -1169,10 +1192,17 @@
                 bottom: 'Настоящее предложение не является офертой (в соответствии со ст.435 ГК РФ) и не влечет за собой обязательств ООО «Интелприбор» по заключению Договора на условиях настоящего предложения. Размер предоставляемой скидки и условия оплаты уточняются в зависимости от номенклатуры закупаемого оборудования и объемов закупки.     Стоимость указана на условиях: склад Поставщика – Московская обл., г. Жуковский, ул. Энергетическая, д. 15. При необходимости, условия и стоимость доставки согласовываются дополнительно. Срок поставки – в течение 1÷2 недель с даты зачисления денежных средств в оплату за оборудование на расчетный счет Поставщика, получения Поставщиком оригинала, подписанного Покупателем договора поставки (в случае поставки оборудования по договору), в зависимости от того, что произойдет позднее (при условии наличия согласованной Покупателем конфигурации узлов учета на складе Поставщика). Досрочная поставка оборудования допускается по согласованию с Покупателем. Срок действия данного Коммерческого предложения составляет 30 календарных дней',
                 show: false,
                 stup:false,
-                stup4:false
+                stup4:false,
+                otklFormatSPL: true,
+                otklFormatPrSx: true
             }
         },
         computed: {
+
+            // checkimage() {
+            //     return document.getElementById("myFile").files.length
+            //     // return vm.$refs.fileupload.value
+            // },
 
             pozOt(){
                 let i = this.plats.length + 2;
@@ -1431,33 +1461,52 @@
                     return false;
                 }
             },
-            grz() {
 
-                let oo = false;
-                let gg = false;
-                if (this.isx.dut1 < 33 && this.isx.di1 !== '0' && this.isx.di1 !== 0 && this.isx.filo == 2) {
-                    // return true;
-                    console.log('ddddddddd')
-                    let oo = true;
+            disablOtkr(){
+                let diso = true
+                let disg = true
+                if (this.isx.qco > 0 && this.isx.qmax > 0) {
+                   if(this.isx.sx_gvs_dep > 0 ) { 
+                       this.$store.dispatch('actdisotkr', 0)
+                       diso = true
+                    } else { diso = false }
+                    if (this.isx.sx_otkr < 2 ){ disg = false } 
+                    else { disg = true }
                 } 
-                // else {
-                //     // return false;
-                //     let o = false;
-                // }
-                if (this.isx.dut4 < 33 && this.isx.di4 !== '0' && this.isx.di4 !== 0 && this.isx.filg == 2) {
-                    // return true;
-                    let gg = true;
+               return {
+                    diso:diso,
+                    disg:disg,
                 } 
-                // else {
-                //     // return false;
-                //     let o = false;
-                // }
+            },
+            ml() {
+                let o = false;
+                let g = false;
+                if (this.isx.tipLo == 'ml' && this.isx.di1) {
+                    if (this.isx.di1 > 80 || this.isx.di1 < 32) { o =  true; }
+                }
+                if (this.isx.tipLg == 'ml' && (this.isx.di3 > 0 || this.isx.di4 > 0)) {
+                    if (((this.isx.di3 > 80 || this.isx.di3 < 32) && this.isx.di3 > 0) || ((this.isx.di4 > 80 || this
+                            .isx.di4 < 32) && this.isx.di4 > 0)) { g = true; } 
+                }
                 return {
-                    o:oo,
-                    g:gg,
+                    o:o,
+                    g:g,
+                }
+            },
+            grz() {
+                let o = false;
+                let g = false;
+                if (this.isx.dut1 < 33 && this.isx.di1 > 0 && this.isx.filo == 2) {o = true;} 
+                if (((this.isx.dut3 < 33 && this.isx.di3 > 0) || (this.isx.dut4 < 33 && this.isx.di4 > 0) )&& this.isx.filg == 2) {g = true;} 
+                return {
+                    o:o,
+                    g:g,
                 }
 
             },
+
+
+
             speed() {
                 let are = {};
                 let sp =[
@@ -1608,7 +1657,7 @@
                         z1 = '1';
                         z = z1 + z2
                         zz = 'ЦО'
-                        if (this.check6.y1 || this.mlO) {  v1 = 1; } else {  v1 = 0; }
+                        if (this.check6.y1 || this.ml.o) {  v1 = 1; } else {  v1 = 0; }
                         if (this.isx.dut1 < 33 && this.isx.filo == '2') {  v2 = 1 } else { v2 = 0 }
                         bf8 = v1 + v2;
                         if(bf8>0){bf7=1}else{bf7=0}
@@ -1617,7 +1666,7 @@
                         z1 = '2'
                         z = z1 + z4
                         zz = 'ГВС'
-                        if (this.check6.y3 || this.check6.y4 || this.mlG) { v1 = 1; } else { v1 = 0; }
+                        if (this.check6.y3 || this.check6.y4 || this.ml.g) { v1 = 1; } else { v1 = 0; }
                         if ((this.isx.dut3 < 33 && this.isx.di3 > 0 && this.isx.filg == '2') || (this.isx.dut4 < 33 && this.isx.di4 > 0 && this.isx.filg == '2')) {
                             v2 = 1 } else { v2 = 0 }
                         if (this.isx.di4 > 0 && (this.isx.tipIMg3 !== this.isx.tipIMg4)) {  v3 = 1; } else {  v3 = 0; }    
@@ -1638,7 +1687,7 @@
                         z1 = '3'
                         z = z1 + z2 + z3 + z4
 
-                        if (this.check6.y1 || this.check6.y3 || this.check6.y4 || this.mlO || this.mlG) { v1 = 1; } else { v1 = 0; }
+                        if (this.check6.y1 || this.check6.y3 || this.check6.y4 || this.ml.o || this.ml.g) { v1 = 1; } else { v1 = 0; }
                         if (
                             (this.isx.dut1 < 33 && this.isx.filo == '2') || 
                             (this.isx.dut3 < 33 && this.isx.di3 > 0 && this.isx.filg == '2') || 
@@ -1691,9 +1740,23 @@
                 }
                 return tipk;
             },
+            fu_Co() {
+                if (this.isx.sx_otkr < 1) {
+                    return false;
+                } else {
+                    this.$store.dispatch('change_fuCo', '1')
+                    return true;
+                }
+            },
         },
         
         methods: {
+            ImageSPL() {
+                let fileSPL = document.getElementById("fileImageSPL").files.length;
+                let filePrSx = document.getElementById("fileImagePrSx").files.length;
+                if ( fileSPL === 0 ) { this.otklFormatSPL=true} else { this.otklFormatSPL=false }
+                if ( filePrSx === 0 ) { this.otklFormatPrSx=true} else { this.otklFormatPrSx=false }
+            },
             axio () {
                 // this.mess = [];
                 // let asd = [];
@@ -1735,7 +1798,6 @@
                 this.$store.dispatch('actqm', null)
                 this.$store.dispatch('actqs', null)
             },
-           
             modL(){
                 if (this.isx.tipLo == 'ml') {
                     this.fo = true;
@@ -1750,7 +1812,6 @@
                     this.fg = false
                 }
             },
-
             gvs_to(to) {
                     this.$store.dispatch('actGVSto', to)
             },
@@ -1760,7 +1821,6 @@
             hideModal() {
                 this.$refs.myModalRef.hide()
             },
-
             proj(m) {
 
                 let tipu = this.tipProject;
@@ -1770,6 +1830,7 @@
                 this.$store.dispatch('tipkp', kp)
 
                 // console.log('m ==== ',m)
+                this.$store.dispatch('tupik', 0);
 
                 switch (m) {
                     case 'qco':
@@ -1809,14 +1870,11 @@
                     case 'wgvs0':
                     case 'wgvs1':
                         this.stup=false
-                        this.$store.dispatch('tupik', 0);
                         break;    
                     case 'wgvs2':
                         this.stup=true
-                        this.$store.dispatch('tupik', 0);
                         break;
                     case 'wgvs3':
-                    // console.log('тупмковая дб')
                         this.stup=true
                         this.$store.dispatch('tupik', 1);
                         break;    
@@ -1824,7 +1882,7 @@
                     break;
                 }
 
-                if (this.otkrco) {  this.$store.dispatch('actdisotkr', 0) }
+                if (this.disablOtkr.diso) {  this.$store.dispatch('actdisotkr', 0) }
 
                 // this.$store.dispatch('tupik', 0);
 
@@ -1836,7 +1894,6 @@
                 this.im4 = false
 
             },
-
             rash(d) {
                 let R = 0;
                 let R4 = 0;
@@ -1912,8 +1969,6 @@
                 let kp = this.tipKP;
                 this.$store.dispatch('tipkp', kp)
             },
-
-
             change_du(d, h) {
                 let R = '';
                 let tipo = this.isx.pr_ot
@@ -2086,7 +2141,6 @@
                 // let kp = this.tipKP;
                 // this.$store.dispatch('tipkp', kp)
             },
-
             dipTR(du_im, du_tr) {
                 let du = [15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150, 200, 250, 300];
                 let k1 = du.indexOf(+du_im);
@@ -2097,7 +2151,6 @@
                     return false
                 }
             },
-
             nasp() {
                 if (this.isx.selReg != 0) {
                     this.mess = [];
