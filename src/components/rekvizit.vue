@@ -19,7 +19,71 @@
     <label class='col-form-label'>Название проектной организации</label>
     <input type='text' class='form-control form-control-sm' name='name_ooo' v-model="isx.nazvPrO">
 
-    <label class='col-form-label'>ГИП</label>
+                    <div class="form-row">
+                    <div class='col'>
+                    <label class='col-form-label'>ГИП</label>
+                    <input type='text' class='form-control form-control-sm' name='GIP' v-model="isx.GIP">
+                    </div>
+                    <div class='col'>
+                    <label class='col-form-label'>Подпись</label>
+                    <input type="file" name="gip_uploads_sign" accept="image/jpeg,image/png" style="font-size:0.8em;">
+                    </div>    
+                    </div>
+
+
+
+                    <div class="form-row">
+                    <div class='col'>
+                    <label class='col-form-label'>Разработал</label>
+                     <input type='text' class='form-control form-control-sm' name='razr' v-model="isx.razrab">
+                    </div>
+                    <div class='col'>
+                    <label class='col-form-label'>Подпись</label>
+                    <input type="file" name="razr_uploads_sign" accept="image/jpeg,image/png" style="font-size:0.8em;">
+                    </div>    
+                    </div>
+
+
+
+                    <div class="form-row">
+                    <div class='col'>
+                    <label class='col-form-label'>Проверил</label>
+                    <input type='text' class='form-control form-control-sm' name='prov' v-model="isx.prov">
+                    </div>
+                    <div class='col'>
+                    <label class='col-form-label'>Подпись</label>
+                    <input type="file" name="prov_uploads_signs" accept="image/jpeg,image/png" style="font-size:0.8em;" >
+                    </div>    
+                    </div>
+
+
+
+
+                    <div class="form-row">
+                    <div class='col'>
+                    <label class='col-form-label'>Технический контролер</label>
+                    <input type='text' class='form-control form-control-sm' name='tcontr' v-model="isx.tcontr">
+                    </div>
+                    <div class='col'>
+                    <label class='col-form-label'>Подпись</label>
+                    <input type="file" name="tcontr_uploads_sign" accept="image/jpeg,image/png" style="font-size:0.8em;" >
+                    </div>    
+                    </div>
+
+
+                    <div class="form-row">
+                    <div class='col'>
+                    <label class='col-form-label'>Нормоконтролер</label>
+                    <input type='text' class='form-control form-control-sm' name='ncontr' v-model="isx.ncontr">
+                    </div>
+                    <div class='col'>
+                    <label class='col-form-label'>Подпись</label>
+                    <input type="file" name="ncontr_uploads_sign" accept="image/jpeg,image/png" style="font-size:0.8em;" >
+                    </div>    
+                    </div>
+
+
+    <!-- <label class='col-form-label'>ГИП</label>
     <input type='text' class='form-control form-control-sm' name='GIP' v-model="isx.GIP">
 
     <label class='col-form-label'>Разработал</label>
@@ -32,7 +96,8 @@
     <input type='text' class='form-control form-control-sm' name='tcontr' v-model="isx.tcontr">
 
     <label class='col-form-label'>Нормоконтролер</label>
-    <input type='text' class='form-control form-control-sm' name='ncontr' v-model="isx.ncontr">
+    <input type='text' class='form-control form-control-sm' name='ncontr' v-model="isx.ncontr"> -->
+
 </div>
 
 

@@ -83,12 +83,12 @@
             </div>
 
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                     <div class='col'>
-                        <h6><span class="badge">Принципиальная схема</span></h6>
+                        <h6><span class="badge">Вставка внешних файлов</span></h6>
                         <div class="form-row">
                             <div class='col'>
-                                <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
+                                <label class='col-form-label'>Принципиальная схема</label>
                                 <input type="file" id = "fileImagePrSx" name="princ_sx_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;" @change="ImageSPL"
                                     v-b-popover.hover.righttop="'Изображение в формате JPG или PNG с соотношением сторон 1,735 (Ш/В)'"
                                     title="Принципиальная схема">
@@ -109,7 +109,7 @@
                         <h6><span class="badge">Ситуационный план</span></h6>
                         <div class="form-row">
                             <div class='col'>
-                                <label class='col-form-label'>Файл плана в формате JPG, PNG</label>
+                                <label class='col-form-label'>Ситуационный план</label>
                                 <input type="file" id = "fileImageSPL" name="sitplan_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;"  @change="ImageSPL"
                                     v-b-popover.hover.righttop="'Изображение в формате JPG или PNG с соотношением сторон 1,735 (Ш/В)'"
                                     title="Ситуационный план">
@@ -123,8 +123,43 @@
                             </div>    
                         </div>
                     </div>
+            </div> -->
+
+            <div class="form-group">
+                    <div class='col'>
+                        <h6><span class="badge">Вставка внешних файлов</span></h6>
+                        <div class="form-row">
+                            <div class='col'>
+                                <label class='col-form-label'>Принципиальная схема</label>
+                                <input type="file" id = "fileImagePrSx" name="princ_sx_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;" @change="ImageSPL">
+                            </div>
+                            <div class='col'>
+                                    <label class='col-form-label'>Формат листа:</label>
+                                    <select class='form-control form-control-sm' name="formatPRSX" :disabled="otklFormatPrSx">
+                                    <option value='A3'>А3</option>
+                                    <option value='A2'>А2</option>
+                                    </select> 
+                            </div>    
+                        </div>
+                        <div class="form-row">
+                            <div class='col'>
+                                <label class='col-form-label'>Ситуационный план</label>
+                                <input type="file" id = "fileImageSPL" name="sitplan_uploads" accept="image/jpeg,image/png" style="font-size:0.8em;"  @change="ImageSPL">
+                            </div>
+                            <div class='col'>
+                                    <label class='col-form-label'>Формат листа:</label>
+                                    <select class='form-control form-control-sm' name="formatSitPl" :disabled="otklFormatSPL">
+                                    <option value='A3'>А3</option>
+                                    <option value='A2'>А2</option>
+                                    </select> 
+                            </div>    
+                        </div>
+                    </div>
             </div>
+
         </div>
+
+
 
 
         <!-- // ************************************************** -->
@@ -1194,7 +1229,8 @@
                 stup:false,
                 stup4:false,
                 otklFormatSPL: true,
-                otklFormatPrSx: true
+                otklFormatPrSx: true,
+                file: null,
             }
         },
         computed: {
@@ -1407,61 +1443,6 @@
             tipImT2(){ if (this.isx.tipIMo == 6) { return 'И6' } else {  return 'К5' } },
             duImT2() { if (+this.isx.di1 === 0) {  return 'нет' } else {  return this.isx.di1 } },
             dutrT2() { if (+this.isx.dut2 === 0) { return '' } else { return this.isx.dut2 } },
-            otkrco() {
-                 if (this.isx.qco > 0 && this.isx.qmax > 0) {
-                   if(this.isx.sx_gvs_dep > 0 ) { 
-                       this.$store.dispatch('actdisotkr', 0)
-                       return true
-                    }
-                    return false
-                } else {
-                    return true
-                }
-            },
-            otkrgvs() { 
-                if (this.isx.qco > 0 && this.isx.qmax > 0){
-                    if (this.isx.sx_otkr < 2 ){ return false } else { return true }
-                    } else { return true }
-
-                },
-            mlO() {
-                if (this.isx.tipLo == 'ml' && this.isx.di1) {
-                    if (this.isx.di1 > 80 || this.isx.di1 < 32) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            },
-            mlG() {
-                if (this.isx.tipLg == 'ml' && (this.isx.di3 > 0 || this.isx.di4 > 0)) {
-                    if (((this.isx.di3 > 80 || this.isx.di3 < 32) && this.isx.di3 > 0) || ((this.isx.di4 > 80 || this
-                            .isx.di4 < 32) && this.isx.di4 > 0)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            },
-            grzO() {
-                if (this.isx.dut1 < 33 && this.isx.di1 !== '0' && this.isx.di1 !== 0 && this.isx.filo == 2) {
-                    return true;
-                } else {
-                    return false;
-                }
-            },
-            grzG() {
-                if (this.isx.dut4 < 33 && this.isx.di4 !== '0' && this.isx.di4 !== 0 && this.isx.filg == 2) {
-                    return true;
-                } else {
-                    return false;
-                }
-            },
-
             disablOtkr(){
                 let diso = true
                 let disg = true
@@ -1504,9 +1485,6 @@
                 }
 
             },
-
-
-
             speed() {
                 let are = {};
                 let sp =[
@@ -2181,4 +2159,5 @@
 
     }
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css">
+</style>
