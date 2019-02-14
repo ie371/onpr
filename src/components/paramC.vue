@@ -857,30 +857,32 @@
                     { id:9, name:"kr3x", col:6 },
                     { id:10, name:"man", col:6 },
                     { id:11, name:"term", col:2 },
-                    { id:12, name:"spu15", col:2 },
-                    { id:13, name:"spu25", col:0 },
-                    { id:14, name:"vst1", col:1 },
-                    { id:15, name:"vst9", col:0 },
+                    { id:12, name:"terman", col:0 },
+                    { id:13, name:"spu15", col:2 },
+                    { id:14, name:"spu25", col:0 },
+                    { id:15, name:"vst1", col:1 },
+                    { id:16, name:"vst9", col:0 },
                 ],
                 pozGVSisx: [
-                    { id:0, name:"im3", col:1 },
-                    { id:1, name:"im4", col:0 },
+                    { id:0, name:"im4", col:0 },
+                    { id:1, name:"im3", col:1 },
                     { id:2, name:"sensT", col:1 },
                     { id:3, name:"sensD", col:2 },
-                    { id:4, name:"kr3", col:1 },
-                    { id:5, name:"kr33", col:0 },
-                    { id:6, name:"kr4", col:1 },
-                    { id:7, name:"kr44", col:0 },
+                    { id:4, name:"kr4", col:1 },
+                    { id:5, name:"kr3", col:1 },
+                    { id:6, name:"kr44", col:0 },
+                    { id:7, name:"kr33", col:0 },
                     { id:8, name:"ok", col:0 },
-                    { id:9, name:"filtr3", col:0 },
-                    { id:10, name:"filtr4", col:0 },
+                    { id:9, name:"filtr4", col:0 },
+                    { id:10, name:"filtr3", col:0 },
                     { id:11, name:"kr3x", col:6 },
                     { id:12, name:"man", col:6 },
                     { id:13, name:"term", col:2 },
-                    { id:14, name:"spu15", col:2 },
-                    { id:15, name:"spu25", col:0 },
-                    { id:16, name:"vst3", col:1 },
+                    { id:14, name:"terman", col:0 },
+                    { id:15, name:"spu15", col:2 },
+                    { id:16, name:"spu25", col:0 },
                     { id:17, name:"vst4", col:0 },
+                    { id:18, name:"vst3", col:1 },
                 ],
                 options: [{
                         plt: 'GSM-модем',
@@ -1234,12 +1236,6 @@
             }
         },
         computed: {
-
-            // checkimage() {
-            //     return document.getElementById("myFile").files.length
-            //     // return vm.$refs.fileupload.value
-            // },
-
             pozOt(){
                 let i = this.plats.length + 2;
                 let arSpOt = {};
@@ -1248,19 +1244,31 @@
                         if(this.isx.sx_ot > 0){
                             this.pozOtisx[1].col = 1
                             this.pozOtisx[4].col = 1
-                            this.pozOtisx[15].col = 1
+                            this.pozOtisx[16].col = 1
                             if(this.isx.filp > 0){this.pozOtisx[8].col = 1}else{this.pozOtisx[8].col = 0}
                         } else {
                         this.pozOtisx[1].col = 0
                             this.pozOtisx[4].col = 0
-                            this.pozOtisx[15].col = 0
+                            this.pozOtisx[16].col = 0
                         }
                         if(this.isx.filo > 0){this.pozOtisx[7].col = 1}else{this.pozOtisx[7].col = 0}
 
-                        if(this.isx.filo > 1){ this.pozOtisx[13].col = 1
-                        }else {this.pozOtisx[13].col = 0}
+                        if(this.isx.filo > 1){ this.pozOtisx[14].col = 1
+                        }else {this.pozOtisx[14].col = 0}
 
-                        if(this.isx.tipLo === 'ml'){this.pozOtisx[6].col = 1}else{this.pozOtisx[6].col = 0}
+                        if(this.isx.tipLo === 'ml'){
+                            this.pozOtisx[6].col = 1
+                            if(this.isx.tipIMo == 6){ this.pozOtisx[9].col = 0 } else { this.pozOtisx[9].col = 1 }
+                            this.pozOtisx[10].col = 0
+                            this.pozOtisx[11].col = 0
+                            this.pozOtisx[12].col = 1
+                            }else{
+                            this.pozOtisx[6].col = 0
+                            this.pozOtisx[9].col = 1
+                            this.pozOtisx[10].col = 1
+                            this.pozOtisx[11].col = 1
+                            this.pozOtisx[12].col = 0
+                                }
 
                         
                         this.pozOtisx.forEach(function (el) {
@@ -1276,36 +1284,48 @@
                         if(this.isx.sx_gvs < 1){
                                 //  модули
                                 if( +this.isx.di3!==+this.isx.di4 ){
-                                     this.pozGVSisx[1].col=1
-                                     this.pozGVSisx[17].col=1
+                                     this.pozGVSisx[0].col=1
+                                     this.pozGVSisx[18].col=1
                                      }
                                  else{
-                                     this.pozGVSisx[1].col=0
-                                     this.pozGVSisx[17].col=0
+                                     this.pozGVSisx[0].col=0
+                                     this.pozGVSisx[18].col=0
                                      }
                                 // краны
                                 if(this.isx.tipLg === 'ml'){
-                                    this.pozGVSisx[8].col = 0
-                                    // console.log('ml')
-                                    if(+this.isx.dut3!==+this.isx.dut4){
-                                        // console.log('ml<><><><><')
-                                         this.pozGVSisx[5].col = 1
-                                         this.pozGVSisx[6].col = 1
-                                         this.pozGVSisx[7].col = 1
-                                    } else {
-                                        // console.log('ml===========')
-                                        this.pozGVSisx[5].col = 0
-                                        this.pozGVSisx[7].col = 0
-                                    }
-                                }else{
+                                            this.pozGVSisx[8].col = 0
+                                            this.pozGVSisx[6].col = 1
+                                            if(this.isx.tipIMg3 == 6){ this.pozGVSisx[11].col = 0 } else { this.pozGVSisx[11].col = 1  }
+                                            this.pozGVSisx[12].col = 0
+                                            this.pozGVSisx[13].col = 0
+                                            this.pozGVSisx[14].col = 1
+
+                                            // console.log('ml')
+                                            if(+this.isx.di3!==+this.isx.di4){
+                                                this.pozGVSisx[4].col = 1
+                                                this.pozGVSisx[6].col = 1
+                                                this.pozGVSisx[7].col = 1
+                                            } else {
+                                                this.pozGVSisx[4].col = 0
+                                                this.pozGVSisx[6].col = 0
+                                                this.pozGVSisx[7].col = 1
+                                            }
+                                } else {
+                                    this.pozGVSisx[6].col = 0
+                                    this.pozGVSisx[7].col = 0
                                     this.pozGVSisx[8].col = 1
+                                    this.pozGVSisx[12].col = 1
+                                    this.pozGVSisx[13].col = 1
+                                    this.pozGVSisx[14].col = 0
+
                                     //  console.log('kl')
-                                    if(+this.isx.dut3!==+this.isx.dut4){
-                                         this.pozGVSisx[6].col = 1
-                                        //  this.pozOtisx[7].col = 1
+                                    if(+this.isx.dut3!==+this.isx.dut4){    
+                                         this.pozGVSisx[4].col = 1
+                                         this.pozGVSisx[17].col = 1
+
                                     } else {
-                                        this.pozGVSisx[6].col = 0
-                                        // this.pozOtisx[7].col = 0
+                                        this.pozGVSisx[4].col = 0
+                                        this.pozGVSisx[17].col = 0
                                     }
 
                                     }
@@ -1313,26 +1333,25 @@
                                 // фильтры
 
                                     if(this.isx.filg > 0){
-                                    this.pozGVSisx[9].col = 1
-                                    if(+this.isx.dut3!==+this.isx.dut4){this.pozGVSisx[10].col = 1}
-                                    else{this.pozGVSisx[10].col = 0}
+                                    this.pozGVSisx[10].col = 1
+                                    if(+this.isx.dut3!==+this.isx.dut4){this.pozGVSisx[9].col = 1} else {this.pozGVSisx[9].col = 0}
                                     
                                     }else{
                                         this.pozGVSisx[9].col = 0
                                         this.pozGVSisx[10].col = 0
                                         }
-                                if(this.isx.filg > 1){ this.pozGVSisx[15].col = 1 } else {this.pozGVSisx[15].col = 0} 
+                                if(this.isx.filg > 1){ this.pozGVSisx[16].col = 1 } else {this.pozGVSisx[16].col = 0} 
 
                                  
                         } else {
                             // console.log('tupik')
                             this.pozGVSisx[1].col=0
-                            if(this.isx.tipLg === 'ml'){this.pozGVSisx[5].col=1}else{this.pozGVSisx[5].col=0}
-                            this.pozGVSisx[6].col=0
+                            if(this.isx.tipLg === 'ml'){this.pozGVSisx[6].col=1}else{this.pozGVSisx[6].col=0}
+                            this.pozGVSisx[5].col=0
                             this.pozGVSisx[7].col = 0
                             this.pozGVSisx[8].col = 0
                             if(this.isx.filg > 0){this.pozGVSisx[9].col = 1}else{this.pozGVSisx[9].col = 0}
-                             if(this.isx.filg > 1){ this.pozGVSisx[15].col = 1 } else {this.pozGVSisx[15].col = 0} 
+                             if(this.isx.filg > 1){ this.pozGVSisx[16].col = 1 } else {this.pozGVSisx[16].col = 0} 
                             this.pozGVSisx[10].col = 0
                             this.pozGVSisx[13].col = 0
                             this.pozGVSisx[17].col=0
