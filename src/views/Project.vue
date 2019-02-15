@@ -16,7 +16,7 @@ onkeypress="if(event.keyCode == 13) return false;" >
                 <div class="btn-group" role="group" aria-label="First group">
                             <a class="nav-item nav-link" :class="{active : currentTab === 1}"  @click="currentTab = 1" href="#tab_1">Реквизиты</a>
                             <a class="nav-item nav-link" :class="{active : currentTab === 2}"  @click="currentTab = 2" href="#tab_2">Параметры</a>
-                           <a class="nav-item nav-link" :class="{active : currentTab === 3}"  @click="currentTab = 3" href="#tab_2">HELP</a>
+                           <!-- <a class="nav-item nav-link" :class="{active : currentTab === 3}"  @click="currentTab = 3" href="#tab_2">HELP</a> -->
                 </div>
             </nav>
             <div class="tab-content">
@@ -35,7 +35,7 @@ onkeypress="if(event.keyCode == 13) return false;" >
                     </div>
                 </div>
 
-                <div class="tab-pane" :class="{active : currentTab === 3}" >
+                <!-- <div class="tab-pane" :class="{active : currentTab === 3}" >
                     <div class="form-row">
                         <div class='col-md-12'>
 
@@ -43,7 +43,7 @@ onkeypress="if(event.keyCode == 13) return false;" >
 
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
 
@@ -58,7 +58,7 @@ onkeypress="if(event.keyCode == 13) return false;" >
 <script>
     import rekvizit from '../components/rekvizit.vue';
     import paramC from '../components/paramC.vue';
-    import help from '../components/help.vue';
+    // import help from '../components/help.vue';
     // import kpField from '../components/kpField.vue';
 
     export default {
@@ -66,7 +66,7 @@ onkeypress="if(event.keyCode == 13) return false;" >
     components: {
                 rekvizit: rekvizit,
                 paramC: paramC,
-                help:help
+                // help:help
                 // kpField:kpField,
                 },
     data() {

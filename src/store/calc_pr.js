@@ -60,16 +60,65 @@ function speed(ss,d) {
 
 function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen, filtr, ok ) {
 
+    let ki = 'w' + du_tr + du_im;
+
+    let alfaAr = {
+        w2015:	8.4,
+        w2515:	13.8,
+        w3215:	11.7,
+        w3225:	11.4,
+        w4025:	24.4,
+        w4032:	13.4,
+        w5025:	31,
+        w5032:	23.8,
+        w5040:	11.4,
+        w6532:	38.2,
+        w6540:	25,
+        w6550:	15.4,
+        w8040:	32.6,
+        w8050:	24,
+        w8065:	10,
+        w10050: 35.4,
+        w10065: 22.6,
+        w10080: 13.6,
+        w12565: 31.8,
+        w12580: 24.8,
+        w125100: 14.2,
+        w15080: 30.2,
+        w150100: 22.2,
+        w200100: 60.3,
+        w200150: 24.2,
+        w250150: 35.2,
+        w250200: 17,
+        w300150: 61.4,
+        w300200: 32.8
+    }
+    var alfa = alfaAr[ki];
+    if(alfa) { var alf = alfa; } else { var alf = 0; }
+
+
+    let Kvs = {
+        w15:	{8.4},
+        w20:	13.8,
+        w25:	11.7,
+        w32:	11.4,
+        w40:	24.4,
+        w50:	31,
+        w65:	38.2,
+        w80:	32.6,
+        w100: 35.4,
+        w125: 31.8,
+        w150: 30.2,
+        w200: 60.3,
+        w250: 35.2,
+        w300: 61.4,
+    }
+
     if(tipL==='kl'){ var L = du_im*6 + 200; } else if (tipL==='ml'){ var L = du_im*6; }
-    var alf = 20;    
-    // var du_tr = 80; 
     var sherh = 0.5;
     var Ltr = 0.4;
     var lambda = 0.032;
     var kr = 2;    
-    // var suj = 1;
-    // var trm = 1;    
-    // var man = 1; 
     var PL = ro(t,p);
 
 
@@ -110,19 +159,22 @@ function gidr(  t, du_im, du_tr, Gm,  p,  tipL, Gg,  tg, pg, otpen, filtr, ok ) 
     var n = 0.00000178/(1+0.0337*t+0.000221*Math.pow(t, 2));    
     var re = du_im * V/(n*1000);
     var I =  0.11*Math.pow((68/re)+(sherh/du_im), 0.25);
-    var Xtr = (I/(8 * Math.sin( (alf/2) * Math.PI/180) )) * (1-Math.pow(du_im/du_tr, 4));
-    var Xk = ( -0.0125*Math.pow(du_im/du_tr, 6) + 0.0224*Math.pow(du_im/du_tr, 5) - 0.00723*Math.pow(du_im/du_tr, 4) + 0.00444*Math.pow(du_im/du_tr, 2) - 0.00745) *((Math.pow(0.01745*alf, 3) - 2*Math.PI*Math.pow(0.01745*alf, 2) - 10*0.01745*alf))+Xtr;
-    //var Kd = -0.24*Math.log10(re)+2.869;
+   if(alf === 0){ var Xtr = 0 }  else { var Xtr = (I/(8 * Math.sin( (alf/2) * Math.PI/180) )) * (1-Math.pow(du_im/du_tr, 4));}
+   if(alf === 0){ var Xk = 0 }  else { var Xk = ( -0.0125*Math.pow(du_im/du_tr, 6) + 0.0224*Math.pow(du_im/du_tr, 5) - 0.00723*Math.pow(du_im/du_tr, 4) + 0.00444*Math.pow(du_im/du_tr, 2) - 0.00745) *((Math.pow(0.01745*alf, 3) - 2*Math.PI*Math.pow(0.01745*alf, 2) - 10*0.01745*alf))+Xtr;}
     var Kd = -0.24*Math.log(re)/Math.LN10 + 2.869;    
-    var Xr = Kd*3.2*Math.pow(1-Math.pow(du_im/du_tr, 2), 2)* Math.pow( Math.tan( ((alf/2)* Math.PI/180) ), 1.25);    
+    if(alf === 0){ var Xr = 0 }  else { var Xr = Kd*3.2*Math.pow(1-Math.pow(du_im/du_tr, 2), 2)* Math.pow( Math.tan( ((alf/2)* Math.PI/180) ), 1.25); }   
     var Hk = Xk*Math.pow(V, 2)/(2*9.81);
-    var Hi = (I*(8*du_im+10)+0*L-0*(8*du_im+10))*Math.pow(V, 2)/(2*9.81*du_im);
+
+    var alshu = 0.11*Math.pow(((68/re)+(0.03/du_im)),0.25);
+    var Hi = (I*(8*du_im+10)+alshu*L-alshu*(8*du_im+10))*Math.pow(V, 2)/(2*9.81*du_im);
+
     var Hd = (Xr+Xtr)*Math.pow(V, 2)/(2*9.81); 
     var H = Hk + Hi + Hd; 
     var Ptr = ((Ltr*0.00638*lambda*Math.pow(Gv,2))/( Math.pow(0.001*du_tr, 5) * 958.4))/1000;
     // var Ptrmestn = Math.pow(V, 2)*(kr+suj+trm+man)*48.9/9810;
     var Ptrmestn = Math.pow(V, 2)*(kr+fil+grz+ok)*48.9/9810;
     var Puu = (H + Ptr + Ptrmestn).toFixed(4);
+
 
     var Gidr = {
 

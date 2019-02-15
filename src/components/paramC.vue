@@ -741,6 +741,8 @@
                            
                         </li>
                     </ul> -->
+
+
                     <!-- <ul id="example-1">
                         <li v-for="(item, index) in rescalc.OT" :key="index">
                             {{ item }} - {{index}} 
@@ -1241,16 +1243,7 @@
                 let arSpOt = {};
                 let arSpGvs = {};
                     if(this.isx.pr_ot !==0){
-                        if(this.isx.sx_ot > 0){
-                            this.pozOtisx[1].col = 1
-                            this.pozOtisx[4].col = 1
-                            this.pozOtisx[16].col = 1
-                            if(this.isx.filp > 0){this.pozOtisx[8].col = 1}else{this.pozOtisx[8].col = 0}
-                        } else {
-                        this.pozOtisx[1].col = 0
-                            this.pozOtisx[4].col = 0
-                            this.pozOtisx[16].col = 0
-                        }
+                        
                         if(this.isx.filo > 0){this.pozOtisx[7].col = 1}else{this.pozOtisx[7].col = 0}
 
                         if(this.isx.filo > 1){ this.pozOtisx[14].col = 1
@@ -1269,6 +1262,24 @@
                             this.pozOtisx[11].col = 1
                             this.pozOtisx[12].col = 0
                                 }
+                        // Подпитка
+                        if(this.isx.sx_ot > 0){
+                            this.pozOtisx[1].col = 1
+                            this.pozOtisx[4].col = 1
+                            this.pozOtisx[16].col = 1
+                                    if(this.isx.filp > 0){
+                                        this.pozOtisx[8].col = 1
+                                        this.pozOtisx[9].col = 1
+                                        this.pozOtisx[10].col = 1
+                                    } else {
+                                        this.pozOtisx[8].col = 0
+                                        }
+                        } else {
+                            this.pozOtisx[1].col = 0
+                            this.pozOtisx[4].col = 0
+                            this.pozOtisx[16].col = 0
+                        }
+
 
                         
                         this.pozOtisx.forEach(function (el) {
@@ -1345,17 +1356,30 @@
                                  
                         } else {
                             // console.log('tupik')
-                            this.pozGVSisx[1].col=0
+                            this.pozGVSisx[0].col=0
                             if(this.isx.tipLg === 'ml'){this.pozGVSisx[6].col=1}else{this.pozGVSisx[6].col=0}
-                            this.pozGVSisx[5].col=0
-                            this.pozGVSisx[7].col = 0
+                            this.pozGVSisx[4].col=0
+                            this.pozGVSisx[6].col = 0
                             this.pozGVSisx[8].col = 0
-                            if(this.isx.filg > 0){this.pozGVSisx[9].col = 1}else{this.pozGVSisx[9].col = 0}
-                             if(this.isx.filg > 1){ this.pozGVSisx[16].col = 1 } else {this.pozGVSisx[16].col = 0} 
-                            this.pozGVSisx[10].col = 0
-                            this.pozGVSisx[13].col = 0
-                            this.pozGVSisx[17].col=0
+                            this.pozGVSisx[9].col = 0
+                            if(this.isx.filg > 0){this.pozGVSisx[10].col = 1}else{this.pozGVSisx[10].col = 0}
 
+
+                            if(this.isx.tipLg === 'ml'){
+                                if(this.isx.tipIMg3 == 6){ this.pozGVSisx[11].col = 0 } else { this.pozGVSisx[11].col = 1  }
+                                this.pozGVSisx[7].col=1
+                                this.pozGVSisx[12].col=0 
+                                this.pozGVSisx[13].col=0 
+                                this.pozGVSisx[14].col=1 
+                            } else {
+                                this.pozGVSisx[7].col=0
+                                this.pozGVSisx[11].col=1
+                                this.pozGVSisx[12].col=1  
+                                this.pozGVSisx[13].col=1
+                                this.pozGVSisx[14].col=0 
+                            }
+                            if(this.isx.filg > 1){ this.pozGVSisx[16].col = 1 } else {this.pozGVSisx[16].col = 0} 
+                            this.pozGVSisx[17].col=0
                         }
                        
                         this.pozGVSisx.forEach(function (el) {
