@@ -24,10 +24,10 @@ export default {
 			t2:70,
 			t3:60,
 			t4:50,
-			p1:null,
-			p2:null,
-			p3:null,
-			p4:null,
+			p1:50,
+			p2:40,
+			p3:50,
+			p4:40,
 			di1:0,
 			di2:0,
 			di9:0,
@@ -101,8 +101,9 @@ export default {
 		actPodp(context, s){ context.commit('muPodp', s) },
 		actOKP(context, s){ context.commit('muOKP', s) },
 		actGVSto(context, s){ context.commit('muGVSto', s) },
-		actGVSNO(context){ context.commit('muGVSNO') },
+		// actGVSNO(context){ context.commit('muGVSNO') },
 		change_fuCo(context,p){ context.commit('mufuCo',p) },
+		change_tip_im4(context,p){ context.commit('mutip_im4',p) },
 	},
 
 	mutations:{
@@ -112,7 +113,6 @@ export default {
 			}
 			state.isxcalc.pr_ot = payload;
 		},
-
 		mu_pr_gvs(state, payload){
 			if(payload===0){
 				state.isxcalc.qmax = null;
@@ -161,28 +161,15 @@ export default {
 				state.isxcalc.dut4 = null;
 			}
 		},
-		muGVSNO(state, payload){
-			// state.rescalc.Ggvs = {};
-			state.rescalc.gdr3 = { Gv:'',  V:'', du_im:0 };
-			state.rescalc.gdr4 = { Gv:'',  V:'', du_im:0 };
-
-			// if(payload !==''){
-				state.isxcalc.di3 = 0;
-				state.isxcalc.di4 = 0;
-				state.isxcalc.dut3 = null;
-				state.isxcalc.dut4 = null;
-			// }
-		},
 		mupeR(state, payload){
 			if(payload.d==='t1'){
 				state.rescalc.gdr1 = payload.result.gdr1;
 				state.rescalc.gdr2 = payload.result.gdr2;
 				state.isxcalc.di1 = payload.result.gdr1.du_im;
 				state.isxcalc.di2 = payload.result.gdr2.du_im;
-				state.isxcalc.pr_ot = 0;
 				state.rescalc.gdr9 = payload.result.gdr9;
 				state.isxcalc.di9 = payload.result.gdr9.du_im;
-
+				state.isxcalc.pr_ot = 0;
 			}
 			if(payload.d==='t3'){
 				state.rescalc.gdr3 = payload.result.gdr3;
@@ -216,8 +203,8 @@ export default {
 				break;
 			}
 		},
-
 		murescalc(state,payload){ 
+
 			if(payload.result.gdr1){
 				state.rescalc.gdr1 = payload.result.gdr1;
 				state.isxcalc.di1 = payload.result.gdr1.du_im;
@@ -232,7 +219,8 @@ export default {
 				state.rescalc.gdr9 = payload.result.gdr9;
 				state.isxcalc.di9 = payload.result.gdr9.du_im;
 				state.isxcalc.dut9 = payload.result.gdr9.du_tr;
-			} else { state.isxcalc.pr_ot = 0;}
+			} 
+			// else { state.isxcalc.pr_ot = 0;}
 			if(payload.result.gdr3){
 				state.rescalc.gdr3 = payload.result.gdr3;
 				state.isxcalc.di3 = payload.result.gdr3.du_im;
@@ -243,14 +231,14 @@ export default {
 				state.isxcalc.di4 = payload.result.gdr4.du_im;
 				state.isxcalc.dut4 = payload.result.gdr4.du_tr;
 				state.rescalc.Ggvs = payload.result.Ggvs;
-			} else { state.isxcalc.pr_gvs = 0;}
+				// if(){state.isxcalc.pr_gvs = 0}
+			} 
+			// else { state.isxcalc.pr_gvs = 0;}
 		},
-
 		mukch(state, payload){
 			state.isxcalc.qmax = null;
 			state.isxcalc.qgvssr = null;
 		},
-
 		muqm(state, payload){
 			if(payload<=0){ 
 				state.isxcalc.qmax = null
@@ -263,7 +251,6 @@ export default {
 				// state.isxcalc.sx_gvs = 0;
 			}
 		},
-
 		muqs(state, payload){
 			if(payload<=0){ state.isxcalc.qgvssr = null 
 				state.isxcalc.sx_gvs_dep = 0;
@@ -276,13 +263,20 @@ export default {
 				state.isxcalc.sx_gvs = 0;
 			}
 		},
-		
-		mudisotkr(state,payload){ state.isxcalc.sx_otkr = payload; },
-		muPodp(state,payload){ state.isxcalc.sx_ot = payload; },
-
+		mudisotkr(state,payload){ 
+			state.isxcalc.sx_otkr = payload;
+		},
+		muPodp(state,payload){ 
+			state.isxcalc.sx_ot = payload;
+			// if(payload == 0){ 
+				state.isxcalc.filp = payload;
+			//  }
+		},
 		munum(state,payload){ 
-			if(payload>10){payload = payload/100;}
-			state.isxcalc.qco = payload;
+			if(payload>10){payload = payload/100;
+				state.isxcalc.qco = payload;
+			}
+			// state.isxcalc.qco = payload;
 			
 		},
 		munas(state,payload){ 
@@ -306,6 +300,7 @@ export default {
 		mufilG(state,payload){ state.isxcalc.filg = payload; },
 		muOKP(state,payload){ state.isxcalc.onlineKP = payload; },
 		mufuCo(state,payload){ state.isxcalc.fuCo = payload; },
+		mutip_im4(state,payload){ state.isxcalc.tipIMg4 = payload; },
 
 	}
 

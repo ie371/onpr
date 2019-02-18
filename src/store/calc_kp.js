@@ -50,7 +50,7 @@ function podborR( Gv, sk) {
     return { 
             Gv:  Gv,
             V:v_arr[0], 
-            du_im:d_arr[0] 
+            du_im:d_arr[0],
             };
 
 }
@@ -110,7 +110,6 @@ return objot
 }
 
 function kp( R, sk, d) {
-
         switch(d){
             case 't1':
                 var OT = {}
@@ -138,9 +137,8 @@ function kp( R, sk, d) {
             break;
 
         }
- var resu = Object.assign({}, objot, objgvs);
-
-return objot;
+var resu = Object.assign({}, objot, objgvs);
+return resu;
 }
 
 function calc(R, sk, d, m, dd, zero) {
